@@ -3,7 +3,7 @@
   "cookingtime": 100,
   "experience": 0.5,
   "ingredient": {
-    "item": "spcefactory:ultrapure_iron"
+    "item": "spacefactory:ultrapure_iron"
   },
-  "result": "spcefactory:steel_sheet"
+  "result": "spacefactory:steel_sheet"
 }
