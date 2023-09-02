@@ -6,5 +6,9 @@
   "item.spacefactory.ultrapure_silicon": "Ultra-pure Silicon",
   "item.spacefactory.ultrapure_iron_nugget": "Ultra-pure Iron Nugget",
   "item.spacefactory.ultrapure_copper_nugget": "Ultra-pure Copper Nugget",
-  "item.spacefactory.steel_sheet": "Steel Sheet"
+  "item.spacefactory.steel_sheet": "Steel Sheet",
+  "item.spacefactory.circuit": "Circuit",
+  "item.spacefactory.electric_motor": "Electric Motor",
+  "item.spacefactory.transformer": "Transformer",
+  "item.spacefactory.supercapacitor": "Supercapacitor"
 }
