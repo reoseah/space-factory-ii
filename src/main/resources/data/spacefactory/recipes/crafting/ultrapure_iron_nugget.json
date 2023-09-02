@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "spacefactory:ultrapure_iron_nugget"
+  }
+}
