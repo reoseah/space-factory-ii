@@ -1,11 +1,10 @@
 {
   "itemGroup.spacefactory": "Space Factory",
-  "item.spacefactory.coal_dust": "Coal Dust",
-  "item.spacefactory.ender_pearl_dust": "Ender Pearl Dust",
   "item.spacefactory.ultrapure_iron": "Ultra-pure Iron",
   "item.spacefactory.ultrapure_copper": "Ultra-pure Copper",
   "item.spacefactory.ultrapure_gold": "Ultra-pure Gold",
   "item.spacefactory.ultrapure_silicon": "Ultra-pure Silicon",
+  "item.spacefactory.ultrapure_carbon": "Ultra-pure Carbon",
   "item.spacefactory.ultrapure_iron_nugget": "Ultra-pure Iron Nugget",
   "item.spacefactory.ultrapure_copper_nugget": "Ultra-pure Copper Nugget",
   "item.spacefactory.steel_sheet": "Steel Sheet",

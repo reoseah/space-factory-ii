@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "spacefactory:item/ender_pearl_dust"
+    "layer0": "spacefactory:item/ultrapure_carbon"
   }
 }
