@@ -20,6 +20,7 @@ public class SpaceFactory {
     public static final Item ULTRAPURE_SILICON = new Item(new Item.Settings());
     public static final Item ULTRAPURE_IRON_NUGGET = new Item(new Item.Settings());
     public static final Item ULTRAPURE_COPPER_NUGGET = new Item(new Item.Settings());
+    public static final Item STEEL_SHEET = new Item(new Item.Settings());
 
     public static void initialize() {
         LOGGER.info("Initializing...");
@@ -30,6 +31,7 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_silicon", ULTRAPURE_SILICON);
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_nugget", ULTRAPURE_IRON_NUGGET);
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_nugget", ULTRAPURE_COPPER_NUGGET);
+        Registry.register(Registries.ITEM, "spacefactory:steel_sheet", STEEL_SHEET);
 
         ItemGroup itemGroup = FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.spacefactory"))
@@ -41,6 +43,7 @@ public class SpaceFactory {
                     entries.add(ULTRAPURE_SILICON);
                     entries.add(ULTRAPURE_IRON_NUGGET);
                     entries.add(ULTRAPURE_COPPER_NUGGET);
+                    entries.add(STEEL_SHEET);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
