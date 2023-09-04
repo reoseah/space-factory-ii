@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "spacefactory",
+  "id": "space-factory",
   "version": "${version}",
-  "name": "Example mod",
-  "description": "This is an spacefactory description! Tell everyone what your mod is about!",
+  "name": "Space Factory II",
+  "description": "",
   "authors": [
-    "Me!"
+    "Reoseah"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-spacefactory-mod"
+    "homepage": "https://github.com/reoseah/space-factory-ii",
+    "sources": "https://github.com/reoseah/space-factory-ii"
   },
   "license": "CC0-1.0",
   "icon": "assets/spacefactory/icon.png",
@@ -36,6 +36,5 @@
     "fabric-api": "*"
   },
   "suggests": {
-    "another-mod": "*"
   }
 }

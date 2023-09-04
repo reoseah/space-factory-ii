@@ -30,6 +30,8 @@ public class SpaceFactory {
     public static final Block LIGHT_GRAY_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.LIGHT_GRAY).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block GRAY_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.GRAY).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block GRAY_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.GRAY).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
+    public static final Block BLACK_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.BLACK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
+    public static final Block BLACK_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.BLACK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
 
     public static final Item ULTRAPURE_IRON = new Item(new Item.Settings());
     public static final Item ULTRAPURE_COPPER = new Item(new Item.Settings());
@@ -55,6 +57,8 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:light_gray_spaceglaze_panel", LIGHT_GRAY_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:gray_spaceglaze", GRAY_SPACEGLAZE);
         Registry.register(Registries.BLOCK, "spacefactory:gray_spaceglaze_panel", GRAY_SPACEGLAZE_PANEL);
+        Registry.register(Registries.BLOCK, "spacefactory:black_spaceglaze", BLACK_SPACEGLAZE);
+        Registry.register(Registries.BLOCK, "spacefactory:black_spaceglaze_panel", BLACK_SPACEGLAZE_PANEL);
 
         Registry.register(Registries.ITEM, "spacefactory:white_spaceglaze", new BlockItem(WHITE_SPACEGLAZE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:white_spaceglaze_panel", new BlockItem(WHITE_SPACEGLAZE_PANEL, new Item.Settings()));
@@ -62,6 +66,8 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:light_gray_spaceglaze_panel", new BlockItem(LIGHT_GRAY_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:gray_spaceglaze", new BlockItem(GRAY_SPACEGLAZE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:gray_spaceglaze_panel", new BlockItem(GRAY_SPACEGLAZE_PANEL, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:black_spaceglaze", new BlockItem(BLACK_SPACEGLAZE, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:black_spaceglaze_panel", new BlockItem(BLACK_SPACEGLAZE_PANEL, new Item.Settings()));
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron", ULTRAPURE_IRON);
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper", ULTRAPURE_COPPER);
@@ -88,6 +94,8 @@ public class SpaceFactory {
                     entries.add(LIGHT_GRAY_SPACEGLAZE_PANEL);
                     entries.add(GRAY_SPACEGLAZE);
                     entries.add(GRAY_SPACEGLAZE_PANEL);
+                    entries.add(BLACK_SPACEGLAZE);
+                    entries.add(BLACK_SPACEGLAZE_PANEL);
 
                     entries.add(ULTRAPURE_IRON);
                     entries.add(ULTRAPURE_COPPER);
