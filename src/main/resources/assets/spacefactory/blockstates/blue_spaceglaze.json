@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "spacefactory:block/blue_spaceglaze",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "spacefactory:block/blue_spaceglaze",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "spacefactory:block/blue_spaceglaze"
+    },
+    "facing=west": {
+      "model": "spacefactory:block/blue_spaceglaze",
+      "y": 90
+    }
+  }
+}
