@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "spacefactory:block/lime_spaceglaze",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "spacefactory:block/lime_spaceglaze",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "spacefactory:block/lime_spaceglaze"
+    },
+    "facing=west": {
+      "model": "spacefactory:block/lime_spaceglaze",
+      "y": 90
+    }
+  }
+}
