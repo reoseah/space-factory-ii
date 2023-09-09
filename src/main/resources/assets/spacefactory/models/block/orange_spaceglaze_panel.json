@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "spacefactory:block/orange_spaceglaze_panel"
+  }
+}
