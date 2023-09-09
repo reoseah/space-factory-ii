@@ -27,6 +27,10 @@ public class SpaceFactory {
     public static final Block LIGHT_GRAY_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.LIGHT_GRAY).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block GRAY_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.GRAY).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block GRAY_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.GRAY).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
+    public static final Block BLACK_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.BLACK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
+    public static final Block BLACK_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.BLACK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
+    public static final Block BROWN_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.BROWN).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
+    public static final Block BROWN_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.BROWN).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block RED_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.RED).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block RED_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.RED).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block YELLOW_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.YELLOW).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
@@ -43,9 +47,6 @@ public class SpaceFactory {
     public static final Block BLUE_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.BLUE).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block PINK_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.PINK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block PINK_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.PINK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
-    public static final Block BLACK_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.BLACK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
-    public static final Block BLACK_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.BLACK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
-
     public static final Block RED_FORCEFIELD = new TransparentBlock(AbstractBlock.Settings.create().mapColor(DyeColor.RED).strength(5F).luminance(state -> 13).nonOpaque());
     public static final Block GREEN_FORCEFIELD = new TransparentBlock(AbstractBlock.Settings.create().mapColor(DyeColor.GREEN).strength(5F).luminance(state -> 13).nonOpaque());
     public static final Block BLUE_FORCEFIELD = new TransparentBlock(AbstractBlock.Settings.create().mapColor(DyeColor.BLUE).strength(5F).luminance(state -> 13).nonOpaque());
@@ -74,6 +75,10 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:light_gray_spaceglaze_panel", LIGHT_GRAY_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:gray_spaceglaze", GRAY_SPACEGLAZE);
         Registry.register(Registries.BLOCK, "spacefactory:gray_spaceglaze_panel", GRAY_SPACEGLAZE_PANEL);
+        Registry.register(Registries.BLOCK, "spacefactory:black_spaceglaze", BLACK_SPACEGLAZE);
+        Registry.register(Registries.BLOCK, "spacefactory:black_spaceglaze_panel", BLACK_SPACEGLAZE_PANEL);
+        Registry.register(Registries.BLOCK, "spacefactory:brown_spaceglaze", BROWN_SPACEGLAZE);
+        Registry.register(Registries.BLOCK, "spacefactory:brown_spaceglaze_panel", BROWN_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:red_spaceglaze", RED_SPACEGLAZE);
         Registry.register(Registries.BLOCK, "spacefactory:red_spaceglaze_panel", RED_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:yellow_spaceglaze", YELLOW_SPACEGLAZE);
@@ -90,8 +95,6 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:blue_spaceglaze_panel", BLUE_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:pink_spaceglaze", PINK_SPACEGLAZE);
         Registry.register(Registries.BLOCK, "spacefactory:pink_spaceglaze_panel", PINK_SPACEGLAZE_PANEL);
-        Registry.register(Registries.BLOCK, "spacefactory:black_spaceglaze", BLACK_SPACEGLAZE);
-        Registry.register(Registries.BLOCK, "spacefactory:black_spaceglaze_panel", BLACK_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:red_forcefield", RED_FORCEFIELD);
         Registry.register(Registries.BLOCK, "spacefactory:green_forcefield", GREEN_FORCEFIELD);
         Registry.register(Registries.BLOCK, "spacefactory:blue_forcefield", BLUE_FORCEFIELD);
@@ -102,6 +105,10 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:light_gray_spaceglaze_panel", new BlockItem(LIGHT_GRAY_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:gray_spaceglaze", new BlockItem(GRAY_SPACEGLAZE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:gray_spaceglaze_panel", new BlockItem(GRAY_SPACEGLAZE_PANEL, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:black_spaceglaze", new BlockItem(BLACK_SPACEGLAZE, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:black_spaceglaze_panel", new BlockItem(BLACK_SPACEGLAZE_PANEL, new Item.Settings()));
+         Registry.register(Registries.ITEM, "spacefactory:brown_spaceglaze", new BlockItem(BROWN_SPACEGLAZE, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:brown_spaceglaze_panel", new BlockItem(BROWN_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:red_spaceglaze", new BlockItem(RED_SPACEGLAZE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:red_spaceglaze_panel", new BlockItem(RED_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:yellow_spaceglaze", new BlockItem(YELLOW_SPACEGLAZE, new Item.Settings()));
@@ -118,8 +125,6 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:blue_spaceglaze_panel", new BlockItem(BLUE_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:pink_spaceglaze", new BlockItem(PINK_SPACEGLAZE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:pink_spaceglaze_panel", new BlockItem(PINK_SPACEGLAZE_PANEL, new Item.Settings()));
-        Registry.register(Registries.ITEM, "spacefactory:black_spaceglaze", new BlockItem(BLACK_SPACEGLAZE, new Item.Settings()));
-        Registry.register(Registries.ITEM, "spacefactory:black_spaceglaze_panel", new BlockItem(BLACK_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:red_forcefield", new BlockItem(RED_FORCEFIELD, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:green_forcefield", new BlockItem(GREEN_FORCEFIELD, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:blue_forcefield", new BlockItem(BLUE_FORCEFIELD, new Item.Settings()));
@@ -149,6 +154,10 @@ public class SpaceFactory {
                     entries.add(LIGHT_GRAY_SPACEGLAZE_PANEL);
                     entries.add(GRAY_SPACEGLAZE);
                     entries.add(GRAY_SPACEGLAZE_PANEL);
+                    entries.add(BLACK_SPACEGLAZE);
+                    entries.add(BLACK_SPACEGLAZE_PANEL);
+                    entries.add(BROWN_SPACEGLAZE);
+                    entries.add(BROWN_SPACEGLAZE_PANEL);
                     entries.add(RED_SPACEGLAZE);
                     entries.add(RED_SPACEGLAZE_PANEL);
                     entries.add(YELLOW_SPACEGLAZE);
@@ -165,8 +174,6 @@ public class SpaceFactory {
                     entries.add(BLUE_SPACEGLAZE_PANEL);
                     entries.add(PINK_SPACEGLAZE);
                     entries.add(PINK_SPACEGLAZE_PANEL);
-                    entries.add(BLACK_SPACEGLAZE);
-                    entries.add(BLACK_SPACEGLAZE_PANEL);
                     entries.add(RED_FORCEFIELD);
                     entries.add(GREEN_FORCEFIELD);
                     entries.add(BLUE_FORCEFIELD);
