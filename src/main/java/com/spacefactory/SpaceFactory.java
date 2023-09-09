@@ -49,6 +49,8 @@ public class SpaceFactory {
     public static final Block BLUE_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.BLUE).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block PURPLE_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.PURPLE).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block PURPLE_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.PURPLE).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
+    public static final Block MAGENTA_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.MAGENTA).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
+    public static final Block MAGENTA_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.MAGENTA).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block PINK_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.PINK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block PINK_SPACEGLAZE_PANEL = new Block(AbstractBlock.Settings.create().mapColor(DyeColor.PINK).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block RED_FORCEFIELD = new TransparentBlock(AbstractBlock.Settings.create().mapColor(DyeColor.RED).strength(5F).luminance(state -> 13).nonOpaque());
@@ -101,6 +103,8 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:blue_spaceglaze_panel", BLUE_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:purple_spaceglaze", PURPLE_SPACEGLAZE);
         Registry.register(Registries.BLOCK, "spacefactory:purple_spaceglaze_panel", PURPLE_SPACEGLAZE_PANEL);
+        Registry.register(Registries.BLOCK, "spacefactory:magenta_spaceglaze", MAGENTA_SPACEGLAZE);
+        Registry.register(Registries.BLOCK, "spacefactory:magenta_spaceglaze_panel", MAGENTA_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:pink_spaceglaze", PINK_SPACEGLAZE);
         Registry.register(Registries.BLOCK, "spacefactory:pink_spaceglaze_panel", PINK_SPACEGLAZE_PANEL);
         Registry.register(Registries.BLOCK, "spacefactory:red_forcefield", RED_FORCEFIELD);
@@ -135,6 +139,8 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:blue_spaceglaze_panel", new BlockItem(BLUE_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:purple_spaceglaze", new BlockItem(PURPLE_SPACEGLAZE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:purple_spaceglaze_panel", new BlockItem(PURPLE_SPACEGLAZE_PANEL, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:magenta_spaceglaze", new BlockItem(MAGENTA_SPACEGLAZE, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:magenta_spaceglaze_panel", new BlockItem(MAGENTA_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:pink_spaceglaze", new BlockItem(PINK_SPACEGLAZE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:pink_spaceglaze_panel", new BlockItem(PINK_SPACEGLAZE_PANEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:red_forcefield", new BlockItem(RED_FORCEFIELD, new Item.Settings()));
@@ -188,6 +194,8 @@ public class SpaceFactory {
                     entries.add(BLUE_SPACEGLAZE_PANEL);
                     entries.add(PURPLE_SPACEGLAZE);
                     entries.add(PURPLE_SPACEGLAZE_PANEL);
+                    entries.add(MAGENTA_SPACEGLAZE);
+                    entries.add(MAGENTA_SPACEGLAZE_PANEL);
                     entries.add(PINK_SPACEGLAZE);
                     entries.add(PINK_SPACEGLAZE_PANEL);
                     entries.add(RED_FORCEFIELD);
