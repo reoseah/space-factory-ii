@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 public class SpaceFactory {
     public static final Logger LOGGER = LoggerFactory.getLogger("spacefactory");
 
+    public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
+
     public static final Block WHITE_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.WHITE).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block LIGHT_GRAY_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.LIGHT_GRAY).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
     public static final Block GRAY_SPACEGLAZE = new GlazedTerracottaBlock(AbstractBlock.Settings.create().mapColor(DyeColor.GRAY).strength(5F, 15F).allowsSpawning(SpaceFactory::none).pistonBehavior(PistonBehavior.PUSH_ONLY));
@@ -77,6 +79,8 @@ public class SpaceFactory {
     public static void initialize() {
         LOGGER.info("Initializing...");
 
+        Registry.register(Registries.BLOCK, "spacefactory:ultrapure_iron_block", ULTRAPURE_IRON_BLOCK);
+
         Registry.register(Registries.BLOCK, "spacefactory:white_spaceglaze", WHITE_SPACEGLAZE);
         Registry.register(Registries.BLOCK, "spacefactory:light_gray_spaceglaze", LIGHT_GRAY_SPACEGLAZE);
         Registry.register(Registries.BLOCK, "spacefactory:gray_spaceglaze", GRAY_SPACEGLAZE);
@@ -114,6 +118,8 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:red_forcefield", RED_FORCEFIELD);
         Registry.register(Registries.BLOCK, "spacefactory:green_forcefield", GREEN_FORCEFIELD);
         Registry.register(Registries.BLOCK, "spacefactory:blue_forcefield", BLUE_FORCEFIELD);
+
+        Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
 
         Registry.register(Registries.ITEM, "spacefactory:white_spaceglaze", new BlockItem(WHITE_SPACEGLAZE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:white_spaceglaze_panel", new BlockItem(WHITE_SPACEGLAZE_PANEL, new Item.Settings()));
@@ -170,6 +176,8 @@ public class SpaceFactory {
                 .displayName(Text.translatable("itemGroup.spacefactory"))
                 .icon(() -> new ItemStack(SpaceFactory.ULTRAPURE_IRON))
                 .entries((displayContext, entries) -> {
+                    entries.add(ULTRAPURE_IRON_BLOCK);
+
                     entries.add(WHITE_SPACEGLAZE);
                     entries.add(LIGHT_GRAY_SPACEGLAZE);
                     entries.add(GRAY_SPACEGLAZE);
