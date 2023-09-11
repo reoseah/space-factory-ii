@@ -1,0 +1,19 @@
+{
+  "parent": "block/cube",
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [ 0, 135, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.40, 0.40, 0.40 ]
+    }
+  },
+  "textures": {
+    "particle": "spacefactory:block/assembler_front",
+    "down": "spacefactory:block/machine_bottom",
+    "up": "spacefactory:block/assembler_top",
+    "north": "spacefactory:block/assembler_front",
+    "east": "spacefactory:block/assembler_side",
+    "south": "spacefactory:block/assembler_back",
+    "west": "spacefactory:block/assembler_side"
+  }
+}

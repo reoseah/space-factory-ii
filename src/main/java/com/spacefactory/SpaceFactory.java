@@ -1,5 +1,8 @@
 package com.spacefactory;
 
+import com.spacefactory.block.AssemblerBlock;
+import com.spacefactory.block.AssemblerBlockEntity;
+import com.spacefactory.screen.AssemblerScreenHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.AbstractBlock;
@@ -23,6 +26,7 @@ public class SpaceFactory {
     public static final Logger LOGGER = LoggerFactory.getLogger("spacefactory");
 
     public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
+    public static final Block ASSEMBLER = new AssemblerBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
 
     public static final Item ULTRAPURE_IRON = new Item(new Item.Settings());
     public static final Item ULTRAPURE_COPPER = new Item(new Item.Settings());
@@ -44,8 +48,10 @@ public class SpaceFactory {
         LOGGER.info("Initializing...");
 
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_iron_block", ULTRAPURE_IRON_BLOCK);
+        Registry.register(Registries.BLOCK, "spacefactory:assembler", ASSEMBLER);
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:assembler", new BlockItem(ASSEMBLER, new Item.Settings()));
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron", ULTRAPURE_IRON);
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper", ULTRAPURE_COPPER);
@@ -68,6 +74,7 @@ public class SpaceFactory {
                 .icon(() -> new ItemStack(SpaceFactory.ULTRAPURE_IRON))
                 .entries((displayContext, entries) -> {
                     entries.add(ULTRAPURE_IRON_BLOCK);
+                    entries.add(ASSEMBLER);
 
                     entries.add(ULTRAPURE_IRON);
                     entries.add(ULTRAPURE_COPPER);
@@ -82,11 +89,15 @@ public class SpaceFactory {
                     entries.add(TRANSFORMER);
                     entries.add(SUPERCAPACITOR);
                     entries.add(RESONANT_LASER);
-                    entries.add(WARP_CRYSTAL);
+//                    entries.add(WARP_CRYSTAL);
                     entries.add(GRAVITY_GENERATOR);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
+
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, "spacefactory:assembler", AssemblerBlockEntity.TYPE);
+
+        Registry.register(Registries.SCREEN_HANDLER, "spacefactory:assembler", AssemblerScreenHandler.TYPE);
 
         FuelRegistry.INSTANCE.add(ULTRAPURE_CARBON, 8 * 200);
     }
