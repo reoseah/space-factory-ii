@@ -40,6 +40,7 @@ public class SpaceFactory {
     public static final Item ELECTRIC_MOTOR = new Item(new Item.Settings());
     public static final Item TRANSFORMER = new Item(new Item.Settings());
     public static final Item SUPERCAPACITOR = new Item(new Item.Settings());
+    public static final Item MOLECULAR_TRANSFORMER = new Item(new Item.Settings());
     public static final Item RESONANT_LASER = new Item(new Item.Settings());
     public static final Item WARP_CRYSTAL = new Item(new Item.Settings());
     public static final Item GRAVITY_GENERATOR = new Item(new Item.Settings());
@@ -65,6 +66,7 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:electric_motor", ELECTRIC_MOTOR);
         Registry.register(Registries.ITEM, "spacefactory:transformer", TRANSFORMER);
         Registry.register(Registries.ITEM, "spacefactory:supercapacitor", SUPERCAPACITOR);
+        Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
         Registry.register(Registries.ITEM, "spacefactory:resonant_laser", RESONANT_LASER);
         Registry.register(Registries.ITEM, "spacefactory:warp_crystal", WARP_CRYSTAL);
         Registry.register(Registries.ITEM, "spacefactory:gravity_generator", GRAVITY_GENERATOR);
@@ -84,10 +86,11 @@ public class SpaceFactory {
                     entries.add(ULTRAPURE_IRON_NUGGET);
                     entries.add(ULTRAPURE_COPPER_NUGGET);
                     entries.add(STEEL_SHEET);
-                    entries.add(CIRCUIT);
+//                    entries.add(CIRCUIT);
                     entries.add(ELECTRIC_MOTOR);
                     entries.add(TRANSFORMER);
                     entries.add(SUPERCAPACITOR);
+                    entries.add(MOLECULAR_TRANSFORMER);
                     entries.add(RESONANT_LASER);
 //                    entries.add(WARP_CRYSTAL);
                     entries.add(GRAVITY_GENERATOR);
