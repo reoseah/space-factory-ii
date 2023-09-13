@@ -11,7 +11,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 public class AssemblerScreen extends HandledScreen<AssemblerScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier("spacefactory:textures/gui/smeltery.png");
+    private static final Identifier TEXTURE = new Identifier("spacefactory:textures/gui/assembler.png");
 
     public AssemblerScreen(AssemblerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);

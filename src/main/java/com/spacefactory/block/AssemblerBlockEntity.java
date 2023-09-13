@@ -13,10 +13,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-public class AssemblerBlockEntity extends BlockEntity implements Inventory, NamedScreenHandlerFactory {
+public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScreenHandlerFactory {
     public static final BlockEntityType<AssemblerBlockEntity> TYPE = new BlockEntityType<>(AssemblerBlockEntity::new, ImmutableSet.of(SpaceFactory.ASSEMBLER), null);
 
     public AssemblerBlockEntity(BlockPos pos, BlockState state) {
@@ -24,53 +25,12 @@ public class AssemblerBlockEntity extends BlockEntity implements Inventory, Name
     }
 
     @Override
-    public Text getDisplayName() {
-        return SpaceFactory.ASSEMBLER.getName();
-    }
-
-    @Nullable
-    @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new AssemblerScreenHandler(syncId, this, playerInventory);
     }
 
     @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public ItemStack getStack(int slot) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public ItemStack removeStack(int slot, int amount) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public ItemStack removeStack(int slot) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public void setStack(int slot, ItemStack stack) {
-
-    }
-
-    @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return this.pos.getSquaredDistance(player.getPos()) < 64;
-    }
-
-    @Override
-    public void clear() {
-
+    protected DefaultedList<ItemStack> createSlotsList() {
+        return DefaultedList.of();
     }
 }
