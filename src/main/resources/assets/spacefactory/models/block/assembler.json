@@ -9,7 +9,7 @@
   },
   "textures": {
     "particle": "spacefactory:block/assembler_front",
-    "down": "spacefactory:block/machine_bottom",
+    "down": "spacefactory:block/ultrapure_iron_block",
     "up": "spacefactory:block/assembler_top",
     "north": "spacefactory:block/assembler_front",
     "east": "spacefactory:block/assembler_side",

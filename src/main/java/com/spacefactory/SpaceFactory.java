@@ -36,14 +36,12 @@ public class SpaceFactory {
     public static final Item ULTRAPURE_IRON_NUGGET = new Item(new Item.Settings());
     public static final Item ULTRAPURE_COPPER_NUGGET = new Item(new Item.Settings());
     public static final Item STEEL_SHEET = new Item(new Item.Settings());
-    public static final Item CIRCUIT = new Item(new Item.Settings());
-    public static final Item ELECTRIC_MOTOR = new Item(new Item.Settings());
+    public static final Item MOTOR = new Item(new Item.Settings());
     public static final Item TRANSFORMER = new Item(new Item.Settings());
     public static final Item SUPERCAPACITOR = new Item(new Item.Settings());
     public static final Item MOLECULAR_TRANSFORMER = new Item(new Item.Settings());
-    public static final Item RESONANT_LASER = new Item(new Item.Settings());
-    public static final Item WARP_CRYSTAL = new Item(new Item.Settings());
-    public static final Item GRAVITY_GENERATOR = new Item(new Item.Settings());
+    public static final Item RFLUX_LASER = new Item(new Item.Settings());
+    public static final Item QUANTUM_COMPUTER = new Item(new Item.Settings());
 
     public static void initialize() {
         LOGGER.info("Initializing...");
@@ -62,14 +60,12 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_nugget", ULTRAPURE_IRON_NUGGET);
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_nugget", ULTRAPURE_COPPER_NUGGET);
         Registry.register(Registries.ITEM, "spacefactory:steel_sheet", STEEL_SHEET);
-        Registry.register(Registries.ITEM, "spacefactory:circuit", CIRCUIT);
-        Registry.register(Registries.ITEM, "spacefactory:electric_motor", ELECTRIC_MOTOR);
+        Registry.register(Registries.ITEM, "spacefactory:motor", MOTOR);
         Registry.register(Registries.ITEM, "spacefactory:transformer", TRANSFORMER);
         Registry.register(Registries.ITEM, "spacefactory:supercapacitor", SUPERCAPACITOR);
+        Registry.register(Registries.ITEM, "spacefactory:rflux_laser", RFLUX_LASER);
+        Registry.register(Registries.ITEM, "spacefactory:quantum_computer", QUANTUM_COMPUTER);
         Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
-        Registry.register(Registries.ITEM, "spacefactory:resonant_laser", RESONANT_LASER);
-        Registry.register(Registries.ITEM, "spacefactory:warp_crystal", WARP_CRYSTAL);
-        Registry.register(Registries.ITEM, "spacefactory:gravity_generator", GRAVITY_GENERATOR);
 
         ItemGroup itemGroup = FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.spacefactory"))
@@ -86,14 +82,12 @@ public class SpaceFactory {
                     entries.add(ULTRAPURE_IRON_NUGGET);
                     entries.add(ULTRAPURE_COPPER_NUGGET);
                     entries.add(STEEL_SHEET);
-//                    entries.add(CIRCUIT);
-                    entries.add(ELECTRIC_MOTOR);
+                    entries.add(MOTOR);
                     entries.add(TRANSFORMER);
                     entries.add(SUPERCAPACITOR);
+                    entries.add(RFLUX_LASER);
+                    entries.add(QUANTUM_COMPUTER);
                     entries.add(MOLECULAR_TRANSFORMER);
-                    entries.add(RESONANT_LASER);
-//                    entries.add(WARP_CRYSTAL);
-                    entries.add(GRAVITY_GENERATOR);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);

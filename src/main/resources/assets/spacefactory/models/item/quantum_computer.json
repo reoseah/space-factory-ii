@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "spacefactory:item/electric_motor"
+    "layer0": "spacefactory:item/quantum_computer"
   }
 }
