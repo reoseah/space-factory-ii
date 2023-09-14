@@ -16,10 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.spacefactory.SpaceFactory::initialize"
+      "io.github.reoseah.spacefactory.SpaceFactory::initialize"
     ],
     "client": [
-      "com.spacefactory.SpaceFactoryClient::initialize"
+      "io.github.reoseah.spacefactory.SpaceFactoryClient::initialize"
     ]
   },
   "mixins": [

@@ -1,8 +1,8 @@
-package com.spacefactory;
+package io.github.reoseah.spacefactory;
 
-import com.spacefactory.block.AssemblerBlock;
-import com.spacefactory.block.AssemblerBlockEntity;
-import com.spacefactory.screen.AssemblerScreenHandler;
+import io.github.reoseah.spacefactory.block.AssemblerBlock;
+import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
+import io.github.reoseah.spacefactory.screen.AssemblerScreenHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.AbstractBlock;

@@ -1,4 +1,4 @@
-package com.spacefactory.block;
+package io.github.reoseah.spacefactory.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;

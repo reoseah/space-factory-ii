@@ -1,7 +1,7 @@
-package com.spacefactory;
+package io.github.reoseah.spacefactory;
 
-import com.spacefactory.screen.AssemblerScreen;
-import com.spacefactory.screen.AssemblerScreenHandler;
+import io.github.reoseah.spacefactory.screen.AssemblerScreen;
+import io.github.reoseah.spacefactory.screen.AssemblerScreenHandler;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 
 public class SpaceFactoryClient {

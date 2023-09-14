@@ -1,4 +1,4 @@
-package com.spacefactory.screen;
+package io.github.reoseah.spacefactory.screen;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

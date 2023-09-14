@@ -1,4 +1,4 @@
-package com.spacefactory.block;
+package io.github.reoseah.spacefactory.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
