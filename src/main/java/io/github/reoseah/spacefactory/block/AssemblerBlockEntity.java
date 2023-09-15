@@ -28,4 +28,9 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
     protected DefaultedList<ItemStack> createSlotsList() {
         return DefaultedList.of();
     }
+
+    @Override
+    protected int getEnergyCapacity() {
+        return 100_000;
+    }
 }
