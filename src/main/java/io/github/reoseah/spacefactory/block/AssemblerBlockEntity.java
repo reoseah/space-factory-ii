@@ -15,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScreenHandlerFactory {
     public static final BlockEntityType<AssemblerBlockEntity> TYPE = new BlockEntityType<>(AssemblerBlockEntity::new, ImmutableSet.of(SpaceFactory.ASSEMBLER), null);
 
+    public static final int ENERGY_CAPACITY = 100_000;
+
     public AssemblerBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
     }
@@ -26,11 +28,11 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
 
     @Override
     protected DefaultedList<ItemStack> createSlotsList() {
-        return DefaultedList.of();
+        return DefaultedList.ofSize(7, ItemStack.EMPTY);
     }
 
     @Override
-    protected int getEnergyCapacity() {
-        return 100_000;
+    public int getEnergyCapacity() {
+        return ENERGY_CAPACITY;
     }
 }

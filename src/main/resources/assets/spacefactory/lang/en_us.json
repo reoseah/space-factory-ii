@@ -15,5 +15,12 @@
   "item.spacefactory.supercapacitor": "Supercapacitor",
   "item.spacefactory.molecular_transformer": "Molecular Transformer",
   "item.spacefactory.rflux_laser": "R-Flux Laser",
-  "item.spacefactory.quantum_computer": "Quantum Computer"
+  "item.spacefactory.quantum_computer": "Quantum Computer",
+  "spacefactory.energy": "Energy",
+  "spacefactory.energy.amount": "%s ε",
+  "spacefactory.energy.amount_per_tick": "%s ε/t",
+  "spacefactory.energy.amount_and_capacity": "%s / %s ε",
+  "spacefactory.energy.amount_per_use": "%s ε per use",
+  "spacefactory.energy.average_amount_per_tick": "%s avg. ε/t",
+  "spacefactory.energy.amount_and_amount_per_tick": "%s ε at %s ε/t"
 }

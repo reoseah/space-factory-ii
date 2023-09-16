@@ -26,7 +26,7 @@ public abstract class MachineBlockEntity extends LockableContainerBlockEntity {
 
     protected abstract DefaultedList<ItemStack> createSlotsList();
 
-    protected abstract int getEnergyCapacity();
+    public abstract int getEnergyCapacity();
 
     @Override
     public void readNbt(NbtCompound tag) {

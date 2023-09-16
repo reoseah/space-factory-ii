@@ -21,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import team.reborn.energy.api.EnergyStorage;
 
 public class SpaceFactory {
     public static final Logger LOGGER = LoggerFactory.getLogger("spacefactory");
@@ -93,6 +94,8 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
 
         Registry.register(Registries.BLOCK_ENTITY_TYPE, "spacefactory:assembler", AssemblerBlockEntity.TYPE);
+
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.createEnergyStorage(), AssemblerBlockEntity.TYPE);
 
         Registry.register(Registries.SCREEN_HANDLER, "spacefactory:assembler", AssemblerScreenHandler.TYPE);
 
