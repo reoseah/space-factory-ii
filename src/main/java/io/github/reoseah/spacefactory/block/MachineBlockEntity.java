@@ -169,4 +169,23 @@ public abstract class MachineBlockEntity extends LockableContainerBlockEntity {
             return be.getEnergyCapacity();
         }
     }
+
+    protected boolean canAcceptStack(int slot, ItemStack offer) {
+        ItemStack stackInSlot = this.getStack(slot);
+        if (stackInSlot.isEmpty() || offer.isEmpty()) {
+            return true;
+        }
+        return ItemStack.canCombine(stackInSlot, offer)
+                && stackInSlot.getCount() + offer.getCount() <= Math.min(stackInSlot.getMaxCount(), this.getMaxCountPerStack());
+    }
+
+    protected void acceptStack(int slot, ItemStack stack) {
+        ItemStack stackInSlot = this.getStack(slot);
+        if (stackInSlot.isEmpty()) {
+            this.setStack(slot, stack);
+        } else if (stackInSlot.getItem() == stack.getItem()) {
+            stackInSlot.increment(stack.getCount());
+        }
+        this.markDirty();
+    }
 }

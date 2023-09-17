@@ -1,0 +1,15 @@
+{
+  "type": "spacefactory:assembly",
+  "ingredients": [
+    {
+      "item": "spacefactory:ultrapure_copper"
+    },
+    {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  ],
+  "energy": 10000,
+  "result": {
+    "item": "spacefactory:motor"
+  }
+}

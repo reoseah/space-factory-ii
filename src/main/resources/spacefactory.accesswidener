@@ -1,0 +1,8 @@
+accessWidener v1 named
+
+accessible    field    net/minecraft/recipe/Ingredient    entries    [Lnet/minecraft/recipe/Ingredient$Entry;
+accessible    class    net/minecraft/recipe/Ingredient$Entry
+accessible    class    net/minecraft/recipe/Ingredient$TagEntry
+accessible    field    net/minecraft/recipe/Ingredient$TagEntry    tag    Lnet/minecraft/tag/TagKey;
+accessible    class    net/minecraft/recipe/Ingredient$StackEntry
+accessible    field    net/minecraft/recipe/Ingredient$StackEntry    stack    Lnet/minecraft/item/ItemStack;

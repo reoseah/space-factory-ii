@@ -12,7 +12,7 @@ public class EnergyI18n {
     private static final String ENERGY_AMOUNT_KEY = "spacefactory.energy.amount";
     private static final String ENERGY_AMOUNT_AND_CAPACITY_KEY = "spacefactory.energy.amount_and_capacity";
     private static final String ENERGY_AMOUNT_PER_TICK_KEY = "spacefactory.energy.amount_per_tick";
-    private static final String ENERGY_AVERAGE_AMOUNT_PER_TICK_KEY = "spacefactory.energy.average_amount_per_tick";
+    private static final String ENERGY_INPUT_AMOUNT_PER_TICK_KEY = "spacefactory.energy.average_input_per_tick";
     private static final String ENERGY_AMOUNT_PER_USE_KEY = "spacefactory.energy.amount_per_use";
 
     private static final DecimalFormat LARGE_AMOUNTS_FORMAT;
@@ -42,8 +42,8 @@ public class EnergyI18n {
         return Text.translatable(ENERGY_AMOUNT_PER_TICK_KEY, formatEnergy(amount));
     }
 
-    public static MutableText averageEnergyPerTick(float amount) {
-        return Text.translatable(ENERGY_AVERAGE_AMOUNT_PER_TICK_KEY, amount);
+    public static MutableText averageInputPerTick(float amount) {
+        return Text.translatable(ENERGY_INPUT_AMOUNT_PER_TICK_KEY, amount);
     }
 
     public static MutableText energyPerUse(long amount) {

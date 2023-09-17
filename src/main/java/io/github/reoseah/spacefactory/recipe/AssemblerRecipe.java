@@ -25,8 +25,8 @@ public class AssemblerRecipe implements Recipe<Inventory>, Comparable<AssemblerR
 
     protected final Identifier id;
     protected final DefaultedList<Ingredient> ingredients;
-    protected final ItemStack output;
-    protected final int energy;
+    public final ItemStack output;
+    public final int energy;
 
     public AssemblerRecipe(Identifier id, DefaultedList<Ingredient> ingredients, ItemStack output, int energy) {
         this.id = id;
@@ -89,6 +89,11 @@ public class AssemblerRecipe implements Recipe<Inventory>, Comparable<AssemblerR
     }
 
     @Override
+    public DefaultedList<Ingredient> getIngredients() {
+        return this.ingredients;
+    }
+
+    @Override
     public int compareTo(@NotNull AssemblerRecipe other) {
         // normal items before rare
         int result = Integer.compare( //
@@ -106,7 +111,9 @@ public class AssemblerRecipe implements Recipe<Inventory>, Comparable<AssemblerR
         if (result != 0) {
             return result;
         }
-        return id1.getPath().compareTo(id2.getPath());
+//        return id1.getPath().compareTo(id2.getPath());
+        return Integer.compare(Registries.ITEM.getRawId(this.output.getItem()),
+                Registries.ITEM.getRawId(other.output.getItem()));
     }
 
     public static class Serializer implements RecipeSerializer<AssemblerRecipe> {
@@ -151,7 +158,7 @@ public class AssemblerRecipe implements Recipe<Inventory>, Comparable<AssemblerR
 
             JsonElement resultsJson = json.get("result");
             if (!resultsJson.isJsonObject()) {
-                throw new JsonParseException(String.format("Expected result to be an object or an array of objects, but got %s", this.minIngredients));
+                throw new JsonParseException(String.format("Expected result to be an object, but got %s", resultsJson));
             }
             ItemStack result = ShapedRecipe.outputFromJson(resultsJson.getAsJsonObject());
 

@@ -73,7 +73,7 @@ public class SpaceFactory {
 
         ItemGroup itemGroup = FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.spacefactory"))
-                .icon(() -> new ItemStack(SpaceFactory.ULTRAPURE_IRON))
+                .icon(() -> new ItemStack(SpaceFactory.QUANTUM_COMPUTER))
                 .entries((displayContext, entries) -> {
                     entries.add(ULTRAPURE_IRON_BLOCK);
                     entries.add(ASSEMBLER);

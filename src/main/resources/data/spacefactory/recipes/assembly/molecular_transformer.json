@@ -1,0 +1,24 @@
+{
+  "type": "spacefactory:assembly",
+  "ingredients": [
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "spacefactory:ultrapure_silicon"
+    },
+    {
+      "item": "spacefactory:ultrapure_gold"
+    },
+    {
+      "item": "spacefactory:ultrapure_copper"
+    },
+    {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  ],
+  "energy": 10000,
+  "result": {
+    "item": "spacefactory:molecular_transformer"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PMP",
+    "MLM",
+    "CQC"
+  ],
+  "key": {
+    "P": {
+      "item": "spacefactory:steel_sheet"
+    },
+    "M": {
+      "item": "spacefactory:motor"
+    },
+    "L": {
+      "item": "spacefactory:rflux_laser"
+    },
+    "C": {
+      "item": "minecraft:crafting_table"
+    },
+    "Q": {
+      "item": "spacefactory:quantum_computer"
+    }
+  },
+  "result": {
+    "item": "spacefactory:assembler"
+  }
+}
