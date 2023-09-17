@@ -1,6 +1,7 @@
 {
   "itemGroup.spacefactory": "Space Factory",
   "block.spacefactory.ultrapure_iron_block": "Block of Ultra-pure Iron",
+  "block.spacefactory.ultrapure_copper_block": "Block of Ultra-pure Copper",
   "block.spacefactory.assembler": "Space Factory Assembler",
   "item.spacefactory.ultrapure_iron": "Ultra-pure Iron",
   "item.spacefactory.ultrapure_copper": "Ultra-pure Copper",
@@ -23,5 +24,6 @@
   "spacefactory.energy.amount_per_use": "%s ε per use",
   "spacefactory.energy.average_input_per_tick": "%s avg. ε/t in",
   "spacefactory.energy.amount_and_amount_per_tick": "%s ε at %s ε/t",
+  "spacefactory.progress": "Progress",
   "spacefactory.cannot_switch_recipe_with_current_ingredients": "Cannot switch with items inside"
 }

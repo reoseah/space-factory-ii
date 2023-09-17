@@ -28,6 +28,7 @@ public class SpaceFactory {
     public static final Logger LOGGER = LoggerFactory.getLogger("spacefactory");
 
     public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
+    public static final Block ULTRAPURE_COPPER_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.DULL_RED).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block ASSEMBLER = new AssemblerBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
 
     public static final Item ULTRAPURE_IRON = new Item(new Item.Settings());
@@ -49,9 +50,11 @@ public class SpaceFactory {
         LOGGER.info("Initializing...");
 
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_iron_block", ULTRAPURE_IRON_BLOCK);
+        Registry.register(Registries.BLOCK, "spacefactory:ultrapure_copper_block", ULTRAPURE_COPPER_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:assembler", ASSEMBLER);
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:assembler", new BlockItem(ASSEMBLER, new Item.Settings()));
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron", ULTRAPURE_IRON);
@@ -76,6 +79,7 @@ public class SpaceFactory {
                 .icon(() -> new ItemStack(SpaceFactory.QUANTUM_COMPUTER))
                 .entries((displayContext, entries) -> {
                     entries.add(ULTRAPURE_IRON_BLOCK);
+                    entries.add(ULTRAPURE_COPPER_BLOCK);
                     entries.add(ASSEMBLER);
 
                     entries.add(ULTRAPURE_IRON);

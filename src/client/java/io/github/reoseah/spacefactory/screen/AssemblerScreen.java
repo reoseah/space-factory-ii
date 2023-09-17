@@ -65,8 +65,8 @@ public class AssemblerScreen extends HandledScreen<AssemblerScreenHandler> {
         if (duration == 0) {
             duration = 10000;
         }
-        int progress = this.handler.properties.get(AssemblerScreenHandler.Properties.RECIPE_PROGRESS) * 24 / duration;
-        context.drawTexture(TEXTURE, this.x + 103, this.y + 26, 208, 14, progress + 1, 16);
+        int progressToDisplay = this.handler.properties.get(AssemblerScreenHandler.Properties.RECIPE_PROGRESS) * 24 / duration;
+        context.drawTexture(TEXTURE, this.x + 103, this.y + 26, 208, 0, progressToDisplay + 1, 16);
 
         this.drawRecipeBackground(context, mouseX, mouseY);
         this.drawRecipeIcons(context);
@@ -84,6 +84,15 @@ public class AssemblerScreen extends HandledScreen<AssemblerScreenHandler> {
             Text textStored = EnergyI18n.energyAndCapacity(energy, capacity).formatted(Formatting.GRAY);
             Text textEuPerTick = EnergyI18n.averageInputPerTick(energyPerTick).formatted(Formatting.GRAY);
             context.drawTooltip(this.textRenderer, Arrays.asList(textEnergy, textStored, textEuPerTick), mouseX, mouseY);
+            return;
+        }
+        if (this.isPointWithinBounds(103, 26, 24, 16, mouseX, mouseY)) {
+            int totalEnergy = this.handler.properties.get(AssemblerScreenHandler.Properties.RECIPE_ENERGY);
+            int progress = this.handler.properties.get(AssemblerScreenHandler.Properties.RECIPE_PROGRESS);
+            Text textProgress = Text.translatable("spacefactory.progress");
+            Text textEnergy = EnergyI18n.energyAndCapacity(progress, totalEnergy).formatted(Formatting.GRAY);
+            context.drawTooltip(this.textRenderer, Arrays.asList(textProgress, textEnergy), mouseX, mouseY);
+            return;
         }
 
         if (this.drawRecipeIconTooltip(context, mouseX, mouseY)) {
