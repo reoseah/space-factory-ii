@@ -2,6 +2,7 @@ package io.github.reoseah.spacefactory;
 
 import io.github.reoseah.spacefactory.block.AssemblerBlock;
 import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
+import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
 import io.github.reoseah.spacefactory.screen.AssemblerScreenHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -68,6 +69,8 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:quantum_computer", QUANTUM_COMPUTER);
         Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
 
+        FuelRegistry.INSTANCE.add(ULTRAPURE_CARBON, 8 * 200);
+
         ItemGroup itemGroup = FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.spacefactory"))
                 .icon(() -> new ItemStack(SpaceFactory.ULTRAPURE_IRON))
@@ -94,12 +97,12 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
 
         Registry.register(Registries.BLOCK_ENTITY_TYPE, "spacefactory:assembler", AssemblerBlockEntity.TYPE);
-
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.createEnergyStorage(), AssemblerBlockEntity.TYPE);
 
         Registry.register(Registries.SCREEN_HANDLER, "spacefactory:assembler", AssemblerScreenHandler.TYPE);
 
-        FuelRegistry.INSTANCE.add(ULTRAPURE_CARBON, 8 * 200);
+        Registry.register(Registries.RECIPE_TYPE, "spacefactory:assembly", AssemblerRecipe.TYPE);
+        Registry.register(Registries.RECIPE_SERIALIZER, "spacefactory:assembly", AssemblerRecipe.SERIALIZER);
     }
 
     private static boolean none(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {

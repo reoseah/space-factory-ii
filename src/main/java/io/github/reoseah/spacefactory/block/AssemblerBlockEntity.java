@@ -16,6 +16,7 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
     public static final BlockEntityType<AssemblerBlockEntity> TYPE = new BlockEntityType<>(AssemblerBlockEntity::new, ImmutableSet.of(SpaceFactory.ASSEMBLER), null);
 
     public static final int ENERGY_CAPACITY = 100_000;
+    public static final int INVENTORY_SIZE = 7;
 
     public AssemblerBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
@@ -28,7 +29,7 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
 
     @Override
     protected DefaultedList<ItemStack> createSlotsList() {
-        return DefaultedList.ofSize(7, ItemStack.EMPTY);
+        return DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
     }
 
     @Override

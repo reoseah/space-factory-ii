@@ -11,6 +11,7 @@ import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.slot.Slot;
 
 public class AssemblerScreenHandler extends ScreenHandler {
     public static final ScreenHandlerType<AssemblerScreenHandler> TYPE = new ScreenHandlerType<>(AssemblerScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
@@ -22,6 +23,23 @@ public class AssemblerScreenHandler extends ScreenHandler {
         super(TYPE, syncId);
         this.inventory = inventory;
         this.addProperties(this.properties = properties);
+
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 3; x++) {
+                this.addSlot(new Slot(inventory, x + y * 3, 44 + x * 18, 18 + y * 18));
+            }
+        }
+        this.addSlot(new Slot(inventory, 6, 140, 27));
+
+        for (int y = 0; y < 3; ++y) {
+            for (int x = 0; x < 9; ++x) {
+                this.addSlot(new Slot(playerInv, x + y * 9 + 9, 8 + x * 18, 114 + y * 18));
+            }
+        }
+
+        for (int x = 0; x < 9; ++x) {
+            this.addSlot(new Slot(playerInv, x, 8 + x * 18, 172));
+        }
     }
 
     public AssemblerScreenHandler(int syncId, AssemblerBlockEntity be, PlayerInventory playerInv) {
@@ -29,7 +47,7 @@ public class AssemblerScreenHandler extends ScreenHandler {
     }
 
     public AssemblerScreenHandler(int syncId, PlayerInventory playerInv) {
-        this(syncId, new SimpleInventory(0), new ArrayPropertyDelegate(Properties.SIZE), playerInv);
+        this(syncId, new SimpleInventory(AssemblerBlockEntity.INVENTORY_SIZE), new ArrayPropertyDelegate(Properties.SIZE), playerInv);
     }
 
     @Override
