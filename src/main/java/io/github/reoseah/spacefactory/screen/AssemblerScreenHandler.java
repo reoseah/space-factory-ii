@@ -37,7 +37,12 @@ public class AssemblerScreenHandler extends ScreenHandler {
                 this.addSlot(new Slot(inventory, x + y * 3, 44 + x * 18, 18 + y * 18));
             }
         }
-        this.addSlot(new Slot(inventory, 6, 140, 27));
+        this.addSlot(new Slot(inventory, 6, 140, 27) {
+            @Override
+            public boolean canInsert(ItemStack stack) {
+                return false;
+            }
+        });
 
         for (int y = 0; y < 3; ++y) {
             for (int x = 0; x < 9; ++x) {

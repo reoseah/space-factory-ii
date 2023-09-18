@@ -206,7 +206,7 @@ public class AssemblerScreen extends HandledScreen<AssemblerScreenHandler> {
 
                         // TODO figure out where is z index now
 //                        this.setZOffset(this.getZOffset() + 100);
-                        context.drawTexture(TEXTURE, x, y + 16 - 4, 0, 196, 4, 4);
+//                        context.drawTexture(TEXTURE, x, y + 16 - 4, 0, 196, 4, 4);
 //                        this.setZOffset(this.getZOffset() - 100);
                     }
                 }
