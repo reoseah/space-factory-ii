@@ -27,6 +27,7 @@ public abstract class MachineBlock extends BlockWithEntity {
 
     protected MachineBlock(Settings settings) {
         super(settings);
+        this.setDefaultState(this.getDefaultState().with(LIT, false));
     }
 
     @Override

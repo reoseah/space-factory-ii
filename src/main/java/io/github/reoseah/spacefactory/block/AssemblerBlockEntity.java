@@ -19,7 +19,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScreenHandlerFactory, SidedInventory {
@@ -121,20 +120,22 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
     @Override
     protected void tick() {
         super.tick();
-//        boolean wasBurning = this.getCachedState().get(Properties.LIT);
+        boolean wasActive = this.getCachedState().get(Properties.LIT);
+        boolean isActive = false;
         if (this.selectedRecipeId != null) {
-            this.setSelectedRecipe((AssemblerRecipe) world.getRecipeManager()
+            this.setSelectedRecipe((AssemblerRecipe) this.world.getRecipeManager()
                     .get(this.selectedRecipeId)
                     .filter(recipe -> recipe instanceof AssemblerRecipe)
                     .orElse(null));
             this.selectedRecipeId = null;
         }
         AssemblerRecipe recipe = this.getSelectedRecipe();
-        if (recipe != null && recipe.matches(this, world) && this.canAcceptRecipeOutput(recipe)) {
+        if (recipe != null && recipe.matches(this, this.world) && this.canAcceptRecipeOutput(recipe)) {
             if (this.energy > 0) {
                 int amount = Math.min(Math.min(this.energy, ENERGY_CONSUMPTION), recipe.energy - this.recipeProgress);
                 this.energy -= amount;
                 this.recipeProgress += amount;
+                isActive = true;
                 if (this.recipeProgress >= recipe.energy) {
                     this.craftRecipe(recipe);
                     this.recipeProgress = 0;
@@ -144,6 +145,10 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
         } else if (this.recipeProgress > 0) {
             this.recipeProgress = 0;
             this.markDirty();
+        }
+
+        if (isActive != wasActive) {
+            this.world.setBlockState(this.pos, this.getCachedState().with(AssemblerBlock.LIT, isActive));
         }
     }
 
