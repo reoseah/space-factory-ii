@@ -32,11 +32,11 @@ public class ExtractorScreenHandler extends ScreenHandler {
         this.addSlot(new SimpleOutputSlot(inventory, 4, 125, 36));
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 9; x++) {
-                this.addSlot(new Slot(playerInv, x + y * 9 + 9, 8 + x * 18, 66 + y * 18));
+                this.addSlot(new Slot(playerInv, x + y * 9 + 9, 8 + x * 18, 68 + y * 18));
             }
         }
         for (int x = 0; x < 9; x++) {
-            this.addSlot(new Slot(playerInv, x, 8 + x * 18, 124));
+            this.addSlot(new Slot(playerInv, x, 8 + x * 18, 126));
         }
     }
 
