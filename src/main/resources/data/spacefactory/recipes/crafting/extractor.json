@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PMP",
+    "T#T",
+    "PQP"
+  ],
+  "key": {
+    "P": {
+      "item": "spacefactory:steel_sheet"
+    },
+    "M": {
+      "item": "spacefactory:motor"
+    },
+    "T": {
+      "item": "spacefactory:transformer"
+    },
+    "#": {
+      "item": "spacefactory:molecular_transformer"
+    },
+    "Q": {
+      "item": "spacefactory:quantum_computer"
+    }
+  },
+  "result": {
+    "item": "spacefactory:extractor"
+  }
+}

@@ -24,8 +24,6 @@ import org.jetbrains.annotations.Nullable;
 public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScreenHandlerFactory, SidedInventory {
     public static final BlockEntityType<AssemblerBlockEntity> TYPE = new BlockEntityType<>(AssemblerBlockEntity::new, ImmutableSet.of(SpaceFactory.ASSEMBLER), null);
 
-    public static final int ENERGY_CAPACITY = 100_000;
-    public static final int ENERGY_CONSUMPTION = 100;
     public static final int INVENTORY_SIZE = 7;
     public static final int[] INPUT_SLOTS = {0, 1, 2, 3, 4, 5};
     public static final int OUTPUT_SLOT = 6;
@@ -53,7 +51,7 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
 
     @Override
     public int getEnergyCapacity() {
-        return ENERGY_CAPACITY;
+        return SpaceFactory.config.getAssemblerEnergyCapacity();
     }
 
     @Override
@@ -132,7 +130,7 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
         AssemblerRecipe recipe = this.getSelectedRecipe();
         if (recipe != null && recipe.matches(this, this.world) && this.canAcceptRecipeOutput(recipe)) {
             if (this.energy > 0) {
-                int amount = Math.min(Math.min(this.energy, ENERGY_CONSUMPTION), recipe.energy - this.recipeProgress);
+                int amount = Math.min(Math.min(this.energy, SpaceFactory.config.getAssemblerEnergyConsumption()), recipe.energy - this.recipeProgress);
                 this.energy -= amount;
                 this.recipeProgress += amount;
                 isActive = true;

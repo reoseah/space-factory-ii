@@ -1,0 +1,10 @@
+{
+  "type": "spacefactory:extraction",
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "energy": 15000,
+  "result": {
+    "item": "spacefactory:ultrapure_iron"
+  }
+}

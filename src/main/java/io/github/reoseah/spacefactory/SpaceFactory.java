@@ -2,10 +2,14 @@ package io.github.reoseah.spacefactory;
 
 import io.github.reoseah.spacefactory.block.AssemblerBlock;
 import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
+import io.github.reoseah.spacefactory.block.ExtractorBlock;
+import io.github.reoseah.spacefactory.block.ExtractorBlockEntity;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
+import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
 import io.github.reoseah.spacefactory.screen.AssemblerScreenHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,11 +28,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import team.reborn.energy.api.EnergyStorage;
 
+import java.nio.file.Path;
+
 public class SpaceFactory {
     public static final Logger LOGGER = LoggerFactory.getLogger("spacefactory");
 
+    public static SpaceFactoryConfig config;
+
     public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block ULTRAPURE_COPPER_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.DULL_RED).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
+    public static final Block EXTRACTOR = new ExtractorBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block ASSEMBLER = new AssemblerBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
 
     public static final Item ULTRAPURE_IRON = new Item(new Item.Settings());
@@ -46,15 +55,21 @@ public class SpaceFactory {
     public static final Item RFLUX_LASER = new Item(new Item.Settings());
     public static final Item QUANTUM_COMPUTER = new Item(new Item.Settings());
 
-    public static void initialize() {
+    public static void initialize() throws Exception {
+        LOGGER.info("Reading config...");
+        Path configPath = FabricLoader.getInstance().getConfigDir().resolve("spacefactory.json");
+        config = SpaceFactoryConfig.loadOrCreate(configPath);
+
         LOGGER.info("Initializing...");
 
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_iron_block", ULTRAPURE_IRON_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_copper_block", ULTRAPURE_COPPER_BLOCK);
+        Registry.register(Registries.BLOCK, "spacefactory:extractor", EXTRACTOR);
         Registry.register(Registries.BLOCK, "spacefactory:assembler", ASSEMBLER);
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:extractor", new BlockItem(EXTRACTOR, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:assembler", new BlockItem(ASSEMBLER, new Item.Settings()));
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron", ULTRAPURE_IRON);
@@ -80,6 +95,7 @@ public class SpaceFactory {
                 .entries((displayContext, entries) -> {
                     entries.add(ULTRAPURE_IRON_BLOCK);
                     entries.add(ULTRAPURE_COPPER_BLOCK);
+                    entries.add(EXTRACTOR);
                     entries.add(ASSEMBLER);
 
                     entries.add(ULTRAPURE_IRON);
@@ -101,14 +117,23 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
 
         Registry.register(Registries.BLOCK_ENTITY_TYPE, "spacefactory:assembler", AssemblerBlockEntity.TYPE);
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, "spacefactory:extractor", ExtractorBlockEntity.TYPE);
+
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.createEnergyStorage(), AssemblerBlockEntity.TYPE);
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.createEnergyStorage(), ExtractorBlockEntity.TYPE);
 
         Registry.register(Registries.SCREEN_HANDLER, "spacefactory:assembler", AssemblerScreenHandler.TYPE);
 
         Registry.register(Registries.RECIPE_TYPE, "spacefactory:assembly", AssemblerRecipe.TYPE);
+        Registry.register(Registries.RECIPE_TYPE, "spacefactory:extraction", ExtractorRecipe.TYPE);
+
         Registry.register(Registries.RECIPE_SERIALIZER, "spacefactory:assembly", AssemblerRecipe.SERIALIZER);
+        Registry.register(Registries.RECIPE_SERIALIZER, "spacefactory:extraction", ExtractorRecipe.SERIALIZER);
+
+        LOGGER.info("Done!");
     }
 
+    @SuppressWarnings("unused")
     private static boolean none(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
         return false;
     }

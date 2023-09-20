@@ -1,6 +1,5 @@
 package io.github.reoseah.spacefactory.recipe;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -21,7 +20,7 @@ public class AssemblerRecipe implements Recipe<Inventory>, Comparable<AssemblerR
     public static final RecipeType<AssemblerRecipe> TYPE = new RecipeType<>() {
     };
 
-    public static final RecipeSerializer<AssemblerRecipe> SERIALIZER = new Serializer(10_000, 1, 6);
+    public static final RecipeSerializer<AssemblerRecipe> SERIALIZER = new Serializer();
 
     protected final Identifier id;
     protected final DefaultedList<Ingredient> ingredients;
@@ -34,7 +33,6 @@ public class AssemblerRecipe implements Recipe<Inventory>, Comparable<AssemblerR
         this.output = output;
         this.energy = energy;
     }
-
 
     @Override
     public boolean matches(Inventory inventory, World world) {
@@ -117,51 +115,28 @@ public class AssemblerRecipe implements Recipe<Inventory>, Comparable<AssemblerR
     }
 
     public static class Serializer implements RecipeSerializer<AssemblerRecipe> {
-        protected final int defaultEnergy;
-        protected final int minIngredients, maxIngredients;
-
-        public Serializer(int defaultEnergy, int minIngredients, int maxIngredients) {
-            this.defaultEnergy = defaultEnergy;
-            this.minIngredients = minIngredients;
-            this.maxIngredients = maxIngredients;
-        }
+        protected final int defaultEnergy = 10_000;
+        protected final int minIngredients = 1, maxIngredients = 6;
 
         @Override
         public AssemblerRecipe read(Identifier id, JsonObject json) {
-            DefaultedList<Ingredient> ingredients;
+            DefaultedList<Ingredient> ingredients = DefaultedList.of();
             if (json.has("ingredient") && json.has("ingredients")) {
                 throw new JsonParseException("Expected recipe to have either ingredient or ingredients entry, not both");
             } else if (json.has("ingredients")) {
-                JsonArray ingredientsJson = JsonHelper.getArray(json, "ingredients");
-                int ingredientCount = ingredientsJson.size();
-                if (ingredientCount < this.minIngredients) {
-                    throw new JsonParseException(String.format("Recipe %s requires at least %s ingredients, but got %s", this, this.minIngredients, ingredientsJson));
-                } else if (ingredientCount > this.maxIngredients) {
-                    throw new JsonParseException(String.format("Recipe %s allows at most %s ingredients, but got %s", this, this.maxIngredients, ingredientsJson));
+                for (JsonElement element : JsonHelper.getArray(json, "ingredients")) {
+                    ingredients.add(Ingredient.fromJson(element));
                 }
-                ingredients = DefaultedList.ofSize(ingredientCount, Ingredient.EMPTY);
-                for (int i = 0; i < ingredientCount; i++) {
-                    JsonElement ingredientJson = ingredientsJson.get(i);
-                    Ingredient ingredient = Ingredient.fromJson(ingredientJson);
-
-                    ingredients.set(i, ingredient);
+                if (ingredients.size() < this.minIngredients) {
+                    throw new JsonParseException(String.format("Recipe %s requires at least %s ingredients, but got %s", this, this.minIngredients, JsonHelper.getArray(json, "ingredients")));
+                } else if (ingredients.size() > this.maxIngredients) {
+                    throw new JsonParseException(String.format("Recipe %s allows at most %s ingredients, but got %s", this, this.maxIngredients, JsonHelper.getArray(json, "ingredients")));
                 }
             } else {
-                if (this.minIngredients > 1) {
-                    throw new JsonParseException(String.format("Recipe %s requires at least %s ingredients", this, this.minIngredients));
-                }
-                ingredients = DefaultedList.ofSize(1, Ingredient.EMPTY);
-                JsonElement ingredientJson = json.get("ingredient");
-                Ingredient ingredient = Ingredient.fromJson(ingredientJson);
-                ingredients.set(0, ingredient);
+                ingredients.add(Ingredient.fromJson(json.get("ingredient")));
             }
 
-            JsonElement resultsJson = json.get("result");
-            if (!resultsJson.isJsonObject()) {
-                throw new JsonParseException(String.format("Expected result to be an object, but got %s", resultsJson));
-            }
-            ItemStack result = ShapedRecipe.outputFromJson(resultsJson.getAsJsonObject());
-
+            ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
             int duration = JsonHelper.getInt(json, "energy", this.defaultEnergy);
 
             return new AssemblerRecipe(id, ingredients, result, duration);

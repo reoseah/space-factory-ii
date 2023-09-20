@@ -1,6 +1,5 @@
 package io.github.reoseah.spacefactory.screen;
 
-import com.google.common.collect.Lists;
 import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
 import it.unimi.dsi.fastutil.ints.IntArrayList;

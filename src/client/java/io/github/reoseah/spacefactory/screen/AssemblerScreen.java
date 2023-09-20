@@ -1,8 +1,8 @@
 package io.github.reoseah.spacefactory.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.api.EnergyI18n;
-import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -56,7 +56,7 @@ public class AssemblerScreen extends HandledScreen<AssemblerScreenHandler> {
         if (energy > 0) {
             int capacity = this.handler.properties.get(AssemblerScreenHandler.Properties.ENERGY_CAPACITY);
             if (capacity <= 0) {
-                capacity = AssemblerBlockEntity.ENERGY_CAPACITY;
+                capacity = SpaceFactory.config.getAssemblerEnergyCapacity();
             }
             int energyBarHeight = Math.max(energy * 32 / capacity, 1);
             context.drawTexture(TEXTURE, this.x + 11, this.y + 51 - energyBarHeight, 240, 32 - energyBarHeight, 10, energyBarHeight);
