@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class ExtractorBlockEntity extends MachineBlockEntity implements SidedInventory {
-    public static final BlockEntityType<ExtractorBlockEntity> TYPE = new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.of(SpaceFactory.ASSEMBLER), null);
+    public static final BlockEntityType<ExtractorBlockEntity> TYPE = new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.of(SpaceFactory.EXTRACTOR), null);
 
     public static final int INVENTORY_SIZE = 5, INPUTS_COUNT = 1, RESULTS_COUNT = 4;
 
