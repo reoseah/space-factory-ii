@@ -29,18 +29,18 @@ public abstract class MachineBlockEntity extends LockableContainerBlockEntity {
     public abstract int getEnergyCapacity();
 
     @Override
-    public void readNbt(NbtCompound tag) {
-        super.readNbt(tag);
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
         this.slots.clear();
-        Inventories.readNbt(tag, this.slots);
-        this.energy = MathHelper.clamp(tag.getInt("Energy"), 0, this.getEnergyCapacity());
+        Inventories.readNbt(nbt, this.slots);
+        this.energy = MathHelper.clamp(nbt.getInt("Energy"), 0, this.getEnergyCapacity());
     }
 
     @Override
-    public void writeNbt(NbtCompound tag) {
-        super.writeNbt(tag);
-        Inventories.writeNbt(tag, this.slots);
-        tag.putInt("Energy", this.energy);
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        Inventories.writeNbt(nbt, this.slots);
+        nbt.putInt("Energy", this.energy);
     }
 
     @Override

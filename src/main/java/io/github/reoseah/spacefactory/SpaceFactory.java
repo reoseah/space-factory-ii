@@ -7,6 +7,7 @@ import io.github.reoseah.spacefactory.block.ExtractorBlockEntity;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
 import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
 import io.github.reoseah.spacefactory.screen.AssemblerScreenHandler;
+import io.github.reoseah.spacefactory.screen.ExtractorScreenHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -123,6 +124,7 @@ public class SpaceFactory {
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.createEnergyStorage(), ExtractorBlockEntity.TYPE);
 
         Registry.register(Registries.SCREEN_HANDLER, "spacefactory:assembler", AssemblerScreenHandler.TYPE);
+        Registry.register(Registries.SCREEN_HANDLER, "spacefactory:extractor", ExtractorScreenHandler.TYPE);
 
         Registry.register(Registries.RECIPE_TYPE, "spacefactory:assembly", AssemblerRecipe.TYPE);
         Registry.register(Registries.RECIPE_TYPE, "spacefactory:extraction", ExtractorRecipe.TYPE);

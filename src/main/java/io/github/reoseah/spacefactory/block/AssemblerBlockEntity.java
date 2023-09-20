@@ -55,18 +55,18 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
     }
 
     @Override
-    public void readNbt(NbtCompound tag) {
-        super.readNbt(tag);
-        if (tag.contains("SelectedRecipe", NbtElement.STRING_TYPE)) {
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        if (nbt.contains("SelectedRecipe", NbtElement.STRING_TYPE)) {
             try {
-                this.selectedRecipeId = new Identifier(tag.getString("SelectedRecipe"));
+                this.selectedRecipeId = new Identifier(nbt.getString("SelectedRecipe"));
             } catch (Exception e) {
                 SpaceFactory.LOGGER.error("Error reading selected recipe", e);
             }
         } else {
             this.selectedRecipeId = null;
         }
-        this.recipeProgress = tag.getInt("RecipeProgress");
+        this.recipeProgress = nbt.getInt("RecipeProgress");
     }
 
     @Override
@@ -119,7 +119,7 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
     protected void tick() {
         super.tick();
         boolean wasActive = this.getCachedState().get(Properties.LIT);
-        boolean isActive = false;
+        boolean active = false;
         if (this.selectedRecipeId != null) {
             this.setSelectedRecipe((AssemblerRecipe) this.world.getRecipeManager()
                     .get(this.selectedRecipeId)
@@ -133,7 +133,7 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
                 int amount = Math.min(Math.min(this.energy, SpaceFactory.config.getAssemblerEnergyConsumption()), recipe.energy - this.recipeProgress);
                 this.energy -= amount;
                 this.recipeProgress += amount;
-                isActive = true;
+                active = true;
                 if (this.recipeProgress >= recipe.energy) {
                     this.craftRecipe(recipe);
                     this.recipeProgress = 0;
@@ -145,8 +145,8 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
             this.markDirty();
         }
 
-        if (isActive != wasActive) {
-            this.world.setBlockState(this.pos, this.getCachedState().with(AssemblerBlock.LIT, isActive));
+        if (active != wasActive) {
+            this.world.setBlockState(this.pos, this.getCachedState().with(AssemblerBlock.LIT, active));
         }
     }
 
