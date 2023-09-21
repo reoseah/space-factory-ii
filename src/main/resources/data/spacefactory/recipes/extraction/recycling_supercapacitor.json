@@ -1,0 +1,18 @@
+{
+  "type": "spacefactory:extraction",
+  "ingredient": {
+    "item": "spacefactory:supercapacitor"
+  },
+  "energy": 15000,
+  "result": [
+    {
+      "item": "spacefactory:ultrapure_carbon"
+    },
+    {
+      "item": "spacefactory:ultrapure_gold"
+    },
+    {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  ]
+}

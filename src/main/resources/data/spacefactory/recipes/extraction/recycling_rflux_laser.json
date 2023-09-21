@@ -1,0 +1,18 @@
+{
+  "type": "spacefactory:extraction",
+  "ingredient": {
+    "item": "spacefactory:rflux_laser"
+  },
+  "energy": 15000,
+  "result": [
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "spacefactory:ultrapure_copper"
+    },
+    {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  ]
+}

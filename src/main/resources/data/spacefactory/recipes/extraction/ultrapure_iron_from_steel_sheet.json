@@ -1,0 +1,10 @@
+{
+  "type": "spacefactory:extraction",
+  "ingredient": {
+    "item": "spacefactory:steel_sheet"
+  },
+  "energy": 15000,
+  "result": {
+    "item": "spacefactory:ultrapure_iron"
+  }
+}

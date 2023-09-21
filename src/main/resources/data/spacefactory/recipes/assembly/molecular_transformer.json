@@ -2,7 +2,7 @@
   "type": "spacefactory:assembly",
   "ingredients": [
     {
-      "item": "minecraft:nether_star"
+      "item": "minecraft:diamond"
     },
     {
       "item": "spacefactory:ultrapure_silicon"

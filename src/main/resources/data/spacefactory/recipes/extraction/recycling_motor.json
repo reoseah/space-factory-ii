@@ -1,0 +1,15 @@
+{
+  "type": "spacefactory:extraction",
+  "ingredient": {
+    "item": "spacefactory:motor"
+  },
+  "energy": 15000,
+  "result": [
+    {
+      "item": "spacefactory:ultrapure_copper"
+    },
+    {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  ]
+}

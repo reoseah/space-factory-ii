@@ -1,0 +1,15 @@
+{
+  "type": "spacefactory:extraction",
+  "ingredient": {
+    "item": "spacefactory:quantum_computer"
+  },
+  "energy": 15000,
+  "result": [
+    {
+      "item": "spacefactory:ultrapure_silicon"
+    },
+    {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  ]
+}
