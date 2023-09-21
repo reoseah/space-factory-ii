@@ -1,0 +1,10 @@
+{
+  "type": "spacefactory:extraction",
+  "ingredient": {
+    "item": "minecraft:coal"
+  },
+  "energy": 15000,
+  "result": {
+    "item": "spacefactory:ultrapure_carbon"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "spacefactory:extraction",
+  "ingredient": {
+    "item": "minecraft:amethyst",
+    "count": 2
+  },
+  "energy": 15000,
+  "result": {
+    "item": "spacefactory:ultrapure_silicon"
+  }
+}
