@@ -4,6 +4,7 @@ import io.github.reoseah.spacefactory.block.AssemblerBlock;
 import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
 import io.github.reoseah.spacefactory.block.ExtractorBlock;
 import io.github.reoseah.spacefactory.block.ExtractorBlockEntity;
+import io.github.reoseah.spacefactory.item.ChargeLauncherItem;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
 import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
 import io.github.reoseah.spacefactory.screen.AssemblerScreenHandler;
@@ -55,6 +56,7 @@ public class SpaceFactory {
     public static final Item MOLECULAR_TRANSFORMER = new Item(new Item.Settings());
     public static final Item RFLUX_LASER = new Item(new Item.Settings());
     public static final Item QUANTUM_COMPUTER = new Item(new Item.Settings());
+    public static final Item CHARGE_LAUNCHER = new ChargeLauncherItem(new Item.Settings());
 
     public static void initialize() throws Exception {
         LOGGER.info("Reading config...");
@@ -87,6 +89,7 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:rflux_laser", RFLUX_LASER);
         Registry.register(Registries.ITEM, "spacefactory:quantum_computer", QUANTUM_COMPUTER);
         Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
+        Registry.register(Registries.ITEM, "spacefactory:charge_launcher", CHARGE_LAUNCHER);
 
         FuelRegistry.INSTANCE.add(ULTRAPURE_CARBON, 8 * 200);
 
@@ -113,6 +116,7 @@ public class SpaceFactory {
                     entries.add(RFLUX_LASER);
                     entries.add(QUANTUM_COMPUTER);
                     entries.add(MOLECULAR_TRANSFORMER);
+                    entries.add(CHARGE_LAUNCHER);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);

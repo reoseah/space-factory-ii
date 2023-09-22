@@ -18,6 +18,7 @@
   "item.spacefactory.molecular_transformer": "Molecular Transformer",
   "item.spacefactory.rflux_laser": "R-Flux Laser",
   "item.spacefactory.quantum_computer": "Quantum Computer",
+  "item.spacefactory.charge_launcher": "Charge Launcher",
   "spacefactory.energy": "Energy",
   "spacefactory.energy.amount": "%s ε",
   "spacefactory.energy.amount_per_tick": "%s ε/t",
