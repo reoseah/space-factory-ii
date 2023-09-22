@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+@SuppressWarnings("ALL")
 public class SpaceFactoryConfig {
     @Getter
     @SerializedName("assembler.energy_capacity")
