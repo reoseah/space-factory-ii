@@ -1,0 +1,15 @@
+{
+  "added": [
+    "spacefactory:blasting/steel_sheet",
+    "spacefactory:assembly/motor",
+    "spacefactory:assembly/transformer",
+    "spacefactory:assembly/supercapacitor",
+    "spacefactory:assembly/rflux_laser",
+    "spacefactory:assembly/quantum_computer",
+    "spacefactory:assembly/molecular_transformer",
+    "spacefactory:crafting/ultrapure_iron_block",
+    "spacefactory:crafting/ultrapure_copper_block",
+    "spacefactory:crafting/extractor",
+    "spacefactory:crafting/assembler"
+  ]
+}

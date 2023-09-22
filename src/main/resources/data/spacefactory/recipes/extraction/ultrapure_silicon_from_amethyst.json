@@ -1,7 +1,7 @@
 {
   "type": "spacefactory:extraction",
   "ingredient": {
-    "item": "minecraft:amethyst",
+    "item": "minecraft:amethyst_shard",
     "count": 2
   },
   "energy": 15000,

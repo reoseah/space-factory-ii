@@ -26,5 +26,6 @@
   "spacefactory.energy.average_input_per_tick": "%s avg. ε/t in",
   "spacefactory.energy.amount_and_amount_per_tick": "%s ε at %s ε/t",
   "spacefactory.progress": "Progress",
-  "spacefactory.cannot_switch_recipe_with_current_ingredients": "Cannot switch with items inside"
+  "spacefactory.cannot_switch_recipe_with_current_ingredients": "Cannot switch with items inside",
+  "emi.category.spacefactory.assembler": "Assembly"
 }

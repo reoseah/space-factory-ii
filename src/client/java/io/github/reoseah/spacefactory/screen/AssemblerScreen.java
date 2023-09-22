@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AssemblerScreen extends HandledScreen<AssemblerScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier("spacefactory:textures/gui/assembler.png");
+    public static final Identifier TEXTURE = new Identifier("spacefactory:textures/gui/assembler.png");
 
     private int scrollOffset = 0;
     private float ghostSlotsTime = 0F;

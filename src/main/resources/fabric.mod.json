@@ -20,6 +20,9 @@
     ],
     "client": [
       "io.github.reoseah.spacefactory.SpaceFactoryClient::initialize"
+    ],
+    "emi": [
+      "io.github.reoseah.spacefactory.emi.SpaceFactoryEMI"
     ]
   },
   "mixins": [
