@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "SCS",
+    "ISI"
+  ],
+  "key": {
+    "S": {
+      "item": "spacefactory:steel_sheet"
+    },
+    "C": {
+      "item": "minecraft:fire_charge"
+    },
+    "I": {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  },
+  "result": {
+    "item": "spacefactory:charge_launcher"
+  }
+}
