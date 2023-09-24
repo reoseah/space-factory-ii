@@ -8,7 +8,9 @@ import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiStack;
 import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
+import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
 import io.github.reoseah.spacefactory.screen.AssemblerScreen;
+import io.github.reoseah.spacefactory.screen.ExtractorScreen;
 import net.minecraft.util.Identifier;
 
 @EmiEntrypoint
@@ -17,13 +19,22 @@ public class SpaceFactoryEMI implements EmiPlugin {
             new Identifier("spacefactory:assembler"), //
             EmiStack.of(SpaceFactory.ASSEMBLER), //
             new EmiTexture(AssemblerScreen.TEXTURE, 240, 240, 16, 16));
+    public static final EmiRecipeCategory EXTRACTOR = new EmiRecipeCategory( //
+            new Identifier("spacefactory:extractor"), //
+            EmiStack.of(SpaceFactory.EXTRACTOR), //
+            new EmiTexture(ExtractorScreen.TEXTURE, 240, 240, 16, 16));
 
     @Override
     public void register(EmiRegistry registry) {
+        registry.addCategory(EXTRACTOR);
         registry.addCategory(ASSEMBLER);
 
+        registry.addWorkstation(EXTRACTOR, EmiStack.of(SpaceFactory.EXTRACTOR));
         registry.addWorkstation(ASSEMBLER, EmiStack.of(SpaceFactory.ASSEMBLER));
 
+        for (ExtractorRecipe recipe : registry.getRecipeManager().listAllOfType(ExtractorRecipe.TYPE)) {
+            registry.addRecipe(new ExtractorEmiRecipe(recipe));
+        }
         for (AssemblerRecipe recipe : registry.getRecipeManager().listAllOfType(AssemblerRecipe.TYPE)) {
             registry.addRecipe(new AssemblerEmiRecipe(recipe));
         }

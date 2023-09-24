@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 import java.util.Arrays;
 
 public class ExtractorScreen extends HandledScreen<ExtractorScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier("spacefactory:textures/gui/extractor.png");
+    public static final Identifier TEXTURE = new Identifier("spacefactory:textures/gui/extractor.png");
 
     public ExtractorScreen(ExtractorScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
