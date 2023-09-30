@@ -42,7 +42,6 @@ public class SpaceFactory {
     public static final Block BEDROCK_EMERALD_ORE = new Block(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).strength(Float.MAX_VALUE, Float.MAX_VALUE));
     public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block ULTRAPURE_COPPER_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.DULL_RED).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
-    public static final Block STEEL_SHEET_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block EXTRACTOR = new ExtractorBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block ASSEMBLER = new AssemblerBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
 
@@ -76,7 +75,6 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:bedrock_emerald_ore", BEDROCK_EMERALD_ORE);
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_iron_block", ULTRAPURE_IRON_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_copper_block", ULTRAPURE_COPPER_BLOCK);
-        Registry.register(Registries.BLOCK, "spacefactory:steel_sheet_block", STEEL_SHEET_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:extractor", EXTRACTOR);
         Registry.register(Registries.BLOCK, "spacefactory:assembler", ASSEMBLER);
 
@@ -87,7 +85,6 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:bedrock_emerald_ore", new BlockItem(BEDROCK_EMERALD_ORE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
-        Registry.register(Registries.ITEM, "spacefactory:steel_sheet_block", new BlockItem(STEEL_SHEET_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:extractor", new BlockItem(EXTRACTOR, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:assembler", new BlockItem(ASSEMBLER, new Item.Settings()));
 
@@ -120,7 +117,6 @@ public class SpaceFactory {
                     entries.add(BEDROCK_EMERALD_ORE);
                     entries.add(ULTRAPURE_IRON_BLOCK);
                     entries.add(ULTRAPURE_COPPER_BLOCK);
-                    entries.add(STEEL_SHEET_BLOCK);
                     entries.add(EXTRACTOR);
                     entries.add(ASSEMBLER);
 
