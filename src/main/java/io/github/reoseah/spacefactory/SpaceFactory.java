@@ -11,10 +11,7 @@ import io.github.reoseah.spacefactory.screen.ExtractorScreenHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -22,6 +19,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
@@ -36,6 +34,12 @@ public class SpaceFactory {
 
     public static SpaceFactoryConfig config;
 
+    public static final Block BEDROCK_IRON_ORE = new Block(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).strength(Float.MAX_VALUE, Float.MAX_VALUE));
+    public static final Block BEDROCK_COPPER_ORE = new Block(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).strength(Float.MAX_VALUE, Float.MAX_VALUE));
+    public static final Block BEDROCK_GOLD_ORE = new Block(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).strength(Float.MAX_VALUE, Float.MAX_VALUE));
+    public static final Block BEDROCK_REDSTONE_ORE = new RedstoneOreBlock(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).strength(Float.MAX_VALUE, Float.MAX_VALUE) //
+            .luminance(state -> state.get(Properties.LIT) ? 9 : 0));
+    public static final Block BEDROCK_EMERALD_ORE = new Block(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).strength(Float.MAX_VALUE, Float.MAX_VALUE));
     public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block ULTRAPURE_COPPER_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.DULL_RED).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block EXTRACTOR = new ExtractorBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
@@ -55,6 +59,7 @@ public class SpaceFactory {
     public static final Item MOLECULAR_TRANSFORMER = new Item(new Item.Settings());
     public static final Item RFLUX_LASER = new Item(new Item.Settings());
     public static final Item QUANTUM_COMPUTER = new Item(new Item.Settings());
+    public static final Item DRILL_SUPPLIES = new Item(new Item.Settings());
 
     public static void initialize() throws Exception {
         LOGGER.info("Reading config...");
@@ -63,11 +68,21 @@ public class SpaceFactory {
 
         LOGGER.info("Initializing...");
 
+        Registry.register(Registries.BLOCK, "spacefactory:bedrock_iron_ore", BEDROCK_IRON_ORE);
+        Registry.register(Registries.BLOCK, "spacefactory:bedrock_copper_ore", BEDROCK_COPPER_ORE);
+        Registry.register(Registries.BLOCK, "spacefactory:bedrock_gold_ore", BEDROCK_GOLD_ORE);
+        Registry.register(Registries.BLOCK, "spacefactory:bedrock_redstone_ore", BEDROCK_REDSTONE_ORE);
+        Registry.register(Registries.BLOCK, "spacefactory:bedrock_emerald_ore", BEDROCK_EMERALD_ORE);
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_iron_block", ULTRAPURE_IRON_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_copper_block", ULTRAPURE_COPPER_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:extractor", EXTRACTOR);
         Registry.register(Registries.BLOCK, "spacefactory:assembler", ASSEMBLER);
 
+        Registry.register(Registries.ITEM, "spacefactory:bedrock_iron_ore", new BlockItem(BEDROCK_IRON_ORE, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:bedrock_copper_ore", new BlockItem(BEDROCK_COPPER_ORE, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:bedrock_gold_ore", new BlockItem(BEDROCK_GOLD_ORE, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:bedrock_redstone_ore", new BlockItem(BEDROCK_REDSTONE_ORE, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:bedrock_emerald_ore", new BlockItem(BEDROCK_EMERALD_ORE, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:extractor", new BlockItem(EXTRACTOR, new Item.Settings()));
@@ -87,6 +102,7 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:rflux_laser", RFLUX_LASER);
         Registry.register(Registries.ITEM, "spacefactory:quantum_computer", QUANTUM_COMPUTER);
         Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
+        Registry.register(Registries.ITEM, "spacefactory:drill_supplies", DRILL_SUPPLIES);
 
         FuelRegistry.INSTANCE.add(ULTRAPURE_CARBON, 8 * 200);
 
@@ -94,6 +110,11 @@ public class SpaceFactory {
                 .displayName(Text.translatable("itemGroup.spacefactory"))
                 .icon(() -> new ItemStack(SpaceFactory.QUANTUM_COMPUTER))
                 .entries((displayContext, entries) -> {
+                    entries.add(BEDROCK_IRON_ORE);
+                    entries.add(BEDROCK_COPPER_ORE);
+                    entries.add(BEDROCK_GOLD_ORE);
+                    entries.add(BEDROCK_REDSTONE_ORE);
+                    entries.add(BEDROCK_EMERALD_ORE);
                     entries.add(ULTRAPURE_IRON_BLOCK);
                     entries.add(ULTRAPURE_COPPER_BLOCK);
                     entries.add(EXTRACTOR);
@@ -113,6 +134,7 @@ public class SpaceFactory {
                     entries.add(RFLUX_LASER);
                     entries.add(QUANTUM_COMPUTER);
                     entries.add(MOLECULAR_TRANSFORMER);
+                    entries.add(DRILL_SUPPLIES);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
