@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TQC",
+    "MPM",
+    "SDS"
+  ],
+  "key": {
+    "S": {
+      "item": "spacefactory:steel_sheet"
+    },
+    "M": {
+      "item": "spacefactory:motor"
+    },
+    "T": {
+      "item": "spacefactory:transformer"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "Q": {
+      "item": "spacefactory:quantum_computer"
+    },
+    "C": {
+      "item": "spacefactory:supercapacitor"
+    },
+    "D": {
+      "item": "spacefactory:drill_supplies"
+    }
+  },
+  "result": {
+    "item": "spacefactory:bedrock_miner"
+  }
+}

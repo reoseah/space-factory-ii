@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:bedrock",
+    "spacefactory:bedrock_iron_ore",
+    "spacefactory:bedrock_copper_ore",
+    "spacefactory:bedrock_gold_ore",
+    "spacefactory:bedrock_redstone_ore",
+    "spacefactory:bedrock_emerald_ore"
+  ]
+}

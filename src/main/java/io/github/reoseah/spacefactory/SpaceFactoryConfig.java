@@ -9,21 +9,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-@SuppressWarnings("ALL")
+@Getter
+@SuppressWarnings("FieldMayBeFinal")
 public class SpaceFactoryConfig {
-    @Getter
     @SerializedName("assembler.energy_capacity")
     private int assemblerEnergyCapacity = 100_000;
-    @Getter
     @SerializedName("assembler.energy_consumption")
     private int assemblerEnergyConsumption = 100;
 
-    @Getter
     @SerializedName("extractor.energy_capacity")
     private int extractorEnergyCapacity = 100_000;
-    @Getter
     @SerializedName("extractor.energy_consumption")
     private int extractorEnergyConsumption = 150;
+
+    @SerializedName("bedrock_miner.energy_capacity")
+    private int bedrockMinerEnergyCapacity = 100_000;
+    @SerializedName("bedrock_miner.energy_consumption")
+    private int bedrockMinerEnergyConsumption = 100_000;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
