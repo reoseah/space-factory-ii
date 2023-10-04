@@ -10,10 +10,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -27,8 +31,7 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
     public static final BlockEntityType<BedrockMinerBlockEntity> TYPE = new BlockEntityType<>(BedrockMinerBlockEntity::new, ImmutableSet.of(SpaceFactory.BEDROCK_MINER), null);
 
     public static final int INVENTORY_SIZE = 7, INPUTS_COUNT = 1, RESULTS_COUNT = 6;
-    public static final int DRILL_SUPPLIES_TOTAL = 120 * 20;
-    public static final int DRILLLING_DURATION = 10 * 20;
+    public static final TagKey<Item> SUPPLIES = TagKey.of(RegistryKeys.ITEM, new Identifier("spacefactory:bedrock_drill_supplies"));
 
     public static final Map<Block, List<ObjectFloatPair<ItemStack>>> MAP = Util.make(new HashMap<>(), map -> {
         map.put(Blocks.BEDROCK, Util.make(new ArrayList<>(), list -> {
@@ -122,9 +125,9 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
 
         if (this.drillSupply == 0) {
             ItemStack input = this.getStack(0);
-            if (input.isOf(SpaceFactory.DRILL_SUPPLIES)) {
+            if (input.isIn(SUPPLIES)) {
                 input.decrement(1);
-                this.drillSupply = this.drillSupplyTotal = DRILL_SUPPLIES_TOTAL;
+                this.drillSupply = this.drillSupplyTotal = SpaceFactory.config.getBedrockMinerDrillSuppliesDuration();
             } else {
                 return false;
             }
@@ -132,11 +135,11 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
 
         this.drillSupply--;
         this.drillProgress++;
-        if (this.drillProgress >= DRILLLING_DURATION) {
+        if (this.drillProgress >= SpaceFactory.config.getBedrockMinerDrillingDuration()) {
             List<ObjectFloatPair<ItemStack>> output = MAP.get(bedrock);
             for (ObjectFloatPair<ItemStack> entry : output) {
                 if (this.world.getRandom().nextFloat() < entry.rightFloat()) {
-                    this.addStack(entry.left().copy());
+                    this.insertOutput(entry.left());
                 }
             }
             this.drillProgress = 0;
@@ -144,48 +147,37 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
         return true;
     }
 
-    public ItemStack addStack(ItemStack stack) {
-        if (stack.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-        ItemStack itemStack = stack.copy();
-        this.addToExistingSlot(itemStack);
-        if (itemStack.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-        this.addToNewSlot(itemStack);
-        if (itemStack.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-        return itemStack;
-    }
-
-    private void addToNewSlot(ItemStack stack) {
+    public ItemStack insertOutput(ItemStack stack) {
+        ItemStack copy = stack.copy();
         for (int i = 1; i < this.size(); ++i) {
-            ItemStack itemStack = this.getStack(i);
-            if (!itemStack.isEmpty()) continue;
-            this.setStack(i, stack.copyAndEmpty());
-            return;
+            ItemStack slot = this.getStack(i);
+            if (!ItemStack.canCombine(slot, copy)) {
+                continue;
+            }
+            int amount = Math.min(copy.getCount(), Math.min(this.getMaxCountPerStack(), slot.getMaxCount()) - slot.getCount());
+            if (amount > 0) {
+                slot.increment(amount);
+                copy.decrement(amount);
+                this.markDirty();
+            }
+            if (copy.isEmpty()) {
+                break;
+            }
         }
-    }
-
-    private void addToExistingSlot(ItemStack stack) {
+        if (copy.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
         for (int i = 1; i < this.size(); ++i) {
-            ItemStack itemStack = this.getStack(i);
-            if (!ItemStack.canCombine(itemStack, stack)) continue;
-            this.transfer(stack, itemStack);
-            if (!stack.isEmpty()) continue;
-            return;
+            ItemStack slot = this.getStack(i);
+            if (slot.isEmpty()) {
+                this.setStack(i, copy.copyAndEmpty());
+                break;
+            }
         }
+        if (copy.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+        return copy;
     }
 
-    private void transfer(ItemStack source, ItemStack target) {
-        int i = Math.min(this.getMaxCountPerStack(), target.getMaxCount());
-        int j = Math.min(source.getCount(), i - target.getCount());
-        if (j > 0) {
-            target.increment(j);
-            source.decrement(j);
-            this.markDirty();
-        }
-    }
 }

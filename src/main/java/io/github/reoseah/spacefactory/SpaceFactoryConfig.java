@@ -26,6 +26,10 @@ public class SpaceFactoryConfig {
     private int bedrockMinerEnergyCapacity = 100_000;
     @SerializedName("bedrock_miner.energy_consumption")
     private int bedrockMinerEnergyConsumption = 100_000;
+    @SerializedName("bedrock_miner.drill_supplies_duration")
+    private int bedrockMinerDrillSuppliesDuration = 120 * 20;
+    @SerializedName("bedrock_miner.drilling_duration")
+    private int bedrockMinerDrillingDuration = 10 * 20;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 

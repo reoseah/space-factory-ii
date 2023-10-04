@@ -1,6 +1,5 @@
 package io.github.reoseah.spacefactory.screen;
 
-import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.block.BedrockMinerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -98,7 +97,7 @@ public class BedrockMinerScreenHandler extends ScreenHandler {
     }
 
     protected boolean isProcessable(ItemStack stack) {
-        return stack.isOf(SpaceFactory.DRILL_SUPPLIES);
+        return stack.isIn(BedrockMinerBlockEntity.SUPPLIES);
     }
 
     @Override

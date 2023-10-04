@@ -3,7 +3,6 @@ package io.github.reoseah.spacefactory.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.api.EnergyI18n;
-import io.github.reoseah.spacefactory.block.BedrockMinerBlockEntity;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -58,7 +57,7 @@ public class BedrockMinerScreen extends HandledScreen<BedrockMinerScreenHandler>
             int drillSupplyHeight = Math.max(Math.round(drillSupply * 16f / drillSupplyTotal), 1);
             context.drawTexture(TEXTURE, this.x + 51, this.y + 54 - drillSupplyHeight, 176, 33 - drillSupplyHeight, 16, drillSupplyHeight);
         }
-        int progressToDisplay = this.handler.properties.get(BedrockMinerScreenHandler.Properties.DRILL_PROGRESS) * 24 / BedrockMinerBlockEntity.DRILLLING_DURATION;
+        int progressToDisplay = this.handler.properties.get(BedrockMinerScreenHandler.Properties.DRILL_PROGRESS) * 24 / SpaceFactory.config.getBedrockMinerDrillingDuration();
         context.drawTexture(TEXTURE, this.x + 76, this.y + 18, 176, 0, progressToDisplay + 1, 16);
     }
 
