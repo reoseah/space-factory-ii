@@ -18,13 +18,6 @@ public class BedrockMinerBlock extends MachineBlock {
         super(settings);
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return pos.getY() == world.getBottomY() + 1 && //
-                world.getBlockState(pos.down()).isIn(TagKey.of(RegistryKeys.BLOCK, new Identifier("spacefactory:bedrock_miner_mineables")));
-    }
-
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
