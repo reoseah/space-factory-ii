@@ -1,0 +1,15 @@
+{
+  "type": "spacefactory:assembly",
+  "ingredients": [
+    {
+      "item": "spacefactory:ultrapure_iron"
+    },
+    {
+      "item": "spacefactory:ultrapure_carbon"
+    }
+  ],
+  "energy": 10000,
+  "result": {
+    "item": "spacefactory:lightweight_graphene_steel"
+  }
+}

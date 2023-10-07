@@ -40,6 +40,7 @@ public class SpaceFactory {
     public static final Block BEDROCK_EMERALD_ORE = new Block(AbstractBlock.Settings.copy(Blocks.BEDROCK));
     public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
     public static final Block ULTRAPURE_COPPER_BLOCK = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).mapColor(MapColor.DULL_RED));
+    public static final Block LIGHTWEIGHT_STEEL_BLOCK = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK));
     public static final Block EXTRACTOR = new ExtractorBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK) //
             .luminance(state -> state.get(Properties.LIT) ? 9 : 0));
     public static final Block ASSEMBLER = new AssemblerBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK) //
@@ -79,6 +80,7 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:bedrock_gold_ore", BEDROCK_GOLD_ORE);
         Registry.register(Registries.BLOCK, "spacefactory:bedrock_redstone_ore", BEDROCK_REDSTONE_ORE);
         Registry.register(Registries.BLOCK, "spacefactory:bedrock_emerald_ore", BEDROCK_EMERALD_ORE);
+        Registry.register(Registries.BLOCK, "spacefactory:lightweight_graphene_steel", LIGHTWEIGHT_STEEL_BLOCK);
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
@@ -106,6 +108,8 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:quantum_computer", QUANTUM_COMPUTER);
         Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
         Registry.register(Registries.ITEM, "spacefactory:drill_supplies", DRILL_SUPPLIES);
+        Registry.register(Registries.ITEM, "spacefactory:lightweight_graphene_steel", new BlockItem(LIGHTWEIGHT_STEEL_BLOCK, new Item.Settings()));
+
 
         FuelRegistry.INSTANCE.add(ULTRAPURE_CARBON, 8 * 200);
 
@@ -139,6 +143,7 @@ public class SpaceFactory {
                     entries.add(QUANTUM_COMPUTER);
                     entries.add(MOLECULAR_TRANSFORMER);
                     entries.add(DRILL_SUPPLIES);
+                    entries.add(LIGHTWEIGHT_STEEL_BLOCK);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
