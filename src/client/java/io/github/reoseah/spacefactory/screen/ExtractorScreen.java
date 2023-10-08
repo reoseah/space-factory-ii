@@ -69,10 +69,10 @@ public class ExtractorScreen extends HandledScreen<ExtractorScreenHandler> {
             return;
         }
         if (this.isPointWithinBounds(71, 27, 24, 16, mouseX, mouseY)) {
-            int totalEnergy = this.handler.properties.get(ExtractorScreenHandler.Properties.RECIPE_ENERGY);
+            int recipeEnergy = this.handler.properties.get(ExtractorScreenHandler.Properties.RECIPE_ENERGY);
             int progress = this.handler.properties.get(ExtractorScreenHandler.Properties.RECIPE_PROGRESS);
             Text textProgress = Text.translatable("spacefactory.progress");
-            Text textEnergy = EnergyI18n.energyAndCapacity(progress, totalEnergy).formatted(Formatting.GRAY);
+            Text textEnergy = EnergyI18n.energyAndCapacity(progress, recipeEnergy).formatted(Formatting.GRAY);
             context.drawTooltip(this.textRenderer, Arrays.asList(textProgress, textEnergy), mouseX, mouseY);
             return;
         }

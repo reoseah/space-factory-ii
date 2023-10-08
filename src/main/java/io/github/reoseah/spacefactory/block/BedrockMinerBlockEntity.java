@@ -32,6 +32,7 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
 
     public static final int INVENTORY_SIZE = 7, INPUTS_COUNT = 1, RESULTS_COUNT = 6;
     public static final TagKey<Item> SUPPLIES = TagKey.of(RegistryKeys.ITEM, new Identifier("spacefactory:bedrock_drill_supplies"));
+    public static final TagKey<Block> MINEABLES = TagKey.of(RegistryKeys.BLOCK, new Identifier("spacefactory:bedrock_miner_mineables"));
 
     public static final Map<Block, List<ObjectFloatPair<ItemStack>>> MAP = Util.make(new HashMap<>(), map -> {
         map.put(Blocks.BEDROCK, Util.make(new ArrayList<>(), list -> {
@@ -133,6 +134,7 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
             }
         }
 
+        this.energy -= SpaceFactory.config.getBedrockMinerEnergyConsumption();
         this.drillSupply--;
         this.drillProgress++;
         if (this.drillProgress >= SpaceFactory.config.getBedrockMinerDrillingDuration()) {

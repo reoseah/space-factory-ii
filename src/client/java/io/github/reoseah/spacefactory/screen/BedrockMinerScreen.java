@@ -57,8 +57,14 @@ public class BedrockMinerScreen extends HandledScreen<BedrockMinerScreenHandler>
             int drillSupplyHeight = Math.max(Math.round(drillSupply * 16f / drillSupplyTotal), 1);
             context.drawTexture(TEXTURE, this.x + 51, this.y + 54 - drillSupplyHeight, 176, 33 - drillSupplyHeight, 16, drillSupplyHeight);
         }
-        int progressToDisplay = this.handler.properties.get(BedrockMinerScreenHandler.Properties.DRILL_PROGRESS) * 24 / SpaceFactory.config.getBedrockMinerDrillingDuration();
-        context.drawTexture(TEXTURE, this.x + 76, this.y + 18, 176, 0, progressToDisplay + 1, 16);
+
+        int isValidPosition = this.handler.properties.get(BedrockMinerScreenHandler.Properties.IS_VALID_POSITION);
+        if (isValidPosition == 1) {
+            int progressToDisplay = this.handler.properties.get(BedrockMinerScreenHandler.Properties.DRILL_PROGRESS) * 24 / SpaceFactory.config.getBedrockMinerDrillingDuration();
+            context.drawTexture(TEXTURE, this.x + 76, this.y + 18, 176, 0, progressToDisplay + 1, 16);
+        } else {
+            context.drawTexture(TEXTURE, this.x + 74, this.y + 16, 224, 0, 28, 21);
+        }
     }
 
     @Override
@@ -73,6 +79,26 @@ public class BedrockMinerScreen extends HandledScreen<BedrockMinerScreenHandler>
             Text textEuPerTick = EnergyI18n.averageInputPerTick(energyPerTick).formatted(Formatting.GRAY);
             context.drawTooltip(this.textRenderer, Arrays.asList(textEnergy, textStored, textEuPerTick), mouseX, mouseY);
             return;
+        }
+        if (this.isPointWithinBounds(75, 18, 24, 16, mouseX, mouseY)) {
+            int isValidPosition = this.handler.properties.get(BedrockMinerScreenHandler.Properties.IS_VALID_POSITION);
+            if (isValidPosition == 1) {
+                int recipeEnergy = SpaceFactory.config.getBedrockMinerDrillingDuration() * SpaceFactory.config.getBedrockMinerEnergyConsumption();
+                int progress = this.handler.properties.get(BedrockMinerScreenHandler.Properties.DRILL_PROGRESS) * SpaceFactory.config.getBedrockMinerEnergyConsumption();
+                Text textProgress = Text.translatable("spacefactory.progress");
+                Text textEnergy = EnergyI18n.energyAndCapacity(progress, recipeEnergy).formatted(Formatting.GRAY);
+                context.drawTooltip(this.textRenderer, Arrays.asList(textProgress, textEnergy), mouseX, mouseY);
+            } else {
+                context.drawTooltip(this.textRenderer, Text.translatable("spacefactory.invalid_placement"), mouseX, mouseY);
+            }
+            return;
+        }
+        if (this.isPointWithinBounds(51, 37, 16, 16, mouseX, mouseY)) {
+            int suppliesDuration = this.handler.properties.get(BedrockMinerScreenHandler.Properties.DRILL_SUPPLY_TOTAL);
+            int suppliesLeft = this.handler.properties.get(BedrockMinerScreenHandler.Properties.DRILL_SUPPLY_LEFT);
+            Text textDrillSupply = Text.translatable("spacefactory.drill_supply");
+            Text textDrillLeft = Text.translatable("spacefactory.drill_supply.amount", suppliesLeft / 20, suppliesDuration / 20).formatted(Formatting.GRAY);
+            context.drawTooltip(this.textRenderer, Arrays.asList(textDrillSupply, textDrillLeft), mouseX, mouseY);
         }
 
         super.drawMouseoverTooltip(context, mouseX, mouseY);

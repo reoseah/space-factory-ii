@@ -36,6 +36,9 @@
   "spacefactory.energy.amount_and_amount_per_tick": "%s ε at %s ε/t",
   "spacefactory.progress": "Progress",
   "spacefactory.cannot_switch_recipe_with_current_ingredients": "Cannot switch with items inside",
+  "spacefactory.drill_supply": "Drill Durability",
+  "spacefactory.drill_supply.amount": "%s / %s seconds",
+  "spacefactory.invalid_placement": "Invalid Placement",
   "emi.category.spacefactory.extractor": "Extraction",
   "emi.category.spacefactory.assembler": "Assembly"
 }
