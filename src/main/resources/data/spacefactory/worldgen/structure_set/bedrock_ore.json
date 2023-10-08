@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "spacefactory:bedrock_iron_ore",
+      "weight": 1
+    },
+    {
+      "structure": "spacefactory:bedrock_copper_ore",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 123454321,
+    "spacing": 4,
+    "separation": 1
+  }
+}

@@ -17,6 +17,17 @@ repositories {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/"
 	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = "Modrinth"
+				url = "https://api.modrinth.com/maven"
+			}
+		}
+		filter {
+			includeGroup "maven.modrinth"
+		}
+	}
 }
 
 loom {
@@ -45,6 +56,11 @@ dependencies {
 	}
 
 	modCompileOnly "dev.emi:emi-xplat-intermediary:${emi_version}:api"
+
+	modRuntimeOnly "maven.modrinth:lithium:${project.lithium_version}"
+//	modRuntimeOnly "maven.modrinth:ferrite-core:${project.ferrite_core_version}"
+	modRuntimeOnly "maven.modrinth:bbor:${project.bbor_version}"
+//	modRuntimeOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 processResources {

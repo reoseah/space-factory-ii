@@ -10,6 +10,9 @@
     "spacefactory:crafting/ultrapure_iron_block",
     "spacefactory:crafting/ultrapure_copper_block",
     "spacefactory:crafting/extractor",
-    "spacefactory:crafting/assembler"
+    "spacefactory:crafting/assembler",
+    "spacefactory:crafting/bedrock_miner",
+    "spacefactory:crafting/lightweight_graphene_steel",
+    "spacefactory:crafting/lightweight_graphene_steel_slab"
   ]
 }
