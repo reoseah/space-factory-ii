@@ -2,10 +2,22 @@
   "structures": [
     {
       "structure": "spacefactory:bedrock_iron_ore",
-      "weight": 1
+      "weight": 3
     },
     {
       "structure": "spacefactory:bedrock_copper_ore",
+      "weight": 2
+    },
+    {
+      "structure": "spacefactory:bedrock_gold_ore",
+      "weight": 1
+    },
+    {
+      "structure": "spacefactory:bedrock_redstone_ore",
+      "weight": 1
+    },
+    {
+      "structure": "spacefactory:bedrock_emerald_ore",
       "weight": 1
     }
   ],

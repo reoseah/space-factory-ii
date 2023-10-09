@@ -8,6 +8,8 @@ import io.github.reoseah.spacefactory.screen.BedrockMinerScreenHandler;
 import io.github.reoseah.spacefactory.screen.ExtractorScreenHandler;
 import io.github.reoseah.spacefactory.structure.BedrockOreStructure;
 import io.github.reoseah.spacefactory.structure.piece.BedrockOreCenterPiece;
+import io.github.reoseah.spacefactory.structure.piece.SmallOrePiece;
+import io.github.reoseah.spacefactory.structure.piece.TinyOrePiece;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -173,8 +175,11 @@ public class SpaceFactory {
         Registry.register(Registries.RECIPE_SERIALIZER, "spacefactory:extraction", ExtractorRecipe.SERIALIZER);
 
         Registry.register(Registries.STRUCTURE_TYPE, "spacefactory:bedrock_ore", BedrockOreStructure.TYPE);
+
         Registry.register(Registries.STRUCTURE_PIECE, "spacefactory:bedrock_ore_center", BedrockOreCenterPiece.TYPE);
-        
+        Registry.register(Registries.STRUCTURE_PIECE, "spacefactory:tiny_ore", TinyOrePiece.TYPE);
+        Registry.register(Registries.STRUCTURE_PIECE, "spacefactory:small_ore", SmallOrePiece.TYPE);
+
         LOGGER.info("Done!");
     }
 

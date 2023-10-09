@@ -1,0 +1,8 @@
+{
+  "type": "spacefactory:bedrock_ore",
+  "biomes": "#spacefactory:has_structure/bedrock_emerald_ore",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none",
+  "step": "underground_decoration",
+  "ore_type": "emerald"
+}

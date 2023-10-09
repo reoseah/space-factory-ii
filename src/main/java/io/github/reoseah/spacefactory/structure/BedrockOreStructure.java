@@ -55,9 +55,12 @@ public class BedrockOreStructure extends Structure {
 
     public enum Type implements StringIdentifiable {
         IRON("iron", SpaceFactory.BEDROCK_IRON_ORE, Blocks.DEEPSLATE_IRON_ORE),
-        COPPER("copper", SpaceFactory.BEDROCK_COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE);
+        COPPER("copper", SpaceFactory.BEDROCK_COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE),
+        GOLD("gold", SpaceFactory.BEDROCK_GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE),
+        REDSTONE("redstone", SpaceFactory.BEDROCK_REDSTONE_ORE, Blocks.DEEPSLATE_REDSTONE_ORE),
+        EMERALD("emerald", SpaceFactory.BEDROCK_EMERALD_ORE, Blocks.DEEPSLATE_EMERALD_ORE);
 
-        public static final Codec<Type> CODEC = StringIdentifiable.createCodec(Type::values);
+        public static final com.mojang.serialization.Codec<Type> CODEC = StringIdentifiable.createCodec(Type::values);
 
         private final String name;
         @Getter
