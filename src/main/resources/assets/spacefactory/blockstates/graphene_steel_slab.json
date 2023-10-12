@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "spacefactory:block/graphene_steel_slab"
+    },
+    "type=double": {
+      "model": "spacefactory:block/graphene_steel_slab_double"
+    },
+    "type=top": {
+      "model": "spacefactory:block/graphene_steel_slab_top"
+    }
+  }
+}

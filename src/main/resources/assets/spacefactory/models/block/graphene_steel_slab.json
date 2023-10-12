@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "spacefactory:block/graphene_steel",
+    "top": "spacefactory:block/graphene_steel",
+    "side": "spacefactory:block/graphene_steel_slab"
+  }
+}

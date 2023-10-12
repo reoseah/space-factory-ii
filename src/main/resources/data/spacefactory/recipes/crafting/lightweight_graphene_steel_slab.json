@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "spacefactory:lightweight_graphene_steel"
+      "item": "spacefactory:graphene_steel"
     }
   ],
   "result": {
-    "item": "spacefactory:lightweight_graphene_steel_slab",
+    "item": "spacefactory:graphene_steel_slab",
     "count": 1
   }
 }

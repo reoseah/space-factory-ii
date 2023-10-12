@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "spacefactory:block/graphene_steel",
+    "side": "spacefactory:block/graphene_steel_slab"
+  }
+}

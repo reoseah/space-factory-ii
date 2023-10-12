@@ -12,7 +12,7 @@
     "spacefactory:crafting/extractor",
     "spacefactory:crafting/assembler",
     "spacefactory:crafting/bedrock_miner",
-    "spacefactory:crafting/lightweight_graphene_steel",
-    "spacefactory:crafting/lightweight_graphene_steel_slab"
+    "spacefactory:crafting/graphene_steel",
+    "spacefactory:crafting/graphene_steel_slab"
   ]
 }

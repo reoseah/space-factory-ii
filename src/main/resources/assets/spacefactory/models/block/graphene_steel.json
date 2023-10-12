@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "spacefactory:block/lightweight_graphene_steel"
+    "all": "spacefactory:block/graphene_steel"
   }
 }
