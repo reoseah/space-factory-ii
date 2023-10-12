@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "spacefactory:research_station",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 4321234,
+    "spacing": 32,
+    "separation": 8
+  }
+}

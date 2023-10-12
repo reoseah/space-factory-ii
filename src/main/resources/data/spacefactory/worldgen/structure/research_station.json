@@ -1,0 +1,7 @@
+{
+  "type": "spacefactory:research_station",
+  "biomes": "#spacefactory:has_structure/research_station",
+  "spawn_overrides": {},
+  "terrain_adaptation": "beard_thin",
+  "step": "surface_structures"
+}

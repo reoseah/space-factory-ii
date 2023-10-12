@@ -7,7 +7,9 @@ import io.github.reoseah.spacefactory.screen.AssemblerScreenHandler;
 import io.github.reoseah.spacefactory.screen.BedrockMinerScreenHandler;
 import io.github.reoseah.spacefactory.screen.ExtractorScreenHandler;
 import io.github.reoseah.spacefactory.structure.BedrockOreStructure;
+import io.github.reoseah.spacefactory.structure.ResearchStationStructure;
 import io.github.reoseah.spacefactory.structure.piece.BedrockOreCenterPiece;
+import io.github.reoseah.spacefactory.structure.piece.ResearchStationPiece;
 import io.github.reoseah.spacefactory.structure.piece.SmallOrePiece;
 import io.github.reoseah.spacefactory.structure.piece.TinyOrePiece;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -42,7 +44,7 @@ public class SpaceFactory {
     public static final Block BEDROCK_REDSTONE_ORE = new RedstoneOreBlock(AbstractBlock.Settings.copy(Blocks.BEDROCK) //
             .luminance(state -> state.get(Properties.LIT) ? 9 : 0));
     public static final Block BEDROCK_EMERALD_ORE = new Block(AbstractBlock.Settings.copy(Blocks.BEDROCK));
-    public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(SpaceFactory::none));
+    public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(Blocks::never));
     public static final Block ULTRAPURE_COPPER_BLOCK = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).mapColor(MapColor.DULL_RED));
     public static final Block EXTRACTOR = new ExtractorBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK) //
             .luminance(state -> state.get(Properties.LIT) ? 9 : 0));
@@ -175,10 +177,12 @@ public class SpaceFactory {
         Registry.register(Registries.RECIPE_SERIALIZER, "spacefactory:extraction", ExtractorRecipe.SERIALIZER);
 
         Registry.register(Registries.STRUCTURE_TYPE, "spacefactory:bedrock_ore", BedrockOreStructure.TYPE);
+        Registry.register(Registries.STRUCTURE_TYPE, "spacefactory:research_station", ResearchStationStructure.TYPE);
 
         Registry.register(Registries.STRUCTURE_PIECE, "spacefactory:bedrock_ore_center", BedrockOreCenterPiece.TYPE);
         Registry.register(Registries.STRUCTURE_PIECE, "spacefactory:tiny_ore", TinyOrePiece.TYPE);
         Registry.register(Registries.STRUCTURE_PIECE, "spacefactory:small_ore", SmallOrePiece.TYPE);
+        Registry.register(Registries.STRUCTURE_PIECE, "spacefactory:research_station", ResearchStationPiece.TYPE);
 
         LOGGER.info("Done!");
     }
