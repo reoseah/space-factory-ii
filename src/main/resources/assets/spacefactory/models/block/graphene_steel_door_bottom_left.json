@@ -1,0 +1,18 @@
+{
+    "textures": {
+        "particle": "spacefactory:block/graphene_steel_door_back_lower",
+        "bottom": "spacefactory:block/graphene_steel_door_back_lower"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 4, 16, 16 ],
+            "faces": {
+                "down":  { "uv": [ 16, 12,  0, 16 ], "texture": "#bottom", "cullface": "down", "rotation": 90 },
+                "north": { "uv": [  4,  0,  0, 16 ], "texture": "#bottom", "cullface": "north" },
+                "south": { "uv": [  0,  0,  4, 16 ], "texture": "#bottom", "cullface": "south" },
+                "west":  { "uv": [  0,  0, 16, 16 ], "texture": "#bottom", "cullface": "west" },
+                "east":  { "uv": [ 16,  0,  0, 16 ], "texture": "#bottom" }
+            }
+        }
+    ]
+}

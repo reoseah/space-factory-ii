@@ -16,17 +16,16 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import team.reborn.energy.api.EnergyStorage;
@@ -53,6 +52,7 @@ public class SpaceFactory {
     public static final Block BEDROCK_MINER = new BedrockMinerBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK));
     public static final Block GRAPHENE_STEEL = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK));
     public static final Block GRAPHENE_STEEL_SLAB = new SlabBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK));
+    public static final Block GRAPHENE_STEEL_DOOR = new ThickDoorBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK), new BlockSetType("iron", false, BlockSoundGroup.METAL, SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundEvents.BLOCK_IRON_DOOR_OPEN, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON, SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON));
 
     public static final Item ULTRAPURE_IRON = new Item(new Item.Settings());
     public static final Item ULTRAPURE_COPPER = new Item(new Item.Settings());
@@ -89,6 +89,7 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:bedrock_emerald_ore", BEDROCK_EMERALD_ORE);
         Registry.register(Registries.BLOCK, "spacefactory:graphene_steel", GRAPHENE_STEEL);
         Registry.register(Registries.BLOCK, "spacefactory:graphene_steel_slab", GRAPHENE_STEEL_SLAB);
+        Registry.register(Registries.BLOCK, "spacefactory:graphene_steel_door", GRAPHENE_STEEL_DOOR);
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
@@ -118,6 +119,7 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:drill_supplies", DRILL_SUPPLIES);
         Registry.register(Registries.ITEM, "spacefactory:graphene_steel", new BlockItem(GRAPHENE_STEEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:graphene_steel_slab", new BlockItem(GRAPHENE_STEEL_SLAB, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:graphene_steel_door", new BlockItem(GRAPHENE_STEEL_DOOR, new Item.Settings()));
 
         FuelRegistry.INSTANCE.add(ULTRAPURE_CARBON, 8 * 200);
 
@@ -154,6 +156,7 @@ public class SpaceFactory {
                     
                     entries.add(GRAPHENE_STEEL);
                     entries.add(GRAPHENE_STEEL_SLAB);
+                    entries.add(GRAPHENE_STEEL_DOOR);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
@@ -185,9 +188,5 @@ public class SpaceFactory {
         Registry.register(Registries.STRUCTURE_PIECE, "spacefactory:research_station", ResearchStationPiece.TYPE);
 
         LOGGER.info("Done!");
-    }
-
-    private static boolean none(@SuppressWarnings("unused") BlockState state, @SuppressWarnings("unused") BlockView world, @SuppressWarnings("unused") BlockPos pos, @SuppressWarnings("unused") EntityType<?> type) {
-        return false;
     }
 }

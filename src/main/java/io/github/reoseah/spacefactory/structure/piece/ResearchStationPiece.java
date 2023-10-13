@@ -1,6 +1,7 @@
 package io.github.reoseah.spacefactory.structure.piece;
 
 import io.github.reoseah.spacefactory.SpaceFactory;
+import io.github.reoseah.spacefactory.block.MachineBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DoorBlock;
@@ -11,10 +12,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.structure.StructureContext;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.structure.StructurePieceType;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
@@ -41,12 +39,12 @@ public class ResearchStationPiece extends StructurePiece {
             {' ', '#', '.', '.', '.', '.', '.', '.', '.', '#', ' '}, //
             {'#', '.', '.', '.', '#', '.', '#', '.', '.', '.', '#'}, //
             {'#', '#', '#', '#', '#', '.', '#', '#', '#', '#', '#'}, //
+            {'#', 'E', '.', '.', '.', '.', '.', '.', '.', '.', '#'}, //
             {'#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'}, //
-            {'#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'}, //
-            {'#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'}, //
-            {' ', '#', '.', '.', '#', 'R', '#', '.', '.', '#', ' '}, //
+            {'#', 'A', '.', '.', '.', '.', '.', '.', '.', '.', '#'}, //
+            {' ', '#', '.', '.', '#', 'D', '#', '.', '.', '#', ' '}, //
             {' ', ' ', '#', '.', '#', '.', '#', '.', '#', ' ', ' '}, //
-            {' ', ' ', ' ', '#', '#', 'D', '#', '#', ' ', ' ', ' '}, //
+            {' ', ' ', ' ', '#', '#', 'R', '#', '#', ' ', ' ', ' '}, //
     }, { //
             {' ', ' ', ' ', '#', '#', '#', '#', '#', ' ', ' ', ' '}, //
             {' ', ' ', '#', '.', '#', '.', '#', '.', '#', ' ', ' '}, //
@@ -56,9 +54,9 @@ public class ResearchStationPiece extends StructurePiece {
             {'#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'}, //
             {'#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'}, //
             {'#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'}, //
-            {' ', '#', '.', '.', '#', 'r', '#', '.', '.', '#', ' '}, //
+            {' ', '#', '.', '.', '#', 'd', '#', '.', '.', '#', ' '}, //
             {' ', ' ', '#', '.', '$', '.', 'G', '.', '#', ' ', ' '}, //
-            {' ', ' ', ' ', '#', '#', 'd', '#', '#', ' ', ' ', ' '}, //
+            {' ', ' ', ' ', '#', '#', 'r', '#', '#', ' ', ' ', ' '}, //
     }, { //
             {' ', ' ', ' ', '#', '$', 'G', '$', '#', ' ', ' ', ' '}, //
             {' ', ' ', '$', '.', '#', '.', '#', '.', '$', ' ', ' '}, //
@@ -99,10 +97,11 @@ public class ResearchStationPiece extends StructurePiece {
     public static final BlockState STEEL_BLOCK = SpaceFactory.GRAPHENE_STEEL.getDefaultState();
     public static final BlockState STEEL_DOUBLE_SLAB = SpaceFactory.GRAPHENE_STEEL_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.DOUBLE);
     public static final BlockState STEEL_TOP_SLAB = SpaceFactory.GRAPHENE_STEEL_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.TOP);
+    public static final BlockState STEEL_DOOR = SpaceFactory.GRAPHENE_STEEL_DOOR.getDefaultState();
 
     public ResearchStationPiece(ChunkPos pos, Random random, int y) {
         this(0, BlockBox.create(pos.getStartPos().withY(y).add(-5, -1, -5), pos.getStartPos().withY(y).add(5, 4, 5)));
-        this.setOrientation(Direction.NORTH);
+        this.setOrientation(Direction.fromHorizontal(random.nextInt(4)));
     }
 
     public ResearchStationPiece(int length, BlockBox bb) {
@@ -120,25 +119,44 @@ public class ResearchStationPiece extends StructurePiece {
 
     @Override
     public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot) {
+        BlockPos extractorPos = null, assemblerPos = null;
+        int machineCount = 0;
+
         for (int y = 0; y < LAYERS.length; y++) {
             for (int z = 0; z < LAYERS[0].length; z++) {
                 for (int x = 0; x < LAYERS[0][0].length; x++) {
                     char ch = LAYERS[y][z][x];
-                    switch (ch) {
-                        case '#' -> this.addBlock(world, STEEL_BLOCK, x, y, z, chunkBox);
-                        case '$' -> this.addBlock(world, STEEL_DOUBLE_SLAB, x, y, z, chunkBox);
-                        case 'T' -> this.addBlock(world, STEEL_TOP_SLAB, x, y, z, chunkBox);
-                        case 'G' -> this.addBlock(world, Blocks.TINTED_GLASS.getDefaultState(), x, y, z, chunkBox);
-                        case 'D' ->
-                                this.addBlock(world, Blocks.IRON_DOOR.getDefaultState().with(DoorBlock.HALF, DoubleBlockHalf.LOWER), x, y, z, chunkBox);
-                        case 'd' ->
-                                this.addBlock(world, Blocks.IRON_DOOR.getDefaultState().with(DoorBlock.HALF, DoubleBlockHalf.UPPER), x, y, z, chunkBox);
-                        case 'R' ->
-                                this.addBlock(world, Blocks.IRON_DOOR.getDefaultState().with(DoorBlock.HALF, DoubleBlockHalf.LOWER).with(DoorBlock.FACING, Direction.SOUTH), x, y, z, chunkBox);
-                        case 'r' ->
-                                this.addBlock(world, Blocks.IRON_DOOR.getDefaultState().with(DoorBlock.HALF, DoubleBlockHalf.UPPER).with(DoorBlock.FACING, Direction.SOUTH), x, y, z, chunkBox);
-                        case '.' -> this.addBlock(world, Blocks.CAVE_AIR.getDefaultState(), x, y, z, chunkBox);
+                    if (ch == ' ') {
+                        continue;
                     }
+                    if (ch == 'M') {
+                        machineCount++;
+                        if (extractorPos == null || random.nextInt(machineCount) == 0) {
+                            if (extractorPos != null && assemblerPos == null) {
+                                assemblerPos = extractorPos;
+                            }
+                            extractorPos = new BlockPos(x, y, z);
+                        } else if (assemblerPos == null || random.nextInt(machineCount) == 0) {
+                            assemblerPos = new BlockPos(x, y, z);
+                        }
+                    }
+                    BlockState state = switch (ch) {
+                        case '#' -> STEEL_BLOCK;
+                        case '$' -> STEEL_DOUBLE_SLAB;
+                        case 'T' -> STEEL_TOP_SLAB;
+                        case 'G' -> Blocks.TINTED_GLASS.getDefaultState();
+                        case 'D' -> STEEL_DOOR.with(DoorBlock.HALF, DoubleBlockHalf.LOWER);
+                        case 'd' -> STEEL_DOOR.with(DoorBlock.HALF, DoubleBlockHalf.UPPER);
+                        case 'R' -> STEEL_DOOR.with(DoorBlock.HALF, DoubleBlockHalf.LOWER) //
+                                .with(DoorBlock.FACING, Direction.SOUTH);
+                        case 'r' -> STEEL_DOOR.with(DoorBlock.HALF, DoubleBlockHalf.UPPER) //
+                                .with(DoorBlock.FACING, Direction.SOUTH);
+                        case 'E' -> SpaceFactory.EXTRACTOR.getDefaultState().with(MachineBlock.FACING, Direction.WEST);
+                        case 'A' -> SpaceFactory.ASSEMBLER.getDefaultState().with(MachineBlock.FACING, Direction.WEST);
+                        case 'M', '.' -> Blocks.CAVE_AIR.getDefaultState();
+                        default -> throw new IllegalStateException();
+                    };
+                    this.addBlock(world, state, x, y, z, chunkBox);
                 }
             }
         }
