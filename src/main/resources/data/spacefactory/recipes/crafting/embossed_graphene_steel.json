@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "spacefactory:graphene_steel"
+    }
+  },
+  "result": {
+    "item": "spacefactory:embossed_graphene_steel",
+    "count": 4
+  }
+}
