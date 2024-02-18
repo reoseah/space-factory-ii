@@ -106,10 +106,15 @@ public class BedrockMinerScreenHandler extends ScreenHandler {
     }
 
     public record Properties(BedrockMinerBlockEntity be) implements PropertyDelegate {
+        public static final int SIZE = 7;
+
         public static final int ENERGY = 0, //
                 ENERGY_CAPACITY = 1, //
-                ENERGY_PER_TICK_TIMES_100 = 2, DRILL_SUPPLY_LEFT = 3, DRILL_SUPPLY_TOTAL = 4, DRILL_PROGRESS = 5, IS_VALID_POSITION = 6;
-        public static final int SIZE = 7;
+                ENERGY_PER_TICK_TIMES_100 = 2, //
+                DRILL_SUPPLY_LEFT = 3, //
+                DRILL_SUPPLY_TOTAL = 4, //
+                DRILL_PROGRESS = 5, //
+                IS_VALID_FLOOR = 6;
 
         @Override
         public int size() {
@@ -125,8 +130,8 @@ public class BedrockMinerScreenHandler extends ScreenHandler {
                 case DRILL_SUPPLY_LEFT -> this.be.getDrillSupply();
                 case DRILL_SUPPLY_TOTAL -> this.be.getDrillSupplyTotal();
                 case DRILL_PROGRESS -> this.be.getDrillProgress();
-                case IS_VALID_POSITION -> this.be.getWorld().getBlockState(this.be.getPos().down()) //
-                        .isIn(BedrockMinerBlockEntity.MINEABLES) ? 1 : 0;
+                case IS_VALID_FLOOR -> this.be.getWorld().getBlockState(this.be.getPos().down()) //
+                        .isIn(BedrockMinerBlockEntity.ORES) ? 1 : 0;
                 default -> throw new IllegalArgumentException();
             };
         }

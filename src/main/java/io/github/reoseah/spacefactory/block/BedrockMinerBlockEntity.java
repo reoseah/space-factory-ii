@@ -31,8 +31,8 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
     public static final BlockEntityType<BedrockMinerBlockEntity> TYPE = new BlockEntityType<>(BedrockMinerBlockEntity::new, ImmutableSet.of(SpaceFactory.BEDROCK_MINER), null);
 
     public static final int INVENTORY_SIZE = 7, INPUTS_COUNT = 1, RESULTS_COUNT = 6;
-    public static final TagKey<Item> SUPPLIES = TagKey.of(RegistryKeys.ITEM, new Identifier("spacefactory:bedrock_drill_supplies"));
-    public static final TagKey<Block> MINEABLES = TagKey.of(RegistryKeys.BLOCK, new Identifier("spacefactory:bedrock_miner_mineables"));
+    public static final TagKey<Item> SUPPLIES = TagKey.of(RegistryKeys.ITEM, new Identifier("spacefactory:bedrock_miner_supplies"));
+    public static final TagKey<Block> ORES = TagKey.of(RegistryKeys.BLOCK, new Identifier("spacefactory:bedrock_ores"));
 
     public static final Map<Block, List<ObjectFloatPair<ItemStack>>> MAP = Util.make(new HashMap<>(), map -> {
         map.put(Blocks.BEDROCK, Util.make(new ArrayList<>(), list -> {
@@ -149,9 +149,9 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
         return true;
     }
 
-    public ItemStack insertOutput(ItemStack stack) {
+    public void insertOutput(ItemStack stack) {
         ItemStack copy = stack.copy();
-        for (int i = 1; i < this.size(); ++i) {
+        for (int i = INPUTS_COUNT; i < INPUTS_COUNT + RESULTS_COUNT; ++i) {
             ItemStack slot = this.getStack(i);
             if (!ItemStack.canCombine(slot, copy)) {
                 continue;
@@ -167,19 +167,15 @@ public class BedrockMinerBlockEntity extends MachineBlockEntity {
             }
         }
         if (copy.isEmpty()) {
-            return ItemStack.EMPTY;
+            return;
         }
-        for (int i = 1; i < this.size(); ++i) {
+        for (int i = INPUTS_COUNT; i < INPUTS_COUNT + RESULTS_COUNT; ++i) {
             ItemStack slot = this.getStack(i);
             if (slot.isEmpty()) {
                 this.setStack(i, copy.copyAndEmpty());
                 break;
             }
         }
-        if (copy.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-        return copy;
     }
 
 }

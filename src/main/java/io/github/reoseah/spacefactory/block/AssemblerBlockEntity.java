@@ -12,6 +12,7 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.state.property.Properties;
@@ -21,19 +22,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScreenHandlerFactory, SidedInventory {
+import java.util.Objects;
+
+public class AssemblerBlockEntity extends GhostSlotMachineBlockEntity<AssemblerRecipe> implements NamedScreenHandlerFactory, SidedInventory {
     public static final BlockEntityType<AssemblerBlockEntity> TYPE = new BlockEntityType<>(AssemblerBlockEntity::new, ImmutableSet.of(SpaceFactory.ASSEMBLER), null);
 
     public static final int INVENTORY_SIZE = 7;
     public static final int[] INPUT_SLOTS = {0, 1, 2, 3, 4, 5};
     public static final int OUTPUT_SLOT = 6;
-
-    private @Nullable AssemblerRecipe selectedRecipe;
-    // we don't have RecipeManager when reading NBT, so store the ID
-    // and resolve it later in the tick method
-    protected @Nullable Identifier selectedRecipeId;
-
-    private int recipeProgress;
 
     public AssemblerBlockEntity(BlockPos pos, BlockState state) {
         super(TYPE, pos, state);
@@ -55,49 +51,28 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        if (nbt.contains("SelectedRecipe", NbtElement.STRING_TYPE)) {
-            try {
-                this.selectedRecipeId = new Identifier(nbt.getString("SelectedRecipe"));
-            } catch (Exception e) {
-                SpaceFactory.LOGGER.error("Error reading selected recipe", e);
-            }
-        } else {
-            this.selectedRecipeId = null;
-        }
-        this.recipeProgress = nbt.getInt("RecipeProgress");
-    }
-
-    @Override
-    public void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        if (this.getSelectedRecipe() != null) {
-            nbt.putString("SelectedRecipe", this.getSelectedRecipe().getId().toString());
-        }
-        nbt.putInt("RecipeProgress", this.recipeProgress);
+    public int getEnergyConsumption() {
+        return SpaceFactory.config.getAssemblerEnergyConsumption();
     }
 
     @Override
     public int[] getAvailableSlots(Direction side) {
-        return switch (side) {
-            case DOWN -> new int[]{OUTPUT_SLOT};
-            default -> {
-                int[] slots = IntArrays.copy(INPUT_SLOTS);
-                IntArrays.mergeSort(slots, (a, b) -> Integer.compare(this.getStack(a).getCount(), this.getStack(b).getCount()));
-                yield slots;
-            }
-        };
+        if (side == Direction.DOWN) {
+            return new int[]{OUTPUT_SLOT};
+        }
+        int[] slots = IntArrays.copy(INPUT_SLOTS);
+        IntArrays.mergeSort(slots, (a, b) -> Integer.compare(this.getStack(a).getCount(), this.getStack(b).getCount()));
+        return slots;
     }
 
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return switch (slot) {
-            case OUTPUT_SLOT -> false;
-            default -> this.getSelectedRecipe() != null
-                    && slot < this.getSelectedRecipe().getIngredients().size()
-                    && this.getSelectedRecipe().getIngredients().get(slot).test(stack);
-        };
+        if (slot == OUTPUT_SLOT) {
+            return false;
+        }
+        return this.getSelectedRecipe() != null
+                && slot < this.getSelectedRecipe().getIngredients().size()
+                && this.getSelectedRecipe().getIngredients().get(slot).test(stack);
     }
 
     @Override
@@ -105,49 +80,14 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
         return slot == OUTPUT_SLOT;
     }
 
-    public @Nullable AssemblerRecipe getSelectedRecipe() {
-        return this.selectedRecipe;
-    }
-
-    public void setSelectedRecipe(@Nullable AssemblerRecipe selectedRecipe) {
-        this.selectedRecipe = selectedRecipe;
-        this.recipeProgress = 0;
-        this.markDirty();
+    @Override
+    protected RecipeType<AssemblerRecipe> getRecipeType() {
+        return AssemblerRecipe.TYPE;
     }
 
     @Override
-    protected void tick() {
-        super.tick();
-        boolean wasActive = this.getCachedState().get(Properties.LIT);
-        boolean active = false;
-        if (this.selectedRecipeId != null) {
-            this.setSelectedRecipe((AssemblerRecipe) this.world.getRecipeManager()
-                    .get(this.selectedRecipeId)
-                    .filter(recipe -> recipe instanceof AssemblerRecipe)
-                    .orElse(null));
-            this.selectedRecipeId = null;
-        }
-        AssemblerRecipe recipe = this.getSelectedRecipe();
-        if (recipe != null && recipe.matches(this, this.world) && this.canAcceptRecipeOutput(recipe)) {
-            if (this.energy > 0) {
-                int amount = Math.min(Math.min(this.energy, SpaceFactory.config.getAssemblerEnergyConsumption()), recipe.energy - this.recipeProgress);
-                this.energy -= amount;
-                this.recipeProgress += amount;
-                active = true;
-                if (this.recipeProgress >= recipe.energy) {
-                    this.craftRecipe(recipe);
-                    this.recipeProgress = 0;
-                }
-                this.markDirty();
-            }
-        } else if (this.recipeProgress > 0) {
-            this.recipeProgress = 0;
-            this.markDirty();
-        }
-
-        if (active != wasActive) {
-            this.world.setBlockState(this.pos, this.getCachedState().with(AssemblerBlock.LIT, active));
-        }
+    public int getRecipeEnergy(AssemblerRecipe recipe) {
+        return recipe.energy;
     }
 
     protected boolean canAcceptRecipeOutput(AssemblerRecipe recipe) {
@@ -159,9 +99,5 @@ public class AssemblerBlockEntity extends MachineBlockEntity implements NamedScr
             this.getStack(i).decrement(1);
         }
         this.acceptStack(OUTPUT_SLOT, recipe.craft(this, this.world.getRegistryManager()));
-    }
-
-    public int getRecipeProgress() {
-        return this.recipeProgress;
     }
 }

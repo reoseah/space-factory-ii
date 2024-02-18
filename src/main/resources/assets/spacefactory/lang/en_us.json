@@ -28,7 +28,7 @@
   "item.spacefactory.rflux_laser": "R-Flux Laser",
   "item.spacefactory.quantum_computer": "Quantum Computer",
   "item.spacefactory.molecular_transformer": "Molecular Transformer",
-  "item.spacefactory.drill_supplies": "Deep Drilling Supplies",
+  "item.spacefactory.drill_supplies": "Bedrock Drilling Supplies",
   "spacefactory.energy": "Energy",
   "spacefactory.energy.amount": "%s ε",
   "spacefactory.energy.amount_per_tick": "%s ε/t",
@@ -38,9 +38,9 @@
   "spacefactory.energy.amount_and_amount_per_tick": "%s ε at %s ε/t",
   "spacefactory.progress": "Progress",
   "spacefactory.cannot_switch_recipe_with_current_ingredients": "Cannot switch with items inside",
-  "spacefactory.drill_supply": "Drill Durability",
-  "spacefactory.drill_supply.amount": "%s / %s seconds",
-  "spacefactory.invalid_placement": "Invalid Placement",
-  "emi.category.spacefactory.extractor": "Extraction",
-  "emi.category.spacefactory.assembler": "Assembly"
+  "spacefactory.bedrock_miner.supply": "Drill Durability",
+  "spacefactory.bedrock_miner.supply.amount": "%s / %s seconds",
+  "spacefactory.bedrock_miner.invalid_floor": "Ore identification failed",
+  "emi.category.spacefactory.extractor": "Molecular Extraction",
+  "emi.category.spacefactory.assembler": "Space Factory Assembly"
 }

@@ -10,12 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-public class ExtractorRecipe implements Recipe<Inventory> {
+public class ExtractorRecipe implements Recipe<Inventory>, Comparable<ExtractorRecipe> {
     public static final RecipeType<ExtractorRecipe> TYPE = new RecipeType<ExtractorRecipe>() {
     };
     public static final RecipeSerializer<ExtractorRecipe> SERIALIZER = new Serializer();
@@ -80,6 +82,29 @@ public class ExtractorRecipe implements Recipe<Inventory> {
     @Override
     public DefaultedList<Ingredient> getIngredients() {
         return DefaultedList.copyOf(Ingredient.EMPTY, this.ingredient);
+    }
+
+    @Override
+    public int compareTo(@NotNull ExtractorRecipe other) {
+        // normal items before rare
+        int result = Integer.compare( //
+                this.outputs[0].key().getRarity().ordinal(), //
+                other.outputs[0].key().getRarity().ordinal());
+        if (result != 0) {
+            return result;
+        }
+        // vanilla items before modded
+        Identifier id1 = Registries.ITEM.getId(this.outputs[0].key().getItem());
+        Identifier id2 = Registries.ITEM.getId(other.outputs[0].key().getItem());
+        result = -Boolean.compare( //
+                id1.getNamespace().equals("minecraft"), //
+                id2.getNamespace().equals("minecraft"));
+        if (result != 0) {
+            return result;
+        }
+//        return id1.getPath().compareTo(id2.getPath());
+        return Integer.compare(Registries.ITEM.getRawId(this.outputs[0].key().getItem()),
+                Registries.ITEM.getRawId(other.outputs[0].key().getItem()));
     }
 
     public static class Serializer implements RecipeSerializer<ExtractorRecipe> {

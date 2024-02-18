@@ -55,10 +55,10 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
-	modCompileOnly "dev.emi:emi-xplat-intermediary:${emi_version}:api"
+	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+	modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
 
 	modRuntimeOnly "maven.modrinth:lithium:${project.lithium_version}"
-//	modRuntimeOnly "maven.modrinth:ferrite-core:${project.ferrite_core_version}"
 	modRuntimeOnly "maven.modrinth:bbor:${project.bbor_version}"
 //	modRuntimeOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
