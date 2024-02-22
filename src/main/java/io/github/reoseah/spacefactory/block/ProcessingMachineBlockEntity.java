@@ -1,19 +1,24 @@
 package io.github.reoseah.spacefactory.block;
 
 import io.github.reoseah.spacefactory.SpaceFactory;
+import io.github.reoseah.spacefactory.api.ProcessingMachine;
 import lombok.Getter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class GhostSlotMachineBlockEntity<R extends Recipe<? super GhostSlotMachineBlockEntity<R>>> extends MachineBlockEntity {
+public abstract class ProcessingMachineBlockEntity<R extends Recipe<? super ProcessingMachineBlockEntity<R>>> extends MachineBlockEntity implements SidedInventory {
     protected @Nullable R selectedRecipe;
     // we don't have RecipeManager when reading NBT, so store the ID
     // and resolve it later in the tick method
@@ -22,7 +27,7 @@ public abstract class GhostSlotMachineBlockEntity<R extends Recipe<? super Ghost
     @Getter
     protected int recipeProgress;
 
-    protected GhostSlotMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    protected ProcessingMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
@@ -36,15 +41,26 @@ public abstract class GhostSlotMachineBlockEntity<R extends Recipe<? super Ghost
         this.markDirty();
     }
 
-    protected abstract RecipeType<R> getRecipeType();
-
-    public abstract int getRecipeEnergy(R recipe);
+    protected abstract ProcessingMachine getMachineType();
 
     protected abstract boolean canAcceptRecipeOutput(R recipe);
 
     protected abstract void craftRecipe(R recipe);
 
     public abstract int getEnergyConsumption();
+
+    protected RecipeType<R> getRecipeType() {
+        return this.getMachineType().getRecipeType();
+    }
+
+    public int getRecipeEnergy(R recipe) {
+        return this.getMachineType().getRecipeEnergy(recipe);
+    }
+
+    @Override
+    protected DefaultedList<ItemStack> createSlotsList() {
+        return DefaultedList.ofSize(this.getMachineType().inventorySize, ItemStack.EMPTY);
+    }
 
     @Override
     public void readNbt(NbtCompound nbt) {
@@ -71,10 +87,19 @@ public abstract class GhostSlotMachineBlockEntity<R extends Recipe<? super Ghost
     }
 
     @Override
+    public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
+        if (slot >= this.getMachineType().inputCount) {
+            return false;
+        }
+        return this.getSelectedRecipe() != null
+                && slot < this.getSelectedRecipe().getIngredients().size()
+                && this.getSelectedRecipe().getIngredients().get(slot).test(stack);
+    }
+
+    @Override
     protected void tick() {
         super.tick();
-        boolean wasActive = this.getCachedState().get(Properties.LIT);
-        boolean active = false;
+
         if (this.selectedRecipeId != null) {
             this.setSelectedRecipe(this.world.getRecipeManager()
                     .get(this.selectedRecipeId)
@@ -83,6 +108,10 @@ public abstract class GhostSlotMachineBlockEntity<R extends Recipe<? super Ghost
                     .orElse(null));
             this.selectedRecipeId = null;
         }
+
+        boolean wasActive = this.getCachedState().get(Properties.LIT);
+        boolean active = false;
+
         R recipe = this.getSelectedRecipe();
         if (recipe != null && recipe.matches(this, this.world) && this.canAcceptRecipeOutput(recipe)) {
             if (this.energy > 0) {
@@ -105,4 +134,5 @@ public abstract class GhostSlotMachineBlockEntity<R extends Recipe<? super Ghost
             this.world.setBlockState(this.pos, this.getCachedState().with(AssemblerBlock.LIT, active));
         }
     }
+
 }

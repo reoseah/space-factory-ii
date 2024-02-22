@@ -5,16 +5,17 @@ import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
 
-public class ExtractorScreen extends GhostSlotMachineScreen<ExtractorRecipe, ExtractorScreenHandler> {
+public class ExtractorScreen extends ProcessingMachineScreen {
     public static final Identifier TEXTURE = new Identifier("spacefactory:textures/gui/extractor.png");
 
-    public ExtractorScreen(ExtractorScreenHandler handler, PlayerInventory inventory, Text title) {
+    public ExtractorScreen(ProcessingMachineScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
     }
 
@@ -24,8 +25,8 @@ public class ExtractorScreen extends GhostSlotMachineScreen<ExtractorRecipe, Ext
     }
 
     @Override
-    protected ItemStack getOutput(ExtractorRecipe recipe) {
-        return recipe.outputs[0].key();
+    protected ItemStack getOutput(Recipe<?> recipe) {
+        return ((ExtractorRecipe) recipe).outputs[0].key();
     }
 
     @Override

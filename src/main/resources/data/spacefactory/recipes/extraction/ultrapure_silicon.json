@@ -1,8 +1,7 @@
 {
   "type": "spacefactory:extraction",
   "ingredient": {
-    "item": "minecraft:quartz",
-    "count": 2
+    "item": "minecraft:quartz"
   },
   "energy": 15000,
   "result": {

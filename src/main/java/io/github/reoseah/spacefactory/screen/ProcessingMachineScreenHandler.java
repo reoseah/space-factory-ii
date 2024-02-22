@@ -1,7 +1,7 @@
 package io.github.reoseah.spacefactory.screen;
 
-import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
-import io.github.reoseah.spacefactory.block.GhostSlotMachineBlockEntity;
+import io.github.reoseah.spacefactory.api.ProcessingMachine;
+import io.github.reoseah.spacefactory.block.ProcessingMachineBlockEntity;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,23 +9,21 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class GhostSlotMachineScreenHandler<R extends Recipe<? super GhostSlotMachineBlockEntity<R>> & Comparable<R>> extends ScreenHandler {
+public abstract class ProcessingMachineScreenHandler extends ScreenHandler {
     protected final Inventory inventory;
     protected final PropertyDelegate properties;
-    protected List<R> availableRecipes;
+    protected List<Recipe<?>> availableRecipes;
     private Property selectedRecipe;
 
-    protected GhostSlotMachineScreenHandler(ScreenHandlerType<?> type, int syncId, Inventory inventory, PropertyDelegate properties, PlayerInventory playerInv) {
+    protected ProcessingMachineScreenHandler(ScreenHandlerType<?> type, int syncId, Inventory inventory, PropertyDelegate properties, PlayerInventory playerInv) {
         super(type, syncId);
         this.inventory = inventory;
         this.properties = properties;
@@ -43,14 +41,12 @@ public abstract class GhostSlotMachineScreenHandler<R extends Recipe<? super Gho
             this.addSlot(new Slot(playerInv, x, 8 + x * 18, 172));
         }
 
-        this.availableRecipes = new ArrayList<>();
-        @SuppressWarnings({"unchecked", "rawtypes"}) List<R> recipes = playerInv.player.getWorld().getRecipeManager().listAllOfType((RecipeType) this.getRecipeType());
-        this.availableRecipes = DefaultedList.ofSize(recipes.size());
-        this.availableRecipes.addAll(recipes);
-        Collections.sort(this.availableRecipes);
+        this.availableRecipes = new ArrayList<>(playerInv.player.getWorld().getRecipeManager()
+                .listAllOfType(this.getMachineType().getRecipeType()));
+        Collections.sort(this.availableRecipes, this.getMachineType());
     }
 
-    public GhostSlotMachineScreenHandler(ScreenHandlerType<?> type, int syncId, GhostSlotMachineBlockEntity<R> be, PlayerInventory playerInv) {
+    public ProcessingMachineScreenHandler(ScreenHandlerType<?> type, int syncId, ProcessingMachineBlockEntity be, PlayerInventory playerInv) {
         this(type, syncId, be, new Properties(be), playerInv);
         this.addProperty(this.selectedRecipe = new Property() {
             @Override
@@ -65,21 +61,17 @@ public abstract class GhostSlotMachineScreenHandler<R extends Recipe<? super Gho
         });
     }
 
-    public GhostSlotMachineScreenHandler(ScreenHandlerType<?> type, int syncId, int slotCount, PlayerInventory playerInv) {
+    public ProcessingMachineScreenHandler(ScreenHandlerType<?> type, int syncId, int slotCount, PlayerInventory playerInv) {
         this(type, syncId, new SimpleInventory(slotCount), new ArrayPropertyDelegate(Properties.SIZE), playerInv);
         this.addProperty(this.selectedRecipe = Property.create());
     }
 
     protected abstract void addMachineSlots();
 
-    protected abstract int getInputSlots();
-
-    protected abstract int getMachineSlotCount();
-
-    protected abstract RecipeType<R> getRecipeType();
+    protected abstract ProcessingMachine getMachineType();
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public record Properties(GhostSlotMachineBlockEntity be) implements PropertyDelegate {
+    public record Properties(ProcessingMachineBlockEntity be) implements PropertyDelegate {
         public static final int ENERGY = 0, //
                 ENERGY_CAPACITY = 1, //
                 ENERGY_PER_TICK_TIMES_100 = 2, //
@@ -99,8 +91,8 @@ public abstract class GhostSlotMachineScreenHandler<R extends Recipe<? super Gho
                 case ENERGY_CAPACITY -> this.be.getEnergyCapacity();
                 case ENERGY_PER_TICK_TIMES_100 -> (int) (this.be.getAverageEnergyPerTick() * 100);
                 case RECIPE_PROGRESS -> this.be.getRecipeProgress();
-                case RECIPE_ENERGY ->
-                        this.be.getSelectedRecipe() != null ? this.be.getRecipeEnergy(this.be.getSelectedRecipe()) : 0;
+                case RECIPE_ENERGY -> this.be.getSelectedRecipe() != null
+                        ? this.be.getRecipeEnergy(this.be.getSelectedRecipe()) : 0;
                 default -> throw new IllegalArgumentException();
             };
         }
@@ -111,7 +103,7 @@ public abstract class GhostSlotMachineScreenHandler<R extends Recipe<? super Gho
         }
     }
 
-    public List<R> getAvailableRecipes() {
+    public List<Recipe<?>> getAvailableRecipes() {
         return this.availableRecipes;
     }
 
@@ -119,13 +111,13 @@ public abstract class GhostSlotMachineScreenHandler<R extends Recipe<? super Gho
         return this.selectedRecipe.get();
     }
 
-    public R getSelectedRecipe() {
+    public Recipe<?> getSelectedRecipe() {
         return this.availableRecipes.get(this.getSelectedRecipeIdx());
     }
 
     public boolean onButtonClick(PlayerEntity player, int id) {
         if (id >= 0 && id < this.availableRecipes.size()) {
-            R recipe = getSelectedRecipe();
+            Recipe<?> recipe = getSelectedRecipe();
             if (!this.canSwitchToRecipe(recipe)) {
                 player.sendMessage(Text.translatable("spacefactory.cannot_switch_recipe_with_current_ingredients"), true);
                 return true;
@@ -137,13 +129,13 @@ public abstract class GhostSlotMachineScreenHandler<R extends Recipe<? super Gho
         return true;
     }
 
-    public boolean canSwitchToRecipe(R recipe) {
+    public boolean canSwitchToRecipe(Recipe<?> recipe) {
         for (int i = 0; i < recipe.getIngredients().size(); i++) {
             if (!this.getSlot(i).getStack().isEmpty() && !recipe.getIngredients().get(i).test(this.getSlot(i).getStack())) {
                 return false;
             }
         }
-        for (int i = recipe.getIngredients().size(); i < this.getInputSlots(); i++) {
+        for (int i = recipe.getIngredients().size(); i < this.getMachineType().inputCount; i++) {
             if (!this.getSlot(i).getStack().isEmpty()) {
                 return false;
             }
@@ -159,17 +151,17 @@ public abstract class GhostSlotMachineScreenHandler<R extends Recipe<? super Gho
             return ItemStack.EMPTY;
         }
         ItemStack previous = stack.copy();
-        int playerSlotsStart = this.getMachineSlotCount();
+        int playerSlotsStart = this.getMachineType().inventorySize;
         if (index < playerSlotsStart) {
             if (!this.insertItem(stack, playerSlotsStart, playerSlotsStart + 36, true)) {
                 return ItemStack.EMPTY;
             }
             slot.onQuickTransfer(stack, previous);
         } else {
-            R recipe = getSelectedRecipe();
+            Recipe<?> recipe = getSelectedRecipe();
             boolean matchedIngredient = false;
 
-            IntArrayList validSlots = new IntArrayList(this.getInputSlots());
+            IntArrayList validSlots = new IntArrayList(this.getMachineType().inputCount);
             int total = 0;
             for (int i = 0; i < recipe.getIngredients().size(); i++) {
                 if (recipe.getIngredients().get(i).test(stack)) {

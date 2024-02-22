@@ -3,7 +3,6 @@ package io.github.reoseah.spacefactory.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.api.EnergyI18n;
-import io.github.reoseah.spacefactory.block.GhostSlotMachineBlockEntity;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -22,11 +21,11 @@ import net.minecraft.util.math.MathHelper;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotMachineBlockEntity<R>> & Comparable<R>, H extends GhostSlotMachineScreenHandler<R>> extends HandledScreen<H> {
+public abstract class ProcessingMachineScreen extends HandledScreen<ProcessingMachineScreenHandler> {
     private int scrollOffset = 0;
     private float ghostSlotsTime = 0F;
 
-    public GhostSlotMachineScreen(H handler, PlayerInventory inventory, Text title) {
+    public ProcessingMachineScreen(ProcessingMachineScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         this.backgroundHeight = 196;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
@@ -34,7 +33,9 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
 
     protected abstract Identifier getTexture();
 
-    protected abstract ItemStack getOutput(R recipe);
+    protected ItemStack getOutput(Recipe<?> recipe) {
+        return recipe.getOutput(null);
+    }
 
     @Override
     protected void init() {
@@ -54,9 +55,9 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
         RenderSystem.enableBlend();
         context.drawTexture(this.getTexture(), this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
 
-        int energy = this.handler.properties.get(GhostSlotMachineScreenHandler.Properties.ENERGY);
+        int energy = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.ENERGY);
         if (energy > 0) {
-            int capacity = this.handler.properties.get(GhostSlotMachineScreenHandler.Properties.ENERGY_CAPACITY);
+            int capacity = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.ENERGY_CAPACITY);
             if (capacity <= 0) {
                 capacity = SpaceFactory.config.getAssemblerEnergyCapacity();
             }
@@ -72,9 +73,9 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
     @Override
     protected void drawMouseoverTooltip(DrawContext context, int mouseX, int mouseY) {
         if (this.isPointWithinBounds(8, 16, 18, 40, mouseX, mouseY)) {
-            int energy = this.handler.properties.get(GhostSlotMachineScreenHandler.Properties.ENERGY);
-            int capacity = this.handler.properties.get(GhostSlotMachineScreenHandler.Properties.ENERGY_CAPACITY);
-            float energyPerTick = this.handler.properties.get(GhostSlotMachineScreenHandler.Properties.ENERGY_PER_TICK_TIMES_100) / 100F;
+            int energy = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.ENERGY);
+            int capacity = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.ENERGY_CAPACITY);
+            float energyPerTick = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.ENERGY_PER_TICK_TIMES_100) / 100F;
 
             Text textEnergy = EnergyI18n.ENERGY;
             Text textStored = EnergyI18n.energyAndCapacity(energy, capacity).formatted(Formatting.GRAY);
@@ -112,7 +113,7 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
     }
 
     protected void drawRecipeIcons(DrawContext context) {
-        List<R> recipes = this.handler.getAvailableRecipes();
+        List<Recipe<?>> recipes = this.handler.getAvailableRecipes();
 
         for (int i = this.scrollOffset; i < this.scrollOffset + 12 && i < recipes.size(); i++) {
             int pos = i - this.scrollOffset;
@@ -125,7 +126,7 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
     }
 
     protected boolean drawRecipeIconTooltip(DrawContext context, int mouseX, int mouseY) {
-        List<R> recipes = this.handler.getAvailableRecipes();
+        List<Recipe<?>> recipes = this.handler.getAvailableRecipes();
         for (int idx = this.scrollOffset; idx < this.scrollOffset + 12 && idx < recipes.size(); idx++) {
             int pos = idx - this.scrollOffset;
 
@@ -136,7 +137,7 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
                 ItemStack output = this.getOutput(recipes.get(idx));
                 List<Text> tooltip = this.getTooltipFromItem(output);
                 if (idx != this.handler.getSelectedRecipeIdx()) {
-                    R recipe = recipes.get(idx);
+                    Recipe<?> recipe = recipes.get(idx);
                     if (!this.handler.canSwitchToRecipe(recipe)) {
                         tooltip.add(Text.translatable("spacefactory.cannot_switch_recipe_with_current_ingredients").formatted(Formatting.RED));
                     }
@@ -153,7 +154,7 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
         if (!Screen.hasControlDown()) {
             this.ghostSlotsTime += delta;
         }
-        R recipe = this.handler.getAvailableRecipes().get(this.handler.getSelectedRecipeIdx());
+        Recipe<?> recipe = this.handler.getAvailableRecipes().get(this.handler.getSelectedRecipeIdx());
         DefaultedList<Ingredient> ingredients = recipe.getIngredients();
         for (int i = 0; i < ingredients.size(); i++) {
             Slot slot = this.handler.getSlot(i);
@@ -203,7 +204,7 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
     }
 
     protected boolean drawGhostSlotTooltip(DrawContext context, int mouseX, int mouseY) {
-        R recipe = this.handler.getAvailableRecipes() //
+        Recipe<?> recipe = this.handler.getAvailableRecipes() //
                 .get(this.handler.getSelectedRecipeIdx());
         DefaultedList<Ingredient> ingredients = recipe.getIngredients();
         for (int i = 0; i < ingredients.size(); i++) {
@@ -225,7 +226,7 @@ public abstract class GhostSlotMachineScreen<R extends Recipe<? super GhostSlotM
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        List<R> recipes = this.handler.getAvailableRecipes();
+        List<Recipe<?>> recipes = this.handler.getAvailableRecipes();
         for (int idx = this.scrollOffset; idx < this.scrollOffset + 12 && idx < recipes.size(); idx++) {
             int pos = idx - this.scrollOffset;
 

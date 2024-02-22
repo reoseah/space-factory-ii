@@ -1,25 +1,15 @@
 package io.github.reoseah.spacefactory.screen;
 
+import io.github.reoseah.spacefactory.api.ProcessingMachine;
 import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class AssemblerScreenHandler extends GhostSlotMachineScreenHandler<AssemblerRecipe> {
+public class AssemblerScreenHandler extends ProcessingMachineScreenHandler {
     public static final ScreenHandlerType<AssemblerScreenHandler> TYPE = new ScreenHandlerType<>(AssemblerScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
 
     public AssemblerScreenHandler(int syncId, AssemblerBlockEntity be, PlayerInventory playerInv) {
@@ -27,7 +17,7 @@ public class AssemblerScreenHandler extends GhostSlotMachineScreenHandler<Assemb
     }
 
     public AssemblerScreenHandler(int syncId, PlayerInventory playerInv) {
-        super(TYPE, syncId, AssemblerBlockEntity.INVENTORY_SIZE, playerInv);
+        super(TYPE, syncId, ProcessingMachine.ASSEMBLER.inventorySize, playerInv);
     }
 
     @Override
@@ -41,17 +31,7 @@ public class AssemblerScreenHandler extends GhostSlotMachineScreenHandler<Assemb
     }
 
     @Override
-    protected int getInputSlots() {
-        return 6;
-    }
-
-    @Override
-    protected int getMachineSlotCount() {
-        return AssemblerBlockEntity.INVENTORY_SIZE;
-    }
-
-    @Override
-    protected RecipeType<AssemblerRecipe> getRecipeType() {
-        return AssemblerRecipe.TYPE;
+    protected ProcessingMachine getMachineType() {
+        return ProcessingMachine.ASSEMBLER;
     }
 }

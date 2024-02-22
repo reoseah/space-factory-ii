@@ -76,7 +76,7 @@ public class ExtractorRecipe implements Recipe<Inventory>, Comparable<ExtractorR
 
     @Override
     public ItemStack getOutput(DynamicRegistryManager registryManager) {
-        throw new UnsupportedOperationException("This recipe type has multiple outputs with chances, which can't be supported through this API");
+        return this.outputs[0].left();
     }
 
     @Override

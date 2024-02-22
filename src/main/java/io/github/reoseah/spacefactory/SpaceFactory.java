@@ -45,6 +45,7 @@ public class SpaceFactory {
     public static final Block BEDROCK_EMERALD_ORE = new Block(AbstractBlock.Settings.copy(Blocks.BEDROCK));
     public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(Blocks::never));
     public static final Block ULTRAPURE_COPPER_BLOCK = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).mapColor(MapColor.DULL_RED));
+//    public static final Block ULTRAPURE_GOLD_BLOCK = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).mapColor(MapColor.GOLD));
     public static final Block EXTRACTOR = new ExtractorBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK) //
             .luminance(state -> state.get(Properties.LIT) ? 9 : 0));
     public static final Block ASSEMBLER = new AssemblerBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK) //
@@ -80,6 +81,7 @@ public class SpaceFactory {
 
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_iron_block", ULTRAPURE_IRON_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_copper_block", ULTRAPURE_COPPER_BLOCK);
+//        Registry.register(Registries.BLOCK, "spacefactory:ultrapure_gold_block", ULTRAPURE_GOLD_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:extractor", EXTRACTOR);
         Registry.register(Registries.BLOCK, "spacefactory:assembler", ASSEMBLER);
         Registry.register(Registries.BLOCK, "spacefactory:bedrock_miner", BEDROCK_MINER);
@@ -95,6 +97,7 @@ public class SpaceFactory {
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
+//        Registry.register(Registries.ITEM, "spacefactory:ultrapure_gold_block", new BlockItem(ULTRAPURE_GOLD_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:extractor", new BlockItem(EXTRACTOR, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:assembler", new BlockItem(ASSEMBLER, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:bedrock_miner", new BlockItem(BEDROCK_MINER, new Item.Settings()));
@@ -132,6 +135,7 @@ public class SpaceFactory {
                 .entries((displayContext, entries) -> {
                     entries.add(ULTRAPURE_IRON_BLOCK);
                     entries.add(ULTRAPURE_COPPER_BLOCK);
+//                    entries.add(ULTRAPURE_GOLD_BLOCK);
                     entries.add(EXTRACTOR);
                     entries.add(ASSEMBLER);
                     entries.add(BEDROCK_MINER);
@@ -140,6 +144,10 @@ public class SpaceFactory {
                     entries.add(BEDROCK_GOLD_ORE);
                     entries.add(BEDROCK_REDSTONE_ORE);
                     entries.add(BEDROCK_EMERALD_ORE);
+                    entries.add(GRAPHENE_STEEL);
+                    entries.add(GRAPHENE_STEEL_SLAB);
+                    entries.add(EMBOSSED_GRAPHENE_STEEL);
+                    entries.add(GRAPHENE_STEEL_DOOR);
 
                     entries.add(ULTRAPURE_IRON);
                     entries.add(ULTRAPURE_COPPER);
@@ -156,11 +164,6 @@ public class SpaceFactory {
                     entries.add(QUANTUM_COMPUTER);
                     entries.add(MOLECULAR_TRANSFORMER);
                     entries.add(DRILL_SUPPLIES);
-                    
-                    entries.add(GRAPHENE_STEEL);
-                    entries.add(GRAPHENE_STEEL_SLAB);
-                    entries.add(EMBOSSED_GRAPHENE_STEEL);
-                    entries.add(GRAPHENE_STEEL_DOOR);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
