@@ -9,6 +9,5 @@ public class SpaceFactoryClient {
     public static void initialize() {
         HandledScreens.register(AssemblerScreenHandler.TYPE, AssemblerScreen::new);
         HandledScreens.register(ExtractorScreenHandler.TYPE, ExtractorScreen::new);
-        HandledScreens.register(BedrockMinerScreenHandler.TYPE, BedrockMinerScreen::new);
     }
 }
