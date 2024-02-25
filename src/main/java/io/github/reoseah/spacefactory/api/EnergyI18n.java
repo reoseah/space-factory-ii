@@ -54,5 +54,4 @@ public class EnergyI18n {
     public static MutableText amountAndAmountPerTick(long amount, long change) {
         return Text.translatable(AMOUNT_AND_AMOUNT_PER_TICK_KEY, formatEnergy(amount), formatEnergy(change));
     }
-
 }

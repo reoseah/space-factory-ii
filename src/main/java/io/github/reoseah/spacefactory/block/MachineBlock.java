@@ -5,6 +5,8 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,13 +22,19 @@ import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-public abstract class MachineBlock extends BlockWithEntity {
+import java.util.function.BiFunction;
+
+public class MachineBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = Properties.LIT;
 
-    protected MachineBlock(Settings settings) {
+    public final BiFunction<BlockPos, BlockState, MachineBlockEntity> entityFactory;
+
+    public MachineBlock(BiFunction<BlockPos, BlockState, MachineBlockEntity> entityFactory, Settings settings) {
         super(settings);
+        this.entityFactory = entityFactory;
         this.setDefaultState(this.getDefaultState().with(LIT, false));
     }
 
@@ -91,5 +99,21 @@ public abstract class MachineBlock extends BlockWithEntity {
             world.updateComparators(pos, this);
         }
         super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return this.entityFactory.apply(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? null : (w, pos, bs, be) -> {
+            if (be instanceof MachineBlockEntity machine) {
+                machine.tick();
+            }
+        };
     }
 }

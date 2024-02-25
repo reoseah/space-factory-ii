@@ -22,7 +22,7 @@ public class AssemblerEmiRecipe implements EmiRecipe {
     public static final EmiTexture RECIPE_ARROW = new EmiTexture(AssemblerScreen.TEXTURE, 103, 26, 24, 16);
     public static final EmiTexture RECIPE_ARROW_PROGRESS = new EmiTexture(AssemblerScreen.TEXTURE, 208, 0, 24, 16);
 
-    private final AssemblerRecipe recipe;
+    public final AssemblerRecipe recipe;
     private final List<EmiIngredient> input;
     private final EmiStack output;
 

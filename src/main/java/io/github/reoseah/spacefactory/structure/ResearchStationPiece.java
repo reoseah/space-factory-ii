@@ -1,4 +1,4 @@
-package io.github.reoseah.spacefactory.structure.piece;
+package io.github.reoseah.spacefactory.structure;
 
 import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.block.MachineBlock;
@@ -12,12 +12,14 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.structure.StructureContext;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.structure.StructurePieceType;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockBox;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import org.jetbrains.annotations.NotNull;
 
 public class ResearchStationPiece extends StructurePiece {
     public static final StructurePieceType TYPE = ResearchStationPiece::new;
@@ -96,9 +98,9 @@ public class ResearchStationPiece extends StructurePiece {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, //
     }};
     public static final BlockState STEEL_BLOCK = SpaceFactory.GRAPHENE_STEEL.getDefaultState();
-    public static final BlockState STEEL_DOUBLE_SLAB = SpaceFactory.GRAPHENE_STEEL_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.DOUBLE);
     public static final BlockState EMBOSSED_STEEL = SpaceFactory.EMBOSSED_GRAPHENE_STEEL.getDefaultState();
     public static final BlockState STEEL_TOP_SLAB = SpaceFactory.GRAPHENE_STEEL_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.TOP);
+    public static final BlockState STEEL_DOUBLE_SLAB = SpaceFactory.GRAPHENE_STEEL_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.DOUBLE);
     public static final BlockState STEEL_DOOR = SpaceFactory.GRAPHENE_STEEL_DOOR.getDefaultState();
 
     public ResearchStationPiece(ChunkPos pos, Random random, int y) {
@@ -140,8 +142,8 @@ public class ResearchStationPiece extends StructurePiece {
                                 .with(DoorBlock.FACING, Direction.SOUTH);
                         case 'r' -> STEEL_DOOR.with(DoorBlock.HALF, DoubleBlockHalf.UPPER) //
                                 .with(DoorBlock.FACING, Direction.SOUTH);
-                        case 'E' -> SpaceFactory.EXTRACTOR.getDefaultState().with(MachineBlock.FACING, Direction.WEST);
-                        case 'A' -> SpaceFactory.ASSEMBLER.getDefaultState().with(MachineBlock.FACING, Direction.WEST);
+                        case 'E' -> SpaceFactory.EXTRACTOR.getDefaultState().with(MachineBlock.FACING, Direction.EAST);
+                        case 'A' -> SpaceFactory.ASSEMBLER.getDefaultState().with(MachineBlock.FACING, Direction.EAST);
                         case '.' -> Blocks.CAVE_AIR.getDefaultState();
                         default -> throw new IllegalStateException();
                     };

@@ -1,5 +1,6 @@
 package io.github.reoseah.spacefactory.block;
 
+import lombok.Getter;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -16,7 +17,9 @@ import team.reborn.energy.api.EnergyStorage;
 
 public abstract class MachineBlockEntity extends LockableContainerBlockEntity {
     protected final DefaultedList<ItemStack> slots;
+    @Getter
     protected int energy, energyPerTick;
+    @Getter
     protected float averageEnergyPerTick;
 
     protected MachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -47,7 +50,6 @@ public abstract class MachineBlockEntity extends LockableContainerBlockEntity {
     protected Text getContainerName() {
         return this.getCachedState().getBlock().getName();
     }
-
 
     // region Inventory
     @Override
@@ -98,32 +100,6 @@ public abstract class MachineBlockEntity extends LockableContainerBlockEntity {
     }
     // endregion
 
-    protected boolean canFullyAddStack(int slot, ItemStack offer) {
-        ItemStack stackInSlot = this.getStack(slot);
-        if (stackInSlot.isEmpty() || offer.isEmpty()) {
-            return true;
-        }
-        return ItemStack.canCombine(stackInSlot, offer) //
-                && stackInSlot.getCount() + offer.getCount() <= Math.min(stackInSlot.getMaxCount(), this.getMaxCountPerStack());
-    }
-
-    protected void addStack(int slot, ItemStack stack) {
-        ItemStack stackInSlot = this.getStack(slot);
-        if (stackInSlot.isEmpty()) {
-            this.setStack(slot, stack);
-        } else if (stackInSlot.getItem() == stack.getItem()) {
-            stackInSlot.increment(stack.getCount());
-        }
-        this.markDirty();
-    }
-
-    public int getEnergy() {
-        return this.energy;
-    }
-
-    public float getAverageEnergyPerTick() {
-        return this.averageEnergyPerTick;
-    }
 
     protected void tick() {
         this.averageEnergyPerTick = MathHelper.lerp(0.05F, this.averageEnergyPerTick, this.energyPerTick);
@@ -169,23 +145,22 @@ public abstract class MachineBlockEntity extends LockableContainerBlockEntity {
             return be.getEnergyCapacity();
         }
     }
-
-    protected boolean canAcceptStack(int slot, ItemStack offer) {
-        ItemStack stackInSlot = this.getStack(slot);
-        if (stackInSlot.isEmpty() || offer.isEmpty()) {
-            return true;
-        }
-        return ItemStack.canCombine(stackInSlot, offer)
-                && stackInSlot.getCount() + offer.getCount() <= Math.min(stackInSlot.getMaxCount(), this.getMaxCountPerStack());
-    }
-
-    protected void acceptStack(int slot, ItemStack stack) {
-        ItemStack stackInSlot = this.getStack(slot);
-        if (stackInSlot.isEmpty()) {
-            this.setStack(slot, stack);
-        } else if (stackInSlot.getItem() == stack.getItem()) {
-            stackInSlot.increment(stack.getCount());
-        }
-        this.markDirty();
-    }
+//    protected boolean canFullyAddStack(int slot, ItemStack offer) {
+//        ItemStack stackInSlot = this.getStack(slot);
+//        if (stackInSlot.isEmpty() || offer.isEmpty()) {
+//            return true;
+//        }
+//        return ItemStack.canCombine(stackInSlot, offer) //
+//                && stackInSlot.getCount() + offer.getCount() <= Math.min(stackInSlot.getMaxCount(), this.getMaxCountPerStack());
+//    }
+//
+//    protected void addStack(int slot, ItemStack stack) {
+//        ItemStack stackInSlot = this.getStack(slot);
+//        if (stackInSlot.isEmpty()) {
+//            this.setStack(slot, stack);
+//        } else if (stackInSlot.getItem() == stack.getItem()) {
+//            stackInSlot.increment(stack.getCount());
+//        }
+//        this.markDirty();
+//    }
 }

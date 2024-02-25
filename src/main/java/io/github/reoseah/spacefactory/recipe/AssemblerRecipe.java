@@ -17,8 +17,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class AssemblerRecipe implements Recipe<Inventory>, Comparable<AssemblerRecipe> {
-    public static final RecipeType<AssemblerRecipe> TYPE = new RecipeType<>() {
-    };
+    public static final RecipeType<AssemblerRecipe> TYPE = ProcessingRecipeType.ASSEMBLER;
 
     public static final RecipeSerializer<AssemblerRecipe> SERIALIZER = new Serializer();
 

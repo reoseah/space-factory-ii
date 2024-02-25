@@ -10,6 +10,7 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.api.EnergyI18n;
 import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
+import io.github.reoseah.spacefactory.screen.AssemblerScreen;
 import io.github.reoseah.spacefactory.screen.ExtractorScreen;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -20,10 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ExtractorEmiRecipe implements EmiRecipe {
-    public static final EmiTexture RECIPE_ARROW = new EmiTexture(ExtractorScreen.TEXTURE, 71, 27, 24, 16);
-    public static final EmiTexture RECIPE_ARROW_PROGRESS = new EmiTexture(ExtractorScreen.TEXTURE, 176, 0, 24, 16);
+    public static final EmiTexture RECIPE_ARROW = new EmiTexture(ExtractorScreen.TEXTURE, 103, 26, 24, 16);
+    public static final EmiTexture RECIPE_ARROW_PROGRESS = new EmiTexture(ExtractorScreen.TEXTURE, 208, 0, 24, 16);
 
-    private final ExtractorRecipe recipe;
+    public final ExtractorRecipe recipe;
     private final EmiIngredient input;
     private final List<EmiStack> outputs;
 

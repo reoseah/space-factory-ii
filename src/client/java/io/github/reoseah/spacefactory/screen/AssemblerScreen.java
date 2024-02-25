@@ -24,8 +24,6 @@ public class AssemblerScreen extends ProcessingMachineScreen {
         return TEXTURE;
     }
 
-
-
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         super.drawBackground(context, delta, mouseX, mouseY);

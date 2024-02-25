@@ -1,35 +1,46 @@
 package io.github.reoseah.spacefactory.screen;
 
-import io.github.reoseah.spacefactory.api.ProcessingMachine;
+import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
 import io.github.reoseah.spacefactory.block.ProcessingMachineBlockEntity;
+import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
+import io.github.reoseah.spacefactory.recipe.ProcessingRecipeType;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import lombok.Getter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public abstract class ProcessingMachineScreenHandler extends ScreenHandler {
+public class ProcessingMachineScreenHandler extends ScreenHandler {
+    public static final ScreenHandlerType<ProcessingMachineScreenHandler> EXTRACTOR_TYPE = new ScreenHandlerType<>(ProcessingMachineScreenHandler::createExtractor, FeatureFlags.DEFAULT_ENABLED_FEATURES);
+    public static final ScreenHandlerType<ProcessingMachineScreenHandler> ASSEMBLER_TYPE = new ScreenHandlerType<>(ProcessingMachineScreenHandler::createAssembler, FeatureFlags.DEFAULT_ENABLED_FEATURES);
+
+    public final ProcessingRecipeType<?> recipeType;
     protected final Inventory inventory;
     protected final PropertyDelegate properties;
+    @Getter
     protected List<Recipe<?>> availableRecipes;
     private Property selectedRecipe;
 
-    protected ProcessingMachineScreenHandler(ScreenHandlerType<?> type, int syncId, Inventory inventory, PropertyDelegate properties, PlayerInventory playerInv) {
+    protected ProcessingMachineScreenHandler(ScreenHandlerType<?> type, ProcessingRecipeType<?> recipeType, int syncId, Inventory inventory, PropertyDelegate properties, PlayerInventory playerInv) {
         super(type, syncId);
+        this.recipeType = recipeType;
         this.inventory = inventory;
         this.properties = properties;
         this.addProperties(this.properties);
 
-        this.addMachineSlots();
+        this.recipeType.addSlots(this::addSlot, this.inventory);
 
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 9; x++) {
@@ -41,34 +52,35 @@ public abstract class ProcessingMachineScreenHandler extends ScreenHandler {
             this.addSlot(new Slot(playerInv, x, 8 + x * 18, 172));
         }
 
-        this.availableRecipes = new ArrayList<>(playerInv.player.getWorld().getRecipeManager()
-                .listAllOfType(this.getMachineType().getRecipeType()));
-        Collections.sort(this.availableRecipes, this.getMachineType());
+        this.availableRecipes = new ArrayList<>(playerInv.player.getWorld().getRecipeManager().listAllOfType(this.recipeType));
+        Collections.sort(this.availableRecipes, (Comparator) this.recipeType);
     }
 
-    public ProcessingMachineScreenHandler(ScreenHandlerType<?> type, int syncId, ProcessingMachineBlockEntity be, PlayerInventory playerInv) {
-        this(type, syncId, be, new Properties(be), playerInv);
-        this.addProperty(this.selectedRecipe = new Property() {
-            @Override
-            public int get() {
-                return be.getSelectedRecipe() != null ? availableRecipes.indexOf(be.getSelectedRecipe()) : 0;
-            }
-
-            @Override
-            public void set(int value) {
-                be.setSelectedRecipe(availableRecipes.get(value));
-            }
-        });
+    protected ProcessingMachineScreenHandler(ScreenHandlerType<?> type, ProcessingRecipeType<?> recipeType, int syncId, ProcessingMachineBlockEntity<?> be, PlayerInventory playerInv) {
+        this(type, recipeType, syncId, be, new Properties(be), playerInv);
+        this.selectedRecipe = this.addProperty(new SelectedRecipeProperty(be));
     }
 
-    public ProcessingMachineScreenHandler(ScreenHandlerType<?> type, int syncId, int slotCount, PlayerInventory playerInv) {
-        this(type, syncId, new SimpleInventory(slotCount), new ArrayPropertyDelegate(Properties.SIZE), playerInv);
-        this.addProperty(this.selectedRecipe = Property.create());
+    protected ProcessingMachineScreenHandler(ScreenHandlerType<?> type, ProcessingRecipeType<?> recipeType, int syncId, PlayerInventory playerInv) {
+        this(type, recipeType, syncId, new SimpleInventory(recipeType.inputCount + recipeType.outputCount), new ArrayPropertyDelegate(Properties.SIZE), playerInv);
+        this.selectedRecipe = this.addProperty(Property.create());
     }
 
-    protected abstract void addMachineSlots();
+    public static ProcessingMachineScreenHandler createExtractor(int syncId, ProcessingMachineBlockEntity<ExtractorRecipe> be, PlayerInventory playerInv) {
+        return new ProcessingMachineScreenHandler(EXTRACTOR_TYPE, ProcessingRecipeType.EXTRACTOR, syncId, be, playerInv);
+    }
 
-    protected abstract ProcessingMachine getMachineType();
+    private static ProcessingMachineScreenHandler createExtractor(int syncId, PlayerInventory playerInv) {
+        return new ProcessingMachineScreenHandler(EXTRACTOR_TYPE, ProcessingRecipeType.EXTRACTOR, syncId, playerInv);
+    }
+
+    public static ProcessingMachineScreenHandler createAssembler(int syncId, AssemblerBlockEntity be, PlayerInventory playerInv) {
+        return new ProcessingMachineScreenHandler(ASSEMBLER_TYPE, ProcessingRecipeType.ASSEMBLER, syncId, be, playerInv);
+    }
+
+    public static ProcessingMachineScreenHandler createAssembler(int syncId, PlayerInventory playerInv) {
+        return new ProcessingMachineScreenHandler(ASSEMBLER_TYPE, ProcessingRecipeType.ASSEMBLER, syncId, playerInv);
+    }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public record Properties(ProcessingMachineBlockEntity be) implements PropertyDelegate {
@@ -91,8 +103,14 @@ public abstract class ProcessingMachineScreenHandler extends ScreenHandler {
                 case ENERGY_CAPACITY -> this.be.getEnergyCapacity();
                 case ENERGY_PER_TICK_TIMES_100 -> (int) (this.be.getAverageEnergyPerTick() * 100);
                 case RECIPE_PROGRESS -> this.be.getRecipeProgress();
-                case RECIPE_ENERGY -> this.be.getSelectedRecipe() != null
-                        ? this.be.getRecipeEnergy(this.be.getSelectedRecipe()) : 0;
+                case RECIPE_ENERGY -> {
+                    if (this.be.getSelectedRecipe() != null) {
+                        Recipe<Inventory> recipe = this.be.getSelectedRecipe();
+                        yield this.be.getRecipeType().getRecipeEnergy(recipe);
+                    } else {
+                        yield 0;
+                    }
+                }
                 default -> throw new IllegalArgumentException();
             };
         }
@@ -103,8 +121,22 @@ public abstract class ProcessingMachineScreenHandler extends ScreenHandler {
         }
     }
 
-    public List<Recipe<?>> getAvailableRecipes() {
-        return this.availableRecipes;
+    protected class SelectedRecipeProperty extends Property {
+        private final ProcessingMachineBlockEntity be;
+
+        public SelectedRecipeProperty(ProcessingMachineBlockEntity be) {
+            this.be = be;
+        }
+
+        @Override
+        public int get() {
+            return be.getSelectedRecipe() != null ? availableRecipes.indexOf(be.getSelectedRecipe()) : 0;
+        }
+
+        @Override
+        public void set(int value) {
+            be.setSelectedRecipe(availableRecipes.get(value));
+        }
     }
 
     public int getSelectedRecipeIdx() {
@@ -135,7 +167,7 @@ public abstract class ProcessingMachineScreenHandler extends ScreenHandler {
                 return false;
             }
         }
-        for (int i = recipe.getIngredients().size(); i < this.getMachineType().inputCount; i++) {
+        for (int i = recipe.getIngredients().size(); i < this.recipeType.inputCount; i++) {
             if (!this.getSlot(i).getStack().isEmpty()) {
                 return false;
             }
@@ -151,7 +183,7 @@ public abstract class ProcessingMachineScreenHandler extends ScreenHandler {
             return ItemStack.EMPTY;
         }
         ItemStack previous = stack.copy();
-        int playerSlotsStart = this.getMachineType().inventorySize;
+        int playerSlotsStart = this.recipeType.inputCount + this.recipeType.outputCount;
         if (index < playerSlotsStart) {
             if (!this.insertItem(stack, playerSlotsStart, playerSlotsStart + 36, true)) {
                 return ItemStack.EMPTY;
@@ -161,7 +193,7 @@ public abstract class ProcessingMachineScreenHandler extends ScreenHandler {
             Recipe<?> recipe = getSelectedRecipe();
             boolean matchedIngredient = false;
 
-            IntArrayList validSlots = new IntArrayList(this.getMachineType().inputCount);
+            IntArrayList validSlots = new IntArrayList(this.recipeType.inputCount);
             int total = 0;
             for (int i = 0; i < recipe.getIngredients().size(); i++) {
                 if (recipe.getIngredients().get(i).test(stack)) {

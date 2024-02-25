@@ -1,16 +1,17 @@
 package io.github.reoseah.spacefactory.block;
 
 import io.github.reoseah.spacefactory.SpaceFactory;
-import io.github.reoseah.spacefactory.api.ProcessingMachine;
+import io.github.reoseah.spacefactory.recipe.ProcessingRecipeType;
+import it.unimi.dsi.fastutil.ints.IntArrays;
 import lombok.Getter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -18,7 +19,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class ProcessingMachineBlockEntity<R extends Recipe<? super ProcessingMachineBlockEntity<R>>> extends MachineBlockEntity implements SidedInventory {
+import java.util.stream.IntStream;
+
+public abstract class ProcessingMachineBlockEntity<R extends Recipe<Inventory>> extends MachineBlockEntity implements SidedInventory {
     protected @Nullable R selectedRecipe;
     // we don't have RecipeManager when reading NBT, so store the ID
     // and resolve it later in the tick method
@@ -31,6 +34,10 @@ public abstract class ProcessingMachineBlockEntity<R extends Recipe<? super Proc
         super(type, pos, state);
     }
 
+    public abstract ProcessingRecipeType<R> getRecipeType();
+
+    public abstract int getEnergyConsumption();
+
     public @Nullable R getSelectedRecipe() {
         return this.selectedRecipe;
     }
@@ -41,25 +48,48 @@ public abstract class ProcessingMachineBlockEntity<R extends Recipe<? super Proc
         this.markDirty();
     }
 
-    protected abstract ProcessingMachine getMachineType();
+    @Override
+    protected void tick() {
+        super.tick();
+        assert this.world != null;
 
-    protected abstract boolean canAcceptRecipeOutput(R recipe);
+        if (this.selectedRecipeId != null) {
+            //noinspection unchecked
+            this.setSelectedRecipe((R) this.world.getRecipeManager().get(this.selectedRecipeId) //
+                    .filter(recipe -> recipe.getType() == this.getRecipeType()) //
+                    .orElse(null));
+            this.selectedRecipeId = null;
+        }
 
-    protected abstract void craftRecipe(R recipe);
+        boolean wasActive = this.getCachedState().get(Properties.LIT);
+        boolean active = false;
 
-    public abstract int getEnergyConsumption();
+        R recipe = this.getSelectedRecipe();
+        if (recipe != null && recipe.matches(this, this.world) && this.getRecipeType().canAcceptOutput(this, recipe, this.world.getRegistryManager())) {
+            if (this.energy > 0) {
+                int amount = Math.min(Math.min(this.energy, this.getEnergyConsumption()), this.getRecipeType().getRecipeEnergy(recipe) - this.recipeProgress);
+                this.energy -= amount;
+                this.recipeProgress += amount;
+                active = true;
+                if (this.recipeProgress >= this.getRecipeType().getRecipeEnergy(recipe)) {
+                    this.getRecipeType().craftRecipe(this, recipe, this.world.random, this.world);
+                    this.recipeProgress = 0;
+                }
+                this.markDirty();
+            }
+        } else if (this.recipeProgress > 0) {
+            this.recipeProgress = 0;
+            this.markDirty();
+        }
 
-    protected RecipeType<R> getRecipeType() {
-        return this.getMachineType().getRecipeType();
-    }
-
-    public int getRecipeEnergy(R recipe) {
-        return this.getMachineType().getRecipeEnergy(recipe);
+        if (active != wasActive) {
+            this.world.setBlockState(this.pos, this.getCachedState().with(MachineBlock.LIT, active));
+        }
     }
 
     @Override
     protected DefaultedList<ItemStack> createSlotsList() {
-        return DefaultedList.ofSize(this.getMachineType().inventorySize, ItemStack.EMPTY);
+        return DefaultedList.ofSize(this.getRecipeType().inputCount + this.getRecipeType().outputCount, ItemStack.EMPTY);
     }
 
     @Override
@@ -88,51 +118,31 @@ public abstract class ProcessingMachineBlockEntity<R extends Recipe<? super Proc
 
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        if (slot >= this.getMachineType().inputCount) {
+        if (slot >= this.getRecipeType().inputCount) {
             return false;
         }
-        return this.getSelectedRecipe() != null
-                && slot < this.getSelectedRecipe().getIngredients().size()
+        return this.getSelectedRecipe() != null //
+                && slot < this.getSelectedRecipe().getIngredients().size() //
                 && this.getSelectedRecipe().getIngredients().get(slot).test(stack);
     }
 
     @Override
-    protected void tick() {
-        super.tick();
-
-        if (this.selectedRecipeId != null) {
-            this.setSelectedRecipe(this.world.getRecipeManager()
-                    .get(this.selectedRecipeId)
-                    .filter(recipe -> recipe.getType() == this.getRecipeType())
-                    .map(recipe -> (R) recipe)
-                    .orElse(null));
-            this.selectedRecipeId = null;
-        }
-
-        boolean wasActive = this.getCachedState().get(Properties.LIT);
-        boolean active = false;
-
-        R recipe = this.getSelectedRecipe();
-        if (recipe != null && recipe.matches(this, this.world) && this.canAcceptRecipeOutput(recipe)) {
-            if (this.energy > 0) {
-                int amount = Math.min(Math.min(this.energy, this.getEnergyConsumption()), this.getRecipeEnergy(recipe) - this.recipeProgress);
-                this.energy -= amount;
-                this.recipeProgress += amount;
-                active = true;
-                if (this.recipeProgress >= this.getRecipeEnergy(recipe)) {
-                    this.craftRecipe(recipe);
-                    this.recipeProgress = 0;
-                }
-                this.markDirty();
-            }
-        } else if (this.recipeProgress > 0) {
-            this.recipeProgress = 0;
-            this.markDirty();
-        }
-
-        if (active != wasActive) {
-            this.world.setBlockState(this.pos, this.getCachedState().with(AssemblerBlock.LIT, active));
-        }
+    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
+        return true;
     }
 
+    @Override
+    public int[] getAvailableSlots(Direction side) {
+        int inputCount = this.getRecipeType().inputCount;
+        if (side == Direction.DOWN) {
+            int outputCount = this.getRecipeType().outputCount;
+            return IntStream.range(inputCount, inputCount + outputCount).toArray();
+        }
+        if (inputCount == 1) {
+            return new int[]{0};
+        }
+        int[] slots = IntStream.range(0, inputCount).toArray();
+        IntArrays.mergeSort(slots, (a, b) -> Integer.compare(this.getStack(a).getCount(), this.getStack(b).getCount()));
+        return slots;
+    }
 }

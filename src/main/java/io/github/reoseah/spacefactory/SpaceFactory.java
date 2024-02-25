@@ -1,12 +1,14 @@
 package io.github.reoseah.spacefactory;
 
-import io.github.reoseah.spacefactory.block.*;
+import io.github.reoseah.spacefactory.block.AssemblerBlockEntity;
+import io.github.reoseah.spacefactory.block.ExtractorBlockEntity;
+import io.github.reoseah.spacefactory.block.MachineBlock;
+import io.github.reoseah.spacefactory.block.SteelDoorBlock;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
 import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
-import io.github.reoseah.spacefactory.screen.AssemblerScreenHandler;
-import io.github.reoseah.spacefactory.screen.ExtractorScreenHandler;
+import io.github.reoseah.spacefactory.screen.ProcessingMachineScreenHandler;
+import io.github.reoseah.spacefactory.structure.ResearchStationPiece;
 import io.github.reoseah.spacefactory.structure.ResearchStationStructure;
-import io.github.reoseah.spacefactory.structure.piece.ResearchStationPiece;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -37,11 +39,11 @@ public class SpaceFactory {
     public static final Block GRAPHENE_STEEL = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK));
     public static final Block GRAPHENE_STEEL_SLAB = new SlabBlock(AbstractBlock.Settings.copy(GRAPHENE_STEEL));
     public static final Block EMBOSSED_GRAPHENE_STEEL = new Block(AbstractBlock.Settings.copy(GRAPHENE_STEEL));
-    public static final Block GRAPHENE_STEEL_DOOR = new ThickDoorBlock(AbstractBlock.Settings.copy(GRAPHENE_STEEL), new BlockSetType("iron", false, BlockSoundGroup.METAL, SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundEvents.BLOCK_IRON_DOOR_OPEN, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON, SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON));
-    public static final Block EXTRACTOR = new ExtractorBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK) //
-            .luminance(state -> state.get(Properties.LIT) ? 9 : 0));
-    public static final Block ASSEMBLER = new AssemblerBlock(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK) //
-            .luminance(state -> state.get(Properties.LIT) ? 9 : 0));
+    public static final Block GRAPHENE_STEEL_DOOR = new SteelDoorBlock(AbstractBlock.Settings.copy(GRAPHENE_STEEL), new BlockSetType("iron", false, BlockSoundGroup.METAL, SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundEvents.BLOCK_IRON_DOOR_OPEN, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON, SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON));
+    public static final Block EXTRACTOR = new MachineBlock(ExtractorBlockEntity::new, //
+            AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).luminance(state -> state.get(Properties.LIT) ? 9 : 0));
+    public static final Block ASSEMBLER = new MachineBlock(AssemblerBlockEntity::new, //
+            AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).luminance(state -> state.get(Properties.LIT) ? 9 : 0));
 
     public static final Item ULTRAPURE_IRON = new Item(new Item.Settings());
     public static final Item ULTRAPURE_COPPER = new Item(new Item.Settings());
@@ -57,7 +59,6 @@ public class SpaceFactory {
     public static final Item MOLECULAR_TRANSFORMER = new Item(new Item.Settings());
     public static final Item RFLUX_LASER = new Item(new Item.Settings());
     public static final Item QUANTUM_COMPUTER = new Item(new Item.Settings());
-    public static final Item DRILL_SUPPLIES = new Item(new Item.Settings());
 
     public static void initialize() throws Exception {
         LOGGER.info("Reading config...");
@@ -95,7 +96,6 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:rflux_laser", RFLUX_LASER);
         Registry.register(Registries.ITEM, "spacefactory:quantum_computer", QUANTUM_COMPUTER);
         Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
-        Registry.register(Registries.ITEM, "spacefactory:drill_supplies", DRILL_SUPPLIES);
         Registry.register(Registries.ITEM, "spacefactory:graphene_steel", new BlockItem(GRAPHENE_STEEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:graphene_steel_slab", new BlockItem(GRAPHENE_STEEL_SLAB, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:embossed_graphene_steel", new BlockItem(EMBOSSED_GRAPHENE_STEEL, new Item.Settings()));
@@ -131,7 +131,6 @@ public class SpaceFactory {
                     entries.add(RFLUX_LASER);
                     entries.add(QUANTUM_COMPUTER);
                     entries.add(MOLECULAR_TRANSFORMER);
-                    entries.add(DRILL_SUPPLIES);
                 })
                 .build();
         Registry.register(Registries.ITEM_GROUP, "spacefactory:main", itemGroup);
@@ -142,8 +141,8 @@ public class SpaceFactory {
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.createEnergyStorage(), AssemblerBlockEntity.TYPE);
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.createEnergyStorage(), ExtractorBlockEntity.TYPE);
 
-        Registry.register(Registries.SCREEN_HANDLER, "spacefactory:assembler", AssemblerScreenHandler.TYPE);
-        Registry.register(Registries.SCREEN_HANDLER, "spacefactory:extractor", ExtractorScreenHandler.TYPE);
+        Registry.register(Registries.SCREEN_HANDLER, "spacefactory:assembler", ProcessingMachineScreenHandler.ASSEMBLER_TYPE);
+        Registry.register(Registries.SCREEN_HANDLER, "spacefactory:extractor", ProcessingMachineScreenHandler.EXTRACTOR_TYPE);
 
         Registry.register(Registries.RECIPE_TYPE, "spacefactory:assembly", AssemblerRecipe.TYPE);
         Registry.register(Registries.RECIPE_TYPE, "spacefactory:extraction", ExtractorRecipe.TYPE);

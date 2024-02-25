@@ -3,6 +3,8 @@ package io.github.reoseah.spacefactory.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.api.EnergyI18n;
+import io.github.reoseah.spacefactory.recipe.ProcessingRecipeType;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -33,8 +35,8 @@ public abstract class ProcessingMachineScreen extends HandledScreen<ProcessingMa
 
     protected abstract Identifier getTexture();
 
-    protected ItemStack getOutput(Recipe<?> recipe) {
-        return recipe.getOutput(null);
+    protected ItemStack getRecipeIcon(Recipe<?> recipe) {
+        return ((List<ItemStack>) ((ProcessingRecipeType) (this.handler.recipeType)).getOutputStacks(recipe, MinecraftClient.getInstance().world.getRegistryManager())).get(0);
     }
 
     @Override
@@ -121,7 +123,7 @@ public abstract class ProcessingMachineScreen extends HandledScreen<ProcessingMa
             int x = this.x + 10 + (pos % 8) * 18;
             int y = this.y + 64 + (pos / 8) * 18;
 
-            context.drawItem(this.getOutput(recipes.get(i)), x, y, i);
+            context.drawItem(this.getRecipeIcon(recipes.get(i)), x, y, i);
         }
     }
 
@@ -134,7 +136,7 @@ public abstract class ProcessingMachineScreen extends HandledScreen<ProcessingMa
             int y = this.y + 63 + (pos / 8) * 18;
 
             if (mouseX >= x && mouseY >= y && mouseX < x + 18 && mouseY < y + 18) {
-                ItemStack output = this.getOutput(recipes.get(idx));
+                ItemStack output = this.getRecipeIcon(recipes.get(idx));
                 List<Text> tooltip = this.getTooltipFromItem(output);
                 if (idx != this.handler.getSelectedRecipeIdx()) {
                     Recipe<?> recipe = recipes.get(idx);

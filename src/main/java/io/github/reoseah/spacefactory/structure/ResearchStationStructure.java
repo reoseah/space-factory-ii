@@ -3,7 +3,6 @@ package io.github.reoseah.spacefactory.structure;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
-import io.github.reoseah.spacefactory.structure.piece.ResearchStationPiece;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;

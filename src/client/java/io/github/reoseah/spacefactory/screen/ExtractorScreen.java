@@ -25,26 +25,21 @@ public class ExtractorScreen extends ProcessingMachineScreen {
     }
 
     @Override
-    protected ItemStack getOutput(Recipe<?> recipe) {
-        return ((ExtractorRecipe) recipe).outputs[0].key();
-    }
-
-    @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         super.drawBackground(context, delta, mouseX, mouseY);
-        int duration = this.handler.properties.get(ExtractorScreenHandler.Properties.RECIPE_ENERGY);
+        int duration = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.RECIPE_ENERGY);
         if (duration == 0) {
             duration = 10000;
         }
-        int progressToDisplay = this.handler.properties.get(ExtractorScreenHandler.Properties.RECIPE_PROGRESS) * 24 / duration;
+        int progressToDisplay = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.RECIPE_PROGRESS) * 24 / duration;
         context.drawTexture(TEXTURE, this.x + 71, this.y + 27, 208, 0, progressToDisplay + 1, 16);
     }
 
     @Override
     protected void drawMouseoverTooltip(DrawContext context, int mouseX, int mouseY) {
         if (this.isPointWithinBounds(71, 27, 24, 16, mouseX, mouseY)) {
-            int recipeEnergy = this.handler.properties.get(ExtractorScreenHandler.Properties.RECIPE_ENERGY);
-            int progress = this.handler.properties.get(ExtractorScreenHandler.Properties.RECIPE_PROGRESS);
+            int recipeEnergy = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.RECIPE_ENERGY);
+            int progress = this.handler.properties.get(ProcessingMachineScreenHandler.Properties.RECIPE_PROGRESS);
             Text textProgress = Text.translatable("spacefactory.progress");
             Text textEnergy = EnergyI18n.energyAndCapacity(progress, recipeEnergy).formatted(Formatting.GRAY);
             context.drawTooltip(this.textRenderer, Arrays.asList(textProgress, textEnergy), mouseX, mouseY);

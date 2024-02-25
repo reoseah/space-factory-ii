@@ -7,13 +7,13 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class ThickDoorBlock extends DoorBlock {
+public class SteelDoorBlock extends DoorBlock {
     protected static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 16, 4);
     protected static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(0, 0, 12, 16, 16, 16);
     protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(12, 0, 0, 16, 16, 16);
     protected static final VoxelShape WEST_SHAPE = Block.createCuboidShape(0, 0, 0, 4, 16, 16);
 
-    public ThickDoorBlock(Settings settings, BlockSetType blockSetType) {
+    public SteelDoorBlock(Settings settings, BlockSetType blockSetType) {
         super(settings, blockSetType);
     }
 

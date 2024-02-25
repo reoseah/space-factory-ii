@@ -18,8 +18,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class ExtractorRecipe implements Recipe<Inventory>, Comparable<ExtractorRecipe> {
-    public static final RecipeType<ExtractorRecipe> TYPE = new RecipeType<ExtractorRecipe>() {
-    };
+    public static final RecipeType<ExtractorRecipe> TYPE = ProcessingRecipeType.EXTRACTOR;
     public static final RecipeSerializer<ExtractorRecipe> SERIALIZER = new Serializer();
 
     protected final Identifier id;

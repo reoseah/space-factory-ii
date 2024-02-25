@@ -9,20 +9,25 @@ import dev.emi.emi.api.stack.EmiStack;
 import io.github.reoseah.spacefactory.SpaceFactory;
 import io.github.reoseah.spacefactory.recipe.AssemblerRecipe;
 import io.github.reoseah.spacefactory.recipe.ExtractorRecipe;
+import io.github.reoseah.spacefactory.recipe.ProcessingRecipeType;
 import io.github.reoseah.spacefactory.screen.AssemblerScreen;
 import io.github.reoseah.spacefactory.screen.ExtractorScreen;
 import net.minecraft.util.Identifier;
+
+import java.util.Comparator;
 
 @EmiEntrypoint
 public class SpaceFactoryEMI implements EmiPlugin {
     public static final EmiRecipeCategory ASSEMBLER = new EmiRecipeCategory( //
             new Identifier("spacefactory:assembler"), //
             EmiStack.of(SpaceFactory.ASSEMBLER), //
-            new EmiTexture(AssemblerScreen.TEXTURE, 240, 240, 16, 16));
+            new EmiTexture(AssemblerScreen.TEXTURE, 240, 240, 16, 16),
+            Comparator.comparing(emi -> ((AssemblerEmiRecipe) emi).recipe, ProcessingRecipeType.ASSEMBLER));
     public static final EmiRecipeCategory EXTRACTOR = new EmiRecipeCategory( //
             new Identifier("spacefactory:extractor"), //
             EmiStack.of(SpaceFactory.EXTRACTOR), //
-            new EmiTexture(ExtractorScreen.TEXTURE, 240, 240, 16, 16));
+            new EmiTexture(ExtractorScreen.TEXTURE, 240, 240, 16, 16),
+            Comparator.comparing(emi -> ((ExtractorEmiRecipe) emi).recipe, ProcessingRecipeType.EXTRACTOR));
 
     @Override
     public void register(EmiRegistry registry) {
