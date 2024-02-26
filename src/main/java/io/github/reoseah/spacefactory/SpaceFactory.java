@@ -36,6 +36,7 @@ public class SpaceFactory {
 
     public static final Block ULTRAPURE_IRON_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.WHITE).strength(3F, 15F).allowsSpawning(Blocks::never));
     public static final Block ULTRAPURE_COPPER_BLOCK = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).mapColor(MapColor.DULL_RED));
+    public static final Block ULTRAPURE_GOLD_BLOCK = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).mapColor(MapColor.GOLD));
     public static final Block GRAPHENE_STEEL = new Block(AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK));
     public static final Block GRAPHENE_STEEL_SLAB = new SlabBlock(AbstractBlock.Settings.copy(GRAPHENE_STEEL));
     public static final Block EMBOSSED_GRAPHENE_STEEL = new Block(AbstractBlock.Settings.copy(GRAPHENE_STEEL));
@@ -59,6 +60,7 @@ public class SpaceFactory {
     public static final Item MOLECULAR_TRANSFORMER = new Item(new Item.Settings());
     public static final Item RFLUX_LASER = new Item(new Item.Settings());
     public static final Item QUANTUM_COMPUTER = new Item(new Item.Settings());
+    public static final Item METASTABLE_TIME_CRYSTAL = new Item(new Item.Settings());
 
     public static void initialize() throws Exception {
         LOGGER.info("Reading config...");
@@ -69,7 +71,7 @@ public class SpaceFactory {
 
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_iron_block", ULTRAPURE_IRON_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:ultrapure_copper_block", ULTRAPURE_COPPER_BLOCK);
-//        Registry.register(Registries.BLOCK, "spacefactory:ultrapure_gold_block", ULTRAPURE_GOLD_BLOCK);
+        Registry.register(Registries.BLOCK, "spacefactory:ultrapure_gold_block", ULTRAPURE_GOLD_BLOCK);
         Registry.register(Registries.BLOCK, "spacefactory:extractor", EXTRACTOR);
         Registry.register(Registries.BLOCK, "spacefactory:assembler", ASSEMBLER);
         Registry.register(Registries.BLOCK, "spacefactory:graphene_steel", GRAPHENE_STEEL);
@@ -79,7 +81,7 @@ public class SpaceFactory {
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
-//        Registry.register(Registries.ITEM, "spacefactory:ultrapure_gold_block", new BlockItem(ULTRAPURE_GOLD_BLOCK, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:ultrapure_gold_block", new BlockItem(ULTRAPURE_GOLD_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:extractor", new BlockItem(EXTRACTOR, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:assembler", new BlockItem(ASSEMBLER, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron", ULTRAPURE_IRON);
@@ -95,6 +97,7 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:supercapacitor", SUPERCAPACITOR);
         Registry.register(Registries.ITEM, "spacefactory:rflux_laser", RFLUX_LASER);
         Registry.register(Registries.ITEM, "spacefactory:quantum_computer", QUANTUM_COMPUTER);
+        Registry.register(Registries.ITEM, "spacefactory:lapotrogenic_lattice", METASTABLE_TIME_CRYSTAL);
         Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
         Registry.register(Registries.ITEM, "spacefactory:graphene_steel", new BlockItem(GRAPHENE_STEEL, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:graphene_steel_slab", new BlockItem(GRAPHENE_STEEL_SLAB, new Item.Settings()));
@@ -109,7 +112,7 @@ public class SpaceFactory {
                 .entries((displayContext, entries) -> {
                     entries.add(ULTRAPURE_IRON_BLOCK);
                     entries.add(ULTRAPURE_COPPER_BLOCK);
-//                    entries.add(ULTRAPURE_GOLD_BLOCK);
+                    entries.add(ULTRAPURE_GOLD_BLOCK);
                     entries.add(EXTRACTOR);
                     entries.add(ASSEMBLER);
                     entries.add(GRAPHENE_STEEL);
@@ -130,6 +133,7 @@ public class SpaceFactory {
                     entries.add(SUPERCAPACITOR);
                     entries.add(RFLUX_LASER);
                     entries.add(QUANTUM_COMPUTER);
+                    entries.add(METASTABLE_TIME_CRYSTAL);
                     entries.add(MOLECULAR_TRANSFORMER);
                 })
                 .build();

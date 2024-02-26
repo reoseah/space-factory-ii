@@ -1,0 +1,21 @@
+{
+  "type": "spacefactory:assembly",
+  "ingredients": [
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "spacefactory:ultrapure_silicon"
+    },
+    {
+      "item": "spacefactory:ultrapure_carbon"
+    },
+    {
+      "item": "spacefactory:ultrapure_carbon"
+    }
+  ],
+  "energy": 10000,
+  "result": {
+    "item": "spacefactory:lapotrogenic_lattice"
+  }
+}

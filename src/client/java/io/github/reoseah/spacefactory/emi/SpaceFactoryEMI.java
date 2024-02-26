@@ -23,6 +23,7 @@ public class SpaceFactoryEMI implements EmiPlugin {
             EmiStack.of(SpaceFactory.ASSEMBLER), //
             new EmiTexture(AssemblerScreen.TEXTURE, 240, 240, 16, 16),
             Comparator.comparing(emi -> ((AssemblerEmiRecipe) emi).recipe, ProcessingRecipeType.ASSEMBLER));
+
     public static final EmiRecipeCategory EXTRACTOR = new EmiRecipeCategory( //
             new Identifier("spacefactory:extractor"), //
             EmiStack.of(SpaceFactory.EXTRACTOR), //

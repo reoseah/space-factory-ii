@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ExtractorEmiRecipe implements EmiRecipe {
-    public static final EmiTexture RECIPE_ARROW = new EmiTexture(ExtractorScreen.TEXTURE, 103, 26, 24, 16);
+    public static final EmiTexture RECIPE_ARROW = new EmiTexture(ExtractorScreen.TEXTURE, 71, 27, 24, 16);
     public static final EmiTexture RECIPE_ARROW_PROGRESS = new EmiTexture(ExtractorScreen.TEXTURE, 208, 0, 24, 16);
 
     public final ExtractorRecipe recipe;

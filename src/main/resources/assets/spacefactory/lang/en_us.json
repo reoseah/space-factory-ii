@@ -2,6 +2,7 @@
   "itemGroup.spacefactory": "Space Factory",
   "block.spacefactory.ultrapure_iron_block": "Block of Ultra-pure Iron",
   "block.spacefactory.ultrapure_copper_block": "Block of Ultra-pure Copper",
+  "block.spacefactory.ultrapure_gold_block": "Block of Ultra-pure Gold",
   "block.spacefactory.graphene_steel": "Lightweight Graphene Steel",
   "block.spacefactory.graphene_steel_slab": "Lightweight Graphene Steel Slab",
   "block.spacefactory.embossed_graphene_steel": "Embossed Lightweight Graphene Steel",
@@ -19,9 +20,10 @@
   "item.spacefactory.motor": "Precision Motor",
   "item.spacefactory.transformer": "EV Transformer",
   "item.spacefactory.supercapacitor": "Supercapacitor",
-  "item.spacefactory.rflux_laser": "R-Flux Laser",
+  "item.spacefactory.rflux_laser": "R-Tonic Laser",
   "item.spacefactory.quantum_computer": "Quantum Computer",
   "item.spacefactory.molecular_transformer": "Molecular Transformer",
+  "item.spacefactory.lapotrogenic_lattice": "Monocrystalline High-Density Lapotrogenic Lattice",
   "spacefactory.energy": "Energy",
   "spacefactory.energy.amount": "%s ε",
   "spacefactory.energy.amount_per_tick": "%s ε/t",
@@ -32,5 +34,5 @@
   "spacefactory.progress": "Progress",
   "spacefactory.cannot_switch_recipe_with_current_ingredients": "Cannot switch with the items inside",
   "emi.category.spacefactory.extractor": "Molecular Extraction",
-  "emi.category.spacefactory.assembler": "Glittertech Assembly"
+  "emi.category.spacefactory.assembler": "Molecular Assembly"
 }
