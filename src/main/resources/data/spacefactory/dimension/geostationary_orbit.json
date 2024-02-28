@@ -58,7 +58,7 @@
     },
     "biome_source": {
       "type": "minecraft:fixed",
-      "biome": "minecraft:plains"
+      "biome": "spacefactory:space"
     }
   }
 }
