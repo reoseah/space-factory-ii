@@ -41,6 +41,7 @@ public class SpaceFactory {
     public static final Block GRAPHENE_STEEL_SLAB = new SlabBlock(AbstractBlock.Settings.copy(GRAPHENE_STEEL));
     public static final Block EMBOSSED_GRAPHENE_STEEL = new Block(AbstractBlock.Settings.copy(GRAPHENE_STEEL));
     public static final Block GRAPHENE_STEEL_DOOR = new SteelDoorBlock(AbstractBlock.Settings.copy(GRAPHENE_STEEL), new BlockSetType("iron", false, BlockSoundGroup.METAL, SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundEvents.BLOCK_IRON_DOOR_OPEN, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON, SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON));
+    public static final Block SPACEGLAZE_BLOCK = new Block(AbstractBlock.Settings.copy(GRAPHENE_STEEL).mapColor(MapColor.WHITE_GRAY));
     public static final Block EXTRACTOR = new MachineBlock(ExtractorBlockEntity::new, //
             AbstractBlock.Settings.copy(ULTRAPURE_IRON_BLOCK).luminance(state -> state.get(Properties.LIT) ? 9 : 0));
     public static final Block ASSEMBLER = new MachineBlock(AssemblerBlockEntity::new, //
@@ -57,10 +58,11 @@ public class SpaceFactory {
     public static final Item MOTOR = new Item(new Item.Settings());
     public static final Item TRANSFORMER = new Item(new Item.Settings());
     public static final Item SUPERCAPACITOR = new Item(new Item.Settings());
-    public static final Item MOLECULAR_TRANSFORMER = new Item(new Item.Settings());
     public static final Item RFLUX_LASER = new Item(new Item.Settings());
     public static final Item QUANTUM_COMPUTER = new Item(new Item.Settings());
     public static final Item METASTABLE_TIME_CRYSTAL = new Item(new Item.Settings());
+    public static final Item MILLENNIA_BATTERY = new Item(new Item.Settings());
+    public static final Item MOLECULAR_TRANSFORMER = new Item(new Item.Settings());
 
     public static void initialize() throws Exception {
         LOGGER.info("Reading config...");
@@ -78,10 +80,17 @@ public class SpaceFactory {
         Registry.register(Registries.BLOCK, "spacefactory:graphene_steel_slab", GRAPHENE_STEEL_SLAB);
         Registry.register(Registries.BLOCK, "spacefactory:embossed_graphene_steel", EMBOSSED_GRAPHENE_STEEL);
         Registry.register(Registries.BLOCK, "spacefactory:graphene_steel_door", GRAPHENE_STEEL_DOOR);
+        Registry.register(Registries.BLOCK, "spacefactory:spaceglaze_block", SPACEGLAZE_BLOCK);
 
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron_block", new BlockItem(ULTRAPURE_IRON_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_copper_block", new BlockItem(ULTRAPURE_COPPER_BLOCK, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_gold_block", new BlockItem(ULTRAPURE_GOLD_BLOCK, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:graphene_steel", new BlockItem(GRAPHENE_STEEL, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:graphene_steel_slab", new BlockItem(GRAPHENE_STEEL_SLAB, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:embossed_graphene_steel", new BlockItem(EMBOSSED_GRAPHENE_STEEL, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:graphene_steel_door", new BlockItem(GRAPHENE_STEEL_DOOR, new Item.Settings()));
+        Registry.register(Registries.ITEM, "spacefactory:spaceglaze_block", new BlockItem(SPACEGLAZE_BLOCK, new Item.Settings()));
+
         Registry.register(Registries.ITEM, "spacefactory:extractor", new BlockItem(EXTRACTOR, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:assembler", new BlockItem(ASSEMBLER, new Item.Settings()));
         Registry.register(Registries.ITEM, "spacefactory:ultrapure_iron", ULTRAPURE_IRON);
@@ -98,11 +107,8 @@ public class SpaceFactory {
         Registry.register(Registries.ITEM, "spacefactory:rflux_laser", RFLUX_LASER);
         Registry.register(Registries.ITEM, "spacefactory:quantum_computer", QUANTUM_COMPUTER);
         Registry.register(Registries.ITEM, "spacefactory:lapotrogenic_lattice", METASTABLE_TIME_CRYSTAL);
+        Registry.register(Registries.ITEM, "spacefactory:millennia_battery", MILLENNIA_BATTERY);
         Registry.register(Registries.ITEM, "spacefactory:molecular_transformer", MOLECULAR_TRANSFORMER);
-        Registry.register(Registries.ITEM, "spacefactory:graphene_steel", new BlockItem(GRAPHENE_STEEL, new Item.Settings()));
-        Registry.register(Registries.ITEM, "spacefactory:graphene_steel_slab", new BlockItem(GRAPHENE_STEEL_SLAB, new Item.Settings()));
-        Registry.register(Registries.ITEM, "spacefactory:embossed_graphene_steel", new BlockItem(EMBOSSED_GRAPHENE_STEEL, new Item.Settings()));
-        Registry.register(Registries.ITEM, "spacefactory:graphene_steel_door", new BlockItem(GRAPHENE_STEEL_DOOR, new Item.Settings()));
 
         FuelRegistry.INSTANCE.add(ULTRAPURE_CARBON, 8 * 200);
 
@@ -119,6 +125,7 @@ public class SpaceFactory {
                     entries.add(GRAPHENE_STEEL_SLAB);
                     entries.add(EMBOSSED_GRAPHENE_STEEL);
                     entries.add(GRAPHENE_STEEL_DOOR);
+                    entries.add(SPACEGLAZE_BLOCK);
 
                     entries.add(ULTRAPURE_IRON);
                     entries.add(ULTRAPURE_COPPER);
@@ -134,6 +141,7 @@ public class SpaceFactory {
                     entries.add(RFLUX_LASER);
                     entries.add(QUANTUM_COMPUTER);
                     entries.add(METASTABLE_TIME_CRYSTAL);
+                    entries.add(MILLENNIA_BATTERY);
                     entries.add(MOLECULAR_TRANSFORMER);
                 })
                 .build();

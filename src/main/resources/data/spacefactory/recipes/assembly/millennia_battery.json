@@ -1,0 +1,19 @@
+{
+  "type": "spacefactory:assembly",
+  "ingredients": [
+    {
+      "item": "spacefactory:lapotrogenic_lattice"
+    },
+    {
+      "item": "spacefactory:ultrapure_copper"
+    },
+    {
+      "item": "spacefactory:ultrapure_iron"
+    }
+  ],
+  "energy": 10000,
+  "result": {
+    "item": "spacefactory:millennia_battery",
+    "count": 16
+  }
+}
