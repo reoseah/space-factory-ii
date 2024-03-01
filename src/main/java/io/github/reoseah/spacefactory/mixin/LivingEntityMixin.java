@@ -46,6 +46,11 @@ public abstract class LivingEntityMixin extends Entity {
             if (!this.isLogicalSideForUpdatingMovement()) {
                 return;
             }
+            if (((Object) this) instanceof PlayerEntity player) {
+                if (player.isSpectator() || player.isCreative() && player.getAbilities().flying) {
+                    return;
+                }
+            }
 
             BlockPos velocityAffectingPos = this.getVelocityAffectingPos();
             boolean touchesSomething = false;
